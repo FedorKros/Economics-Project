@@ -1,5 +1,4 @@
-
-
+{% load static %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -11,7 +10,7 @@
   </head>
   <body>
 
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <nav class="navbar navbar-expand-lg my-custom-navbar">
   <div class="container-fluid">
 <!--    <a class="navbar-brand" href="#">PeekOnEcon</a>-->
 <!--    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">-->
@@ -20,18 +19,18 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{% url 'home' %}">PeekOnEcon</a>
+          <a class="nav-link active" aria-current="page" href="{% url 'home' %}"><b>PeekOnEcon</b></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'topics' %}">Topics</a>
+          <a class="nav-link cool-link" href="{% url 'topics' %}"><b>Topics</b></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'all_list' %}" method='post'>Quizzes</a>
+          <a class="nav-link cool-link" href="{% url 'all_list' %}" method='post'><b>Quizzes</b></a>
           <!-- <form href="{% url 'all_list' %} "method='post'>Qioiwoie</form> -->
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'about_us' %}">About us</a>
+          <a class="nav-link cool-link" href="{% url 'about_us' %}">About us</a>
         </li>
 <!--        <li class="nav-item dropdown">-->
 <!--          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->

@@ -14,6 +14,24 @@ body {
     background-color: #F8F9F9;
 }
 
+
+.my-custom-navbar {
+  background-color: #F6F9FF;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+
+
+
+
+.container-homepage {
+  display: flex;
+  justify-content: center; /* Horizontally center the children */
+  align-items: center;
+  margin: 0;
+  height: 600px;
+}
+
 .container {
     display: flex;
     justify-content: center; /* Horizontally center the children */
@@ -22,6 +40,30 @@ body {
     gap: 20px;
 }
   
+
+
+
+/* .cool-link {
+  font-size: 36px;
+} */
+.cool-link::after
+{
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+    background: #2979ff;
+  transition: width .3s;
+}
+.cool-link:hover::after
+{
+  width: 100%;
+  transition: width .3s;
+  /* box-shadow: 0 2px 4px #2979ff; */
+}
+
+
+
 
 
 .button-diagrams {
@@ -85,6 +127,7 @@ body {
     /* Hover state */
     background-color: #a877d2;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    color: #fff;
   }
 
   .button-diagrams:active,.button-quizzes:active{
