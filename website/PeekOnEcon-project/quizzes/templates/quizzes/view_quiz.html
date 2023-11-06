@@ -6,11 +6,78 @@
 <p>{{ quiz.description }}</p>
 
 
-<form action="{% url 'quiz_submit' quiz.id %}" method="post">
+<!-- JS timer (autosubmition)  -->
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+    // let timeLimit = {{ time_limit }} * 60; // VS code doesn't like this approach...
+    let timeLimit = document.getElementById('quiz-timer').getAttribute('data-time-limit') * 60;
+    let quizTimer = setTimeout(submitQuiz, timeLimit * 1000); // Set the timeout
+  
+    function submitQuiz() {
+      // Submit the quiz form
+      document.getElementById('quiz-form').submit();
+    }
+    
+    // Optional: Update the UI with the remaining time
+    // This can show a countdown timer to the user
+    let timerDisplay = document.getElementById('timer-display');
+    setInterval(function() {
+      let minutes = Math.floor(timeLimit / 60);
+      let seconds = timeLimit % 60;
+      timerDisplay.textContent = `Time Remaining: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+      if (timeLimit <= 0) {
+        clearTimeout(quizTimer);
+      } else {
+        timeLimit -= 1;
+      }
+    }, 1000);
+  });
+
+
+  window.onload = function() {
+  // Assuming you've set your time limit in seconds as a data attribute in your HTML
+  let timeLimit = parseInt(document.getElementById('quiz-timer').getAttribute('data-time-limit')) * 60;
+  let display = document.getElementById('time');
+
+  startTimer(timeLimit, display);
+};
+
+function startTimer(duration, display) {
+  let timer = duration, minutes, seconds;
+
+  let interval = setInterval(function () {
+    minutes = parseInt(timer / 60, 10);
+    seconds = parseInt(timer % 60, 10);
+
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+    display.textContent = minutes + ":" + seconds;
+
+    if (--timer < 0) {
+      clearInterval(interval);
+      // Optional: Automatically submit the form when the timer reaches 0
+      submitQuiz();
+    }
+  }, 1000);
+}
+
+</script>
+  
+
+
+
+
+  <form id="quiz-form" method="post" action="{% url 'quiz_submit' quiz.id %}">
   {% csrf_token %}
 
-
+    <!-- connecting JS to python time_limit attribute -->
+  <div id="quiz-timer" data-time-limit="{{ time_limit }}"></div>
   <ol>
+    <div id="timer" align="center">Time left: <span id="time">Calculating...</span></div>
+
+  
+
     {% for question in questions %}
       <li>
         <fieldset>

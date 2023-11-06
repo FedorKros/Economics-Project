@@ -13,9 +13,10 @@ def view_quiz(request, quiz_id):
     try: 
         quiz = Quiz.objects.get( id = quiz_id )
         questions = quiz.questions.all().prefetch_related('choices')
+        time_limit = quiz.time_limit
     except: 
         raise Http404('Not found')
-    return render(request, 'quizzes/view_quiz.html', {'quiz':quiz, 'questions': questions})
+    return render(request, 'quizzes/view_quiz.html', {'quiz':quiz, 'questions': questions, 'time_limit': time_limit})
 
 def quiz_submit(request, quiz_id):
     

@@ -20,7 +20,8 @@ from django.contrib import admin
 
 class Quiz(models.Model):
     title = models.CharField(max_length=255)
-    description = models.TextField()
+    description = models.TextField(help_text="Add a description to your quiz.")
+    time_limit = models.PositiveIntegerField(help_text="Time limit in minutes.", default=5)
 
     def __str__(self):
         return self.title
