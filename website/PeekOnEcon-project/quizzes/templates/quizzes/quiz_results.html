@@ -1,0 +1,11 @@
+{% extends "diagrams/base.html" %}
+{% block content %}
+
+  <h1>{{ quiz.title }} Results</h1>
+  <p>You scored {{ score }} out of {{ total_questions }}!</p>
+
+ 
+
+  <a href="{% url 'all_list' %}">Take another quiz</a>
+
+{% endblock %}

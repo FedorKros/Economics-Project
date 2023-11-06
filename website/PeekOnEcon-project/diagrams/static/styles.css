@@ -13,3 +13,84 @@
 body {
     background-color: #F8F9F9;
 }
+
+.container {
+    display: flex;
+    justify-content: center; /* Horizontally center the children */
+    align-items: center; /* Vertically center the children */
+    height: 10vh; /* Make the container full height of the viewport */
+    gap: 20px;
+}
+  
+
+
+.button-diagrams {
+    /* Button dimensions and display */
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 5px;
+  
+    /* Typography */
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+  
+    /* Background and border */
+    background-color: #3498db;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  
+    /* Transition for smoothness */
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+  }
+
+
+  .button-quizzes {
+    /* Button dimensions and display */
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 5px;
+  
+    /* Typography */
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+  
+    /* Background and border */
+    background-color: #bddaed;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  
+    /* Transition for smoothness */
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+  }
+  
+  .button-diagrams:hover{
+    /* Hover state */
+    background-color: #2979ff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+   .button-quizzes:hover {
+    /* Hover state */
+    background-color: #a877d2;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .button-diagrams:active,.button-quizzes:active{
+    /* Active state */
+    background-color: #005ecb;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transform: translateY(2px);
+  }
+  

@@ -71,6 +71,8 @@ TEMPLATES = [
     },
 ]
 
+
+
 WSGI_APPLICATION = "PeekOnEcon.wsgi.application"
 
 
