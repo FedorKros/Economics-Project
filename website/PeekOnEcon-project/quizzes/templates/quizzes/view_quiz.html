@@ -69,12 +69,13 @@ function startTimer(duration, display) {
 
 
   <form id="quiz-form" method="post" action="{% url 'quiz_submit' quiz.id %}">
-  {% csrf_token %}
+  {% csrf_token %} 
 
+  <div class = ""> 
     <!-- connecting JS to python time_limit attribute -->
   <div id="quiz-timer" data-time-limit="{{ time_limit }}"></div>
   <ol>
-    <div id="timer" align="center">Time left: <span id="time">Calculating...</span></div>
+    <div id="timer" class="container-timer" align="center">Time left: <span id="time">Calculating...</span></div>
 
   
 
@@ -94,8 +95,9 @@ function startTimer(duration, display) {
       <p>No questions available for this quiz.</p>
     {% endfor %}
   </ol>
-
+  </div>  
   <input type="submit" value="Submit Quiz">
+
 </form>
 
 {% endblock %}

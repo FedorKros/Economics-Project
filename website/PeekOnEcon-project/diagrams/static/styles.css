@@ -32,6 +32,17 @@ body {
   height: 600px;
 }
 
+.container-timer {
+  background-color: #CBD5E3; 
+  border-radius: 5px; 
+  
+  padding: 10px; 
+  margin: 10px; 
+  max-width: 200px;
+  text-align: center;
+}
+
+
 .container {
     display: flex;
     justify-content: center; /* Horizontally center the children */
@@ -125,15 +136,25 @@ body {
   
    .button-quizzes:hover {
     /* Hover state */
-    background-color: #a877d2;
+    background-color: #B7C1F7;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     color: #fff;
   }
 
-  .button-diagrams:active,.button-quizzes:active{
+  .button-diagrams:active{
     /* Active state */
     background-color: #005ecb;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     transform: translateY(2px);
   }
+
+  .button-quizzes:active{
+    /* Active state */
+    background-color: #7C8FF4;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transform: translateY(2px);
+  }
+  
+  
+
   
