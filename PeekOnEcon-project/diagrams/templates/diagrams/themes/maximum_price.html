@@ -1,0 +1,122 @@
+{% extends 'diagrams/base.html'  %}
+{% block content %}
+
+
+
+
+<div align = "center">
+        <h1> Maximum price (price ceiling) </h1>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        
+
+        <input type="range" id="k-slider" min="-9" max="-1" step="1" value="-2">
+        <label for="k-slider"> Price ceiling <span id="k-value">-2</span></label>
+
+
+        <br>
+        <button id="resetButton">Reset values</button>
+
+        <div style="height: 800px; width: 600px;">
+        <canvas id="myChart" width="400" height="400"></canvas>
+
+        <script>
+    var kSlider = document.getElementById('k-slider');
+    var kValueLabel = document.getElementById('k-value');
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+
+    // Create a function to generate y-values based on current k and b
+
+
+    var chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            datasets: [{
+                pointRadius: 0,
+                label: 'supply',
+                data: [[-10,-10], [10,10]],
+                fill: false,
+                borderColor: 'blue',
+            },
+            {
+                pointRadius: 0,
+                label: 'demand',
+                data: [[-10,10],[10,-10]],
+                fill: false,
+                borderColor: 'red',
+            },
+            {
+                type: 'line',
+                data: [[-10, -2],[10,-2]],
+                borderColor: 'black',
+            },
+            {
+                type: 'line',
+                data: [[-2, -2,], [-2,-10]],
+                borderColor: 'black',
+                borderDash: [10, 10],
+            },
+            {
+                type: 'line',
+                data: [[2, -2,], [2,-10]],
+                borderColor: 'black',
+                borderDash: [10, 10],
+                
+            }
+        ]
+        },
+        options: {
+
+            scales: {
+                x: {
+                        type: 'linear',
+                        position: 'bottom',
+                        min: -10,
+                        max: 10,
+                   },
+                y: {
+                        type: 'linear',
+                        position: 'bottom',
+                        min: -10,
+                        max: 10,
+                   }
+
+            }
+
+        }
+    });
+
+    // Update chart when sliders change
+    function updateChart() {
+        kValueLabel.textContent = kSlider.value;
+
+        new_value = parseFloat(kSlider.value)
+        chart.data.datasets[2].data[0][1] = new_value;
+        chart.data.datasets[2].data[1][1] = new_value;
+
+        chart.data.datasets[3].data[0][0] = new_value;
+        chart.data.datasets[3].data[0][1] = new_value;
+        chart.data.datasets[3].data[1][0] = new_value;
+
+        chart.data.datasets[4].data[0][0] = -new_value;
+        chart.data.datasets[4].data[0][1] = new_value;
+        chart.data.datasets[4].data[1][0] = -new_value;
+        chart.update();
+
+    }
+
+    kSlider.addEventListener('input', updateChart);
+    document.getElementById('resetButton').addEventListener('click', function() {
+        document.getElementById('k-slider').value = -2;
+        updateChart();
+        chart.update();
+});
+</script>
+
+        </div>
+</div>
+
+{% endblock %}

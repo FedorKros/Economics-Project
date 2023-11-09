@@ -1,0 +1,133 @@
+{% extends 'diagrams/base.html'  %}
+{% block content %}
+
+
+
+<div align = "center">
+        <h1>Price elasticity of demand</h1>
+
+
+        <select id="radiusSelector">
+            <option value="-1">Unitary elastic</option>
+            <option value="-0.3">Relatively elastic</option>
+            <option value="-8">Relatively inelastic</option>
+            <option value="0">Perfectly elastic</option>
+            <option value="1000">Perfectly inelastic</option>
+
+        </select>
+        
+        <div style="height: 800px; width: 600px;">
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <canvas id="myChart" width="400" height="400"></canvas>
+            <script>
+            
+            document.addEventListener('DOMContentLoaded', function() {
+            var ctx = document.getElementById('myChart').getContext('2d');
+        
+            var xMin = -5;
+            var xMax = 5;  
+            var step = 0.1;
+            var yMin = -5;
+            var yMax = 5;
+        
+            // Function to calculate y values based on the selected radius
+            function computeYValues(radius, xValues) {
+                var yValues = [];
+                for (var x of xValues) {
+                    yValues.push(radius*x);
+                }
+                return yValues;
+            }
+        
+            // Initial values
+            var xValues = [];
+            for (var x = xMin; x <= xMax; x += step) {
+                xValues.push(x);
+            }
+            var initialRadius = parseFloat(document.getElementById('radiusSelector').value);
+            var yValues = computeYValues(initialRadius, xValues);
+            if (initialRadius = 0) {
+                yValues = [5,5,5,5,5,5]
+            } 
+
+            var chart = new Chart(ctx, {
+                type: 'line',
+                
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        pointRadius: 0,
+                        label: 'Income elasticity of demand',
+                        data: yValues,
+                        fill: false,
+                        borderColor: 'red',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            min: xMin,
+                            max: xMax,
+                            ticks: {
+                                display: false
+                            },
+                            title: {
+                                display: true,
+                                text: 'Quantity demanded',
+                                font: {
+                                    size: 16
+                                },
+                            padding: {top: 20, left: 0, right: 0, bottom: 0}
+                            }
+                        },
+                        y:  {
+                            min: yMin,
+                            max: yMax,
+                            ticks: {
+                                display: false
+                            },
+                            title: {
+                                display: true,
+                                text: 'Price',
+                                font: {
+                                    size: 16
+                                },
+                            padding: {top: 20, left: 0, right: 0, bottom: 0}
+                            }
+                        }
+                    },
+        
+                    animation: {
+                        duration: 300  // duration in milliseconds
+                    },
+                }
+            });
+        
+            // Dropdown change event
+            document.getElementById('radiusSelector').addEventListener('change', function(e) {
+                var selectedRadius = parseFloat(e.target.value);
+                yValues = computeYValues(selectedRadius, xValues);
+                
+                chart.data.datasets[0].data = yValues;
+                
+                // Update the label to reflect the radius change
+                chart.data.datasets[0].label = 'y = sqrt(' + selectedRadius + '^2 - x^2)';
+                
+                chart.update();
+            });
+        });
+        
+            </script>
+         
+
+</div>
+
+{% endblock %}

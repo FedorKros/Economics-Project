@@ -1,0 +1,15 @@
+{% extends 'diagrams/base.html'  %}
+{% block content %}
+
+
+<h2 style="text-align: center;">Quizzes</h2>
+
+{% if quizzes %}
+<ul>
+{% for quiz in quizzes %}
+<li><a href="{% url 'view_quiz' quiz.id %}"> {{ quiz.title }}</a></li> 
+{% endfor %}
+</ul>
+{% endif %}
+
+{% endblock %}

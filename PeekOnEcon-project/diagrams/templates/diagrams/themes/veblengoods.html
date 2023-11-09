@@ -1,0 +1,82 @@
+{% extends 'diagrams/base.html'  %}
+{% block content %}
+
+
+<div align = "center">
+        <h1>Demand for Veblen goods</h1>
+</div>
+
+
+<div align = "center">
+<div style="height: 800px; width: 600px;">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <canvas id="myChart" width="400" height="400"></canvas>
+    <script>
+        // Wait for the document to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            var ctx = document.getElementById('myChart').getContext('2d');
+    
+            // Define the domain
+            var xMin = 0;
+            var xMax = 12;
+            var step = 0.1;
+    
+            // Generate x and y values
+            var xValues = [];
+            var yPositive = [];
+            var yNegative = [];
+    
+            for (var x = xMin; x <= xMax; x += step) {
+                xValues.push(x);
+                yPositive.push(Math.sqrt(4*x));
+                yNegative.push(-Math.sqrt(4*x));
+            }
+            
+            //for dropdown list
+        
+        
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                
+                labels: xValues,
+                datasets: [
+                    {
+                    pointRadius: 0,
+                    label: "The law of demand holds",
+                    data: yNegative,
+                    fill: false,
+                    borderColor: 'rgb(27, 85, 240)',
+                    },
+                    {
+                    pointRadius: 0,
+                    label: "Snob effect comes into play",
+                    data: yPositive,
+                    fill: false,
+                    borderColor: 'rgb(106, 143, 241)',
+                    }
+                ]
+                
+                },
+                options: {
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            min: -1,   // This restricts the domain
+                            max: xMax    // This restricts the domain
+                        },
+                        y:  {
+                                min:-10,
+                                max:10,
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+ 
+</div>
+</div>
+ 
+{% endblock %}

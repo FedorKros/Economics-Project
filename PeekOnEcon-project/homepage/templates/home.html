@@ -1,0 +1,45 @@
+{% extends 'diagrams/base.html'  %}
+{% block content %}
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const images = ['nyc.avif', 'dollars.avif', 'money.avif'];
+  const randomIndex = Math.floor(Math.random() * images.length);
+  const selectedImage = 'static/images/' + images[randomIndex]; 
+  document.body.style.backgroundImage = `url('${selectedImage}')`;
+});
+
+</script>
+
+
+<div class="box-bg" align = "center">
+<div class="container-homepage">
+<div align = "center">
+        <h1 class="light-text">PeekOnEcon</h1>
+        <h3 class="light-text">Learn economics with ease</h3>
+
+        
+        <br>
+        
+
+
+        
+                <a href = "{% url 'topics' %}" class="button-diagrams">Start your journey in economics from here.</a> 
+        <br>
+                <a href = "{% url 'all_list' %}" class="button-quizzes">Or test your knowledge here.</a>
+
+
+
+</div>
+</div>
+</div>
+
+
+
+{% endblock %}
+
+
+
+
