@@ -4,12 +4,15 @@
 
 
 
-<div align = "center">
-        <h1> Inflation (2 types) </h1>
 
-        <select id="radiusSelector">
-            <option value="1.5">Demand-pull inflation</option>
-            <option value="1">Supply-push inflation</option>
+<div align="center">
+
+        <h1> Inflation (two types) </h1>
+
+        <select id="inflation-type">
+            <option value="1">Cost-push inflation</option>
+            <option value="2">Demand-pull inflation</option>
+            <option value="3">Price stability (very rare)</option>
         </select>
 
 
@@ -18,81 +21,75 @@
 
         
 
-        <input type="range" id="k-slider" min="-10" max="10" step="0.1" value="0">
-        <label for="k-slider">Shift in supply <span id="k-value">0</span></label>
+        
 
-        <input type="range" id="b-slider" min="-10" max="10" step="0.1" value="0">
-        <label for="b-slider">Shift in demand<span id="b-value">0</span></label>
-
-        <br>
-        <button id="resetButton">Reset values</button>
+        
 
         <div style="height: 800px; width: 600px;">
         <canvas id="myChart" width="400" height="400"></canvas>
 
         <script>
-    var kSlider = document.getElementById('k-slider');
-    var bSlider = document.getElementById('b-slider');
-    var kValueLabel = document.getElementById('k-value');
-    var bValueLabel = document.getElementById('b-value');
+    var typeSelector = document.getElementById('inflation-type'); // 1 = demand-pull    2 = cost-push
+    
+   
     var ctx = document.getElementById('myChart').getContext('2d');
 
     // Create a function to generate y-values based on current k and b
     function generateDataSupply(k) {
         var data = [];
-        for(var x = -10; x <= 10; x+=0.1) {
+        for(var x = -9; x <= 9; x+=1) {
             data.push({x: x, y: x-k});
         }
         return data;
     }
     function generateDataDemand(b) {
         var data = [];
-        for(var x = -10; x <= 10; x+=0.1) {
+        for(var x = -9; x <= 9; x+=1) {
             data.push({x: x, y: -x-b});
         }
         return data;
     }
 
-    
+    var initialType = parseFloat(document.getElementById('inflation-type').value);
 
     var chart = new Chart(ctx, {
         type: 'line',
         data: {
             datasets: [{
                 pointRadius: 0,
-                label: 'Aggregate supply',
-                data: generateDataSupply(parseFloat(kSlider.value)),
+                label: 'Aggregate supply 2',
+                data: generateDataSupply(-6),
                 fill: false,
-                borderColor: 'blue',
+                borderColor: 'red',
             },
             
             {
                 pointRadius: 0,
-                label: 'Aggregate demand',
-                data: generateDataDemand(parseFloat(bSlider.value)),
+                label: 'Aggregate demand 2',
+                data: generateDataDemand(0),
                 fill: false,
-                borderColor: 'red',
+                borderColor: 'blue',
             },
             {
                 pointRadius: 0,
                 label: 'LRAS',
                 data: [[0, -10], [0, 10]],
                 fill: false,
-                borderColor: 'black',
+                borderColor: 'orange',
             },
             {
                 pointRadius: 0,
-                label: 'Aggregate supply',
-                data: generateDataSupply(parseFloat(kSlider.value)),
+                label: 'Aggregate supply 1',
+                data: generateDataSupply(0),
                 fill: false,
-                borderColor: 'blue',
+                borderColor: 'darkred',
             },
             {
                 pointRadius: 0,
-                label: 'Aggregate demand',
-                data: generateDataDemand(parseFloat(bSlider.value)),
+                label: 'Aggregate demand 1',
+                data: generateDataDemand(0),
                 fill: false,
-                borderColor: 'red',
+                borderColor: 'darkblue',
             },
         ]
         },
@@ -119,27 +116,33 @@
 
     // Update chart when sliders change
     function updateChart() {
-        kValueLabel.textContent = kSlider.value;
-        bValueLabel.textContent = bSlider.value;
+        
+        if (typeSelector.value == 2) {
+            chart.data.datasets[1].data = generateDataDemand(-6);
+            chart.data.datasets[0].data = generateDataSupply(0);
+        } 
+        else if (typeSelector.value == 1) {
+            chart.data.datasets[1].data = generateDataDemand(0);
+            chart.data.datasets[0].data = generateDataSupply(-6);
+        }
+        else {
+            chart.data.datasets[1].data = generateDataDemand(0);
+            chart.data.datasets[0].data = generateDataSupply(0);
+        }
 
-        chart.data.datasets[0].data = generateDataSupply(parseFloat(kSlider.value));
-        chart.data.datasets[1].data = generateDataDemand(parseFloat(bSlider.value));
         chart.update();
 
     }
 
-    kSlider.addEventListener('input', updateChart);
-    bSlider.addEventListener('input', updateChart);
-    document.getElementById('resetButton').addEventListener('click', function() {
-        document.getElementById('k-slider').value = 0; 
-        document.getElementById('b-slider').value = 0;
-        chart.data.datasets[0].data = generateDataSupply(parseFloat(kSlider.value));
-        chart.data.datasets[1].data = generateDataDemand(parseFloat(bSlider.value));
-        chart.update();
-});
+    
+    typeSelector.addEventListener('change', updateChart); 
+
+
+
 </script>
 
         </div>
 </div>
+
 
 {% endblock %}

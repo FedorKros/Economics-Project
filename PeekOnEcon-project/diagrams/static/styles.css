@@ -22,6 +22,22 @@ h2 {
   text-align: center;
 }
 
+a {
+  /* color: hotpink; */
+  color: blue;
+  text-decoration: none;
+  
+}
+
+a:hover {
+  /* text-decoration: underline; */
+  color: hotpink;
+
+}
+
+
+
+
 .my-custom-navbar {
   background-color: #F6F9FF;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -64,6 +80,7 @@ h2 {
   color: white;
   /* text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; */
 }
+
   
 
 .box-bg {
