@@ -1,0 +1,118 @@
+{% extends 'diagrams/base.html'  %}
+{% block content %}
+
+
+
+
+
+<div align = "center">
+
+<h1> The Business cycle </h1>
+
+
+
+
+
+<div style="height: 800px; width: 600px;">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <canvas id="myChart" width="400" height="400"></canvas>
+    <script>
+    
+    document.addEventListener('DOMContentLoaded', function() {
+    var ctx = document.getElementById('myChart').getContext('2d');
+    
+    var xMin = -0.4;
+    var xMax = 26.5;  
+    var step = 0.1;
+    var yMin = -3;
+    var yMax = 7;
+    
+
+
+    function setDataLabel(datapoint) {
+        if (datapoint <= 15) {
+            return 'Smoke';
+        } 
+        else {
+            return 'Drink';
+        }
+}
+    
+
+    // Function to calculate y values 
+    function computeYValues(radius, xValues) {
+        var yValues = [];
+        for (var x of xValues) {
+            yValues.push(Math.sin(x) + x/10 + 0.6);
+        }
+        return yValues;
+    }
+
+    // Initial values
+    var xValues = [];
+    for (var x = xMin; x <= xMax; x += step) {
+        xValues.push(x);
+    }
+    var initialRadius = 1.5;
+    var yValues = computeYValues(initialRadius, xValues);
+
+    var chart = new Chart(ctx, {
+        type: 'line',
+        
+        data: {
+            labels: xValues,
+            datasets: [{
+                pointRadius: 0,
+                // label: setDataLabel(x),
+                label: 'Business cycle',
+                data: yValues,
+                fill: false,
+                borderColor: 'rgb(106, 143, 241)',
+                tension: 0.1
+            },
+            
+            { 
+                label: 'Long term trend',
+                data: [[0.2, 0.8], [26, 3.2]],
+                borderColor: 'red', 
+            },
+            
+        ]
+        },
+        options: {
+            scales: {
+                x: {
+                    type: 'linear',
+                    position: 'bottom',
+                    min: xMin,
+                    max: xMax
+                },
+                y:  {
+                    min: yMin,
+                    max: yMax,  // Adjust this if you expect larger radii
+                }
+            },
+
+            animation: {
+                duration: 300,  // duration in milliseconds
+            },
+        },
+
+        plugins: {
+            tooltip: {
+                callbacks: {
+                label: function(context) {
+                    var label = context.datasets[0].data[context.dataIndex].label; // Use the dynamic label for tooltip
+                    return `${label}: (${context.raw.x}, ${context.raw.y})`;
+                }
+                }
+            }
+        }
+    });
+});
+
+    </script>
+
+</div>
+
+{% endblock %}

@@ -18,6 +18,9 @@ body {
   background-size: cover;
 }
 
+h2 {
+  text-align: center;
+}
 
 .my-custom-navbar {
   background-color: #F6F9FF;

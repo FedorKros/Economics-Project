@@ -44,4 +44,11 @@ urlpatterns = [
     path("keynesian/", views.keynesian, name = "keynesian"),
     path("inflation/", views.inflation, name = "inflation"),
 
+
+    # Free trade and protectionism
+    path("free_trade/", views.free_trade, name = "free_trade"),
+    path("tariffs/", views.tariffs, name = "tariffs"),
+    path("quotas/", views.quotas, name = "quotas"),
+    path("subsidies_tp/", views.subsidies_tp, name = "subsidies_tp"),
+
 ]

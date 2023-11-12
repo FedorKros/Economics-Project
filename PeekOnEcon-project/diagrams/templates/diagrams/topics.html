@@ -1,29 +1,17 @@
 {% extends 'diagrams/base.html'  %}
 {% block content %}
 
-<!-- <div align = "center"> -->
         
-        <h2 style="text-align: center;">Microeconomics</h2>
-        <!-- </div> -->
-        <!-- <a href = "{% url 'demand' %}">Demand</a>
-        <br>
-        <a href = "{% url 'supply' %}">Supply</a>
-        <br>
-        <a href = "{% url 'ppc' %}">Production Possibility Curve</a>
-        <br>
-        <a href = "{% url 'veblengoods' %}">Veblen goods</a> -->
+<h2>Microeconomics</h2>
         
         <h4>Competitive markets</h4>
         <ul>
-        <!-- <li><a href = "{% url 'demand' %}">Demand</a></li> -->
-        <!-- <li><a href = "{% url 'supply' %}">Supply</a></li>   -->
         <li><a href = "{% url 'demand_and_supply' %}">Demand and Supply</a></li>  
         <li><a href = "{% url 'ppc' %}">Production Possibility Curve</a></li>
         <li><a href = "{% url 'veblengoods' %}">Veblen goods</a></li>
         <li><a href = "{% url 'producerandconsumersurplus' %}">Producer and consumer surplus</a></li>
         </ul>
       
-
         <h4>Elasticity</h4>
         <ul>
         <li><a href = "{% url 'ped' %}">Price elasticity of demand (PED)</a></li>
@@ -31,7 +19,6 @@
         <li><a href = "{% url 'pes' %}">Price elasticity of supply (PES)</a></li>
         </ul>
 
-        
         <h4>The role of government in microeconomics</h4>
         <ul>
         <li><a href = "{% url 'indirect_taxation' %}">Indirect taxation</a></li>
@@ -41,15 +28,13 @@
         <li><a href = "{% url 'minimum_wage' %}">Minimum wage</a></li>
         </ul>
 
-
         <h4>Market failure</h4>
         <ul>
         <li><a href = "{% url 'merit_goods' %}">Merit goods (Positive externalities)</a></li>
         <li><a href = "{% url 'demerit_goods' %}">Demerit goods (Negative externalities)</a></li>
         </ul>
 
-      
-        <h2 style="text-align: center;">Macroeconomics</h2>
+<h2>Macroeconomics</h2>
         
         <h4>Economic activity</h4>
         <ul>
@@ -66,7 +51,17 @@
         <ul>
         <li><a href = "{% url 'inflation' %}">Inflation</a></li>
         </ul>
-        <h2 style="text-align: center;">Global economics</h2>
-<!-- </div> -->
+        
+<h2>Global economics</h2>
+
+        <h4>Free trade and protectionism</h4>
+        <ul>
+        <li><a href = "{% url 'free_trade' %}">Free trade</a></li>
+        <li><a href = "{% url 'tariffs' %}">Tariffs</a></li>
+        <li><a href = "{% url 'quotas' %}">Quotas</a></li>
+        <li><a href = "{% url 'subsidies_tp' %}">Subsidies (trade protection)</a></li>
+        </ul>
+
+
 
 {% endblock %}
