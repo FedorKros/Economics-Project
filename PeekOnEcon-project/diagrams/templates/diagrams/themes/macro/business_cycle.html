@@ -1,118 +1,156 @@
-{% extends 'diagrams/base.html'  %}
+{% extends 'diagrams/base.html' %}
 {% block content %}
 
 
 
 
 
-<div align = "center">
+<div align="center">
 
-<h1> The Business cycle </h1>
-
-
+    <h1> The Business cycle </h1>
 
 
 
-<div style="height: 800px; width: 600px;">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <canvas id="myChart" width="400" height="400"></canvas>
-    <script>
-    
-    document.addEventListener('DOMContentLoaded', function() {
-    var ctx = document.getElementById('myChart').getContext('2d');
-    
-    var xMin = -0.4;
-    var xMax = 26.5;  
-    var step = 0.1;
-    var yMin = -3;
-    var yMax = 7;
-    
 
 
-    function setDataLabel(datapoint) {
-        if (datapoint <= 15) {
-            return 'Smoke';
-        } 
-        else {
-            return 'Drink';
-        }
-}
-    
+    <div style="height: 800px; width: 600px;">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"
+            integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    // Function to calculate y values 
-    function computeYValues(radius, xValues) {
-        var yValues = [];
-        for (var x of xValues) {
-            yValues.push(Math.sin(x) + x/10 + 0.6);
-        }
-        return yValues;
-    }
 
-    // Initial values
-    var xValues = [];
-    for (var x = xMin; x <= xMax; x += step) {
-        xValues.push(x);
-    }
-    var initialRadius = 1.5;
-    var yValues = computeYValues(initialRadius, xValues);
+        <canvas id="myChart" width="400" height="400"></canvas>
+        <script>
 
-    var chart = new Chart(ctx, {
-        type: 'line',
-        
-        data: {
-            labels: xValues,
-            datasets: [{
-                pointRadius: 0,
-                // label: setDataLabel(x),
-                label: 'Business cycle',
-                data: yValues,
-                fill: false,
-                borderColor: 'rgb(106, 143, 241)',
-                tension: 0.1
-            },
-            
-            { 
-                label: 'Long term trend',
-                data: [[0.2, 0.8], [26, 3.2]],
-                borderColor: 'red', 
-            },
-            
-        ]
-        },
-        options: {
-            scales: {
-                x: {
-                    type: 'linear',
-                    position: 'bottom',
-                    min: xMin,
-                    max: xMax
-                },
-                y:  {
-                    min: yMin,
-                    max: yMax,  // Adjust this if you expect larger radii
+            document.addEventListener('DOMContentLoaded', function () {
+                var ctx = document.getElementById('myChart').getContext('2d');
+
+                var xMin = -0.4;
+                var xMax = 26.5;
+                var step = 0.1;
+                var yMin = -3;
+                var yMax = 7;
+
+
+
+                function setDataLabel(datapoint) {
+                    if (datapoint <= 15) {
+                        return 'Smoke';
+                    }
+                    else {
+                        return 'Drink';
+                    }
                 }
-            },
 
-            animation: {
-                duration: 300,  // duration in milliseconds
-            },
-        },
 
-        plugins: {
-            tooltip: {
-                callbacks: {
-                label: function(context) {
-                    var label = context.datasets[0].data[context.dataIndex].label; // Use the dynamic label for tooltip
-                    return `${label}: (${context.raw.x}, ${context.raw.y})`;
+                // Function to calculate y values 
+                function computeYValues(radius, xValues) {
+                    var yValues = [];
+                    for (var x of xValues) {
+                        yValues.push(Math.sin(x) + x / 10 + 0.6);
+                    }
+                    return yValues;
                 }
+
+                // Initial values
+                var xValues = [];
+                for (var x = xMin; x <= xMax; x += step) {
+                    xValues.push(x);
                 }
-            }
-        }
-    });
-});
+                var initialRadius = 1.5;
+                var yValues = computeYValues(initialRadius, xValues);
 
-    </script>
+                var chart = new Chart(ctx, {
+                    type: 'line',
 
-</div>
+                    data: {
 
-{% endblock %}
+
+
+                        labels: xValues,
+                        datasets: [{
+                            pointRadius: 0,
+                            // label: setDataLabel(x),
+                            label: 'Business cycle',
+                            data: yValues,
+                            fill: false,
+                            borderColor: 'rgb(106, 143, 241)',
+                            tension: 0.1
+                        },
+
+                        {
+                            label: 'Long term trend',
+                            data: [[0.2, 0.8], [26, 3.2]],
+                            borderColor: 'red',
+                        },
+
+                        ]
+                    },
+                    options: {
+
+                        plugins: {
+                            datalabels: {
+                                formatter: function (value, context) {
+                                    // Display the label only for the first data point
+                                    if (context.dataIndex === 50) {
+                                        return context.dataset.label || '';
+                                    } else if (context.dataIndex === 70) {
+                                        return 'Peak';
+                                    }
+                                    else {
+                                        return ''
+                                    }
+                                },
+                                anchor: 'end',
+                                align: 'top',
+                                offset: 8,
+                                font: {
+                                    weight: 'bold'
+                                }
+                            }
+                        },
+
+                        legend: {
+                            position: 'bottom',
+                            align: 'start'
+                        },
+                        scales: {
+                            x: {
+                                type: 'linear',
+                                position: 'bottom',
+                                min: xMin,
+                                max: xMax
+                            },
+                            y: {
+                                min: yMin,
+                                max: yMax,  // Adjust this if you expect larger radii
+                            }
+                        },
+
+                        animation: {
+                            duration: 300,  // duration in milliseconds
+                        },
+                    },
+
+                    plugins: [ChartDataLabels]
+                    // plugins: {
+                    //     datalabels: {
+                    //         // color: 'black', // label text color
+                    //         // anchor: 'end', // label anchor position
+                    //         // align: 'top', // label alignment
+                    //         // offset: 4, // offset from data point
+                    //         // display: true, // display data labels
+
+                    //     },
+                    // }
+
+                });
+            });
+
+        </script>
+
+    </div>
+
+    {% endblock %}

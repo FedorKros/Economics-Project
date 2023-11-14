@@ -35,6 +35,10 @@ a:hover {
 
 }
 
+.link-hover-default {
+  color: white;
+}
+
 
 
 
@@ -174,7 +178,12 @@ a:hover {
   .button-diagrams:hover{
     /* Hover state */
     background-color: #2979ff;
+    color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .text-glow {
+    text-shadow:1px 1px 2px #5D3FD3, 1px 1px 2px #5D3FD3;
   }
   
    .button-quizzes:hover {
