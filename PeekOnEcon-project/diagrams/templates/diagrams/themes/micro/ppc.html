@@ -1,15 +1,15 @@
-{% extends 'diagrams/base.html'  %}
+{% extends 'diagrams/base.html' %}
 {% block content %}
 
 
 
 
 
-<div align = "center">
+<div align="center">
 
-<h1> PPC curve </h1>
+    <h1> PPC curve </h1>
 
-<!-- <select id="dropdown">
+    <!-- <select id="dropdown">
     <option value="data1">Data Set 1</option>
     <option value="data2">Data Set 2</option>
 </select>
@@ -74,93 +74,163 @@
 </div>
 </div> -->
 
-<select id="radiusSelector">
-    <option value="1.5">Current production possibility</option>
-    <option value="1">Decreased production possibility</option>
-    <option value="2">Increased production possibility</option>
-</select>
+    <select id="radiusSelector">
+        <option value="1.5">Current production possibility</option>
+        <option value="1">Decreased production possibility</option>
+        <option value="2">Increased production possibility</option>
+    </select>
 
-<div style="height: 800px; width: 600px;">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <canvas id="myChart" width="400" height="400"></canvas>
-    <script>
-    
-    document.addEventListener('DOMContentLoaded', function() {
-    var ctx = document.getElementById('myChart').getContext('2d');
+    <div style="height: 800px; width: 600px;">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"
+            integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <canvas id="myChart" width="400" height="400"></canvas>
+        <script>
 
-    var xMin = 0.3;
-    var xMax = 2.2;  // Note: Adjust this if you expect larger radii
-    var step = 0.01;
-    var yMin = 0.3;
-    var yMax = 2.2;
+            document.addEventListener('DOMContentLoaded', function () {
+                var ctx = document.getElementById('myChart').getContext('2d');
 
-    // Function to calculate y values based on the selected radius
-    function computeYValues(radius, xValues) {
-        var yValues = [];
-        for (var x of xValues) {
-            yValues.push(Math.sqrt(Math.pow(radius, 2) - Math.pow(x, 2)));
-        }
-        return yValues;
-    }
+                var xMin = 0.3;
+                var xMax = 2.2;  // Note: Adjust this if you expect larger radii
+                var step = 0.01;
+                var yMin = 0.3;
+                var yMax = 2.2;
 
-    // Initial values
-    var xValues = [];
-    for (var x = xMin; x <= xMax; x += step) {
-        xValues.push(x);
-    }
-    var initialRadius = parseFloat(document.getElementById('radiusSelector').value);
-    var yValues = computeYValues(initialRadius, xValues);
-
-    var chart = new Chart(ctx, {
-        type: 'line',
-        
-        data: {
-            labels: xValues,
-            datasets: [{
-                pointRadius: 0,
-                label: 'y = sqrt(' + initialRadius + '^2 - x^2)',
-                data: yValues,
-                fill: false,
-                borderColor: 'rgb(106, 143, 241)',
-                tension: 0.1
-            }]
-        },
-        options: {
-            scales: {
-                x: {
-                    type: 'linear',
-                    position: 'bottom',
-                    min: xMin,
-                    max: xMax
-                },
-                y:  {
-                    min: yMin,
-                    max: yMax,  // Adjust this if you expect larger radii
+                // Function to calculate y values based on the selected radius
+                function computeYValues(radius, xValues) {
+                    var yValues = [];
+                    for (var x of xValues) {
+                        yValues.push(Math.sqrt(Math.pow(radius, 2) - Math.pow(x, 2)));
+                    }
+                    return yValues;
                 }
-            },
 
-            animation: {
-                duration: 300  // duration in milliseconds
-            },
-        }
-    });
+                // Initial values
+                var xValues = [];
+                for (var x = xMin; x <= xMax; x += step) {
+                    xValues.push(x);
+                }
+                var initialRadius = parseFloat(document.getElementById('radiusSelector').value);
+                var yValues = computeYValues(initialRadius, xValues);
 
-    // Dropdown change event
-    document.getElementById('radiusSelector').addEventListener('change', function(e) {
-        var selectedRadius = parseFloat(e.target.value);
-        yValues = computeYValues(selectedRadius, xValues);
-        
-        chart.data.datasets[0].data = yValues;
-        
-        // Update the label to reflect the radius change
-        chart.data.datasets[0].label = 'y = sqrt(' + selectedRadius + '^2 - x^2)';
-        
-        chart.update();
-    });
-});
+                var chart = new Chart(ctx, {
+                    type: 'line',
 
-    </script>
+                    data: {
+                        labels: xValues,
+                        datasets: [
+                            {
+                                pointRadius: 0,
+                                label: 'ppc',
+                                data: yValues,
+                                fill: false,
+                                borderColor: 'rgb(106, 143, 241)',
+                                tension: 0.1
+                            },
+                            {
+                                pointRadius: 5,
+                                label: 'A (efficient)',
+                                data: [[1.24, 0.85]],
+                                backgroundColor: '#000000'
+                            },
+                            {
+                                pointRadius: 5,
+                                label: 'B (inefficient)',
+                                data: [[0.6, 0.8]],
+                                backgroundColor: '#000000'
+                            },
+                            {
+                                pointRadius: 5,
+                                label: 'C (impossible)',
+                                data: [[1.35, 1.47]],
+                                backgroundColor: '#000000'
+                            },
 
-</div>
 
-{% endblock %}
+                        ]
+                    },
+                    options: {
+
+                        plugins: {
+
+                            legend: {
+                                display: false
+                            },
+
+                            // add points here! (efficient, inefficient, impossible)
+                            datalabels: {
+                                formatter: function (value, context) {
+                                    // Display the label only for the first data point
+                                    if (context.dataIndex === 50 || (context.dataIndex === 0 && context.dataset.label != 'ppc')) {
+                                        return context.dataset.label || '';
+                                    }
+                                    else {
+                                        return ''
+                                    }
+                                },
+                                anchor: 'start',
+                                align: 'left',
+                                offset: 8,
+                                font: {
+                                    weight: 'bold'
+                                }
+                            }
+                        },
+
+                        scales: {
+                            x: {
+                                type: 'linear',
+                                position: 'bottom',
+                                min: xMin,
+                                max: xMax
+                            },
+                            y: {
+                                min: yMin,
+                                max: yMax,  // Adjust this if you expect larger radii
+                            }
+                        },
+
+                        animation: {
+                            duration: 300  // duration in milliseconds
+                        },
+                    },
+
+                    plugins: [ChartDataLabels]
+                });
+
+                // Dropdown change event
+                document.getElementById('radiusSelector').addEventListener('change', function (e) {
+                    var selectedRadius = parseFloat(e.target.value);
+                    yValues = computeYValues(selectedRadius, xValues);
+
+                    chart.data.datasets[0].data = yValues;
+
+                    // Update the dots' labels 
+                    if (selectedRadius === 1.5) {
+                        chart.data.datasets[1].label = 'A (efficient)';
+                        chart.data.datasets[2].label = 'B (inefficient)';
+                        chart.data.datasets[3].label = 'C (impossible)';
+                    }
+
+                    if (selectedRadius === 2) {
+                        chart.data.datasets[1].label = 'A (inefficient)';
+                        chart.data.datasets[2].label = 'B (inefficient)';
+                        chart.data.datasets[3].label = 'C (efficient)';
+                    }
+                    if (selectedRadius === 1){
+                        chart.data.datasets[1].label = 'A (impossible)';
+                        chart.data.datasets[2].label = 'B (efficient)';
+                        chart.data.datasets[3].label = 'C (impossible)';
+                    }
+
+                    chart.update();
+                });
+            });
+
+        </script>
+
+    </div>
+
+    {% endblock %}

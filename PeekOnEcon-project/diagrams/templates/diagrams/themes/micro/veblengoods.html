@@ -1,82 +1,133 @@
-{% extends 'diagrams/base.html'  %}
+{% extends 'diagrams/base.html' %}
 {% block content %}
 
 
-<div align = "center">
-        <h1>Demand for Veblen goods</h1>
+<div align="center">
+    <h1>Demand for Veblen goods</h1>
 </div>
 
 
-<div align = "center">
-<div style="height: 800px; width: 600px;">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <canvas id="myChart" width="400" height="400"></canvas>
-    <script>
-        // Wait for the document to be fully loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            var ctx = document.getElementById('myChart').getContext('2d');
-    
-            // Define the domain
-            var xMin = 0;
-            var xMax = 12;
-            var step = 0.1;
-    
-            // Generate x and y values
-            var xValues = [];
-            var yPositive = [];
-            var yNegative = [];
-    
-            for (var x = xMin; x <= xMax; x += step) {
-                xValues.push(x);
-                yPositive.push(Math.sqrt(4*x));
-                yNegative.push(-Math.sqrt(4*x));
-            }
-            
-            //for dropdown list
-        
-        
-            var chart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                
-                labels: xValues,
-                datasets: [
-                    {
-                    pointRadius: 0,
-                    label: "The law of demand holds",
-                    data: yNegative,
-                    fill: false,
-                    borderColor: 'rgb(27, 85, 240)',
-                    },
-                    {
-                    pointRadius: 0,
-                    label: "Snob effect comes into play",
-                    data: yPositive,
-                    fill: false,
-                    borderColor: 'rgb(106, 143, 241)',
-                    }
-                ]
-                
-                },
-                options: {
-                    scales: {
-                        x: {
-                            type: 'linear',
-                            position: 'bottom',
-                            min: -1,   // This restricts the domain
-                            max: xMax    // This restricts the domain
-                        },
-                        y:  {
-                                min:-10,
-                                max:10,
-                        }
-                    }
+<div align="center">
+    <div style="height: 800px; width: 600px;">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"
+            integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <canvas id="myChart" width="400" height="400"></canvas>
+        <script>
+            // Wait for the document to be fully loaded
+            document.addEventListener('DOMContentLoaded', function () {
+                var ctx = document.getElementById('myChart').getContext('2d');
+
+                // Define the domain
+                var xMin = 0;
+                var xMax = 12;
+                var step = 0.1;
+
+                // Generate x and y values
+                var xValues = [];
+                var yPositive = [];
+                var yNegative = [];
+
+                for (var x = xMin; x <= xMax; x += step) {
+                    xValues.push(x);
+                    yPositive.push(Math.sqrt(4 * x));
+                    yNegative.push(-Math.sqrt(4 * x));
                 }
+
+                //for dropdown list
+
+
+                var chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+
+                        labels: xValues,
+                        datasets: [
+                            {
+                                pointRadius: 0,
+                                label: "Demand - lower part",
+                                data: yNegative,
+                                fill: false,
+                                borderColor: 'rgb(27, 85, 240)',
+                            },
+                            {
+                                pointRadius: 0,
+                                label: "Demand - upper part",
+                                data: yPositive,
+                                fill: false,
+                                borderColor: 'rgb(106, 143, 241)',
+                            },
+                            {
+                                type: 'line',
+                                data: [[-1, 0], [12, 0]],
+                                borderColor: 'black',
+                                fill: '+1',
+                                borderDash: [10, 10]
+
+                            },
+                            {
+                                pointRadius: 0,
+                                data: [[8, 3.5]],
+                                label: 'snob value'
+                            },
+                            {
+                                pointRadius: 0,
+                                data: [[8, -2.5]],
+                                label: 'behaves like normal good'
+                            }
+                            
+                        ]
+
+                    },
+                    options: {
+                        plugins: {
+                            datalabels: {
+                                formatter: function (value, context) {
+                                    // Display the label only for the first data point
+                                    if (context.dataset.label === 'snob value') {
+                                        return context.dataset.label || '';
+                                    } 
+                                    else if (context.dataset.label === 'behaves like normal good') {
+                                        return context.dataset.label || '';
+                                    }
+                                    else if (context.dataIndex == 100 && context.dataset.label === 'Demand - lower part') {
+                                        return 'D' || '';
+                                    }
+                                    else {
+                                        return ''
+                                    }
+                                },
+                                anchor: 'end',
+                                align: 'bottom',
+                                offset: 8,
+                                font: {
+                                    size: '16px',
+                                    weight: 'bold '
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                type: 'linear',
+                                position: 'bottom',
+                                min: -1,   // This restricts the domain
+                                max: xMax    // This restricts the domain
+                            },
+                            y: {
+                                min: -10,
+                                max: 10,
+                            }
+                        }
+                    },
+
+                    plugins: [ChartDataLabels]
+                });
             });
-        });
-    </script>
- 
+        </script>
+
+    </div>
 </div>
-</div>
- 
+
 {% endblock %}

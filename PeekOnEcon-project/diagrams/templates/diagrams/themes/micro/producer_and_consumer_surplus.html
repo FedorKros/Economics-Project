@@ -19,6 +19,10 @@
 
 <div style="height: 800px; width: 600px;">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"
+            integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="path/to/chartjs-plugin-fill-between.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
 
@@ -87,7 +91,7 @@
             },
             {
                 pointRadius: 0,
-                label: 'Line 2',
+                label: 'Line invisible',
                 data: y5,
                 borderColor: 'rgba(232, 12, 23, 0)',
                 fill: false,
@@ -103,7 +107,7 @@
             },
             {
                 pointRadius: 0,
-                label: 'Line 3',
+                label: 'Supply',
                 data: y2,
                 xMin: xCross,
                 borderColor: 'blue',
@@ -112,7 +116,7 @@
             },
             {
                 pointRadius: 0,
-                label: 'Line 4',
+                label: 'Demand',
                 data: y4,
                 xMin: xCross,
                 borderColor: 'red',
@@ -124,6 +128,26 @@
     },
     options: {
         plugins: {
+            datalabels: {
+                formatter: function (value, context) {
+                    // Display the label only for the first data point
+            
+                    if ((context.dataset.label === 'Demand' || context.dataset.label === 'Supply') && context.dataIndex == 9) {
+                        return context.dataset.label || '';
+                    }
+                    else {
+                        return ''
+                    }
+                },
+                anchor: 'end',
+                align: 'right',
+                offset: 8,
+                font: {
+                    size: '16px',
+                    weight: 'bold'
+                }
+            },
+                        
             annotation: {
                 annotations: {
                     // Vertical projection to x-axis
@@ -167,8 +191,8 @@
                 }]
             }
         }
-    }
-    
+    },
+    plugins: [ChartDataLabels]
 });
 
 
