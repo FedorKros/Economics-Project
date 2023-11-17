@@ -56,7 +56,7 @@
             datasets: [
             {
                 pointRadius: 0,
-                label: 'demand',
+                label: 'Demand',
                 data: generateDataDemand(parseFloat(bSlider.value)),
                 fill: false,
                 borderColor: 'red',
@@ -65,14 +65,14 @@
 
             {
                 pointRadius: 0,
-                label: 'supply',
+                label: 'Supply',
                 data: generateDataSupply(),
                 fill: false,
                 borderColor: 'blue',
             },
             {
                 pointRadius: 0,
-                label: 'supply + tax',
+                label: 'Supply + tax',
                 data: generateDataSupply(b = 1, k = 5),
                 fill: false,
                 borderColor: 'darkblue',
@@ -149,11 +149,55 @@
             borderColor: 'black',
             borderDash: [10, 10]
         },
+
+        {
+            pointRadius: 0,
+            data: [[-4.5, 4.5]],
+            label: 'cb'
+        },
+        
+        {
+            pointRadius: 0,
+            data: [[-4.5, 0.5]],
+            label: 'pb'
+        },
          
     
         ]},
         options: {
             plugins: {
+                datalabels: {
+                                formatter: function (value, context) {
+                                    // Display the label only for the first data point
+                                    
+                                   
+                                    if (context.dataIndex === 17 && context.dataset.label == 'Supply') {
+                                        return context.dataset.label || '';
+                                    }
+                                    if (context.dataIndex === 13 && context.dataset.label == 'Supply + tax') {
+                                        return context.dataset.label || '';
+                                    }
+                                    if (context.dataIndex === 17 && context.dataset.label == 'Demand') {
+                                        return context.dataset.label || '';
+                                    }
+                                    if (context.dataset.label == "cb") {
+                                        return 'Consumer benefit'
+                                    }
+                                    if (context.dataset.label == "pb") {
+                                        return 'Producer benefit'
+                                    }
+                                    else {
+                                        return ''
+                                    }
+                                },
+                                anchor: 'end',
+                                align: 'left',
+                                offset: 8,
+                                font: {
+                                    size: '16px',
+                                    weight: 'bold',
+                                }
+                            },
                 legend: {
                     display: false
                 },
@@ -169,15 +213,36 @@
                         position: 'bottom',
                         min: -10,
                         max: 10,
+                        ticks: {
+                                display: false
+                            },
+                        title: {
+                            display: true,
+                            text: 'Quantity',
+                            font: {
+                                    size: 16
+                                },
+                        }
                    },
                 y: {
                         type: 'linear',
                         position: 'bottom',
                         min: -10,
                         max: 10,
+                        ticks: {
+                                display: false
+                            },
+                        title: {
+                            display: true,
+                            text: 'Quantity',
+                            font: {
+                                    size: 16
+                                },
+                        }   
                    }
             }      
-        }
+        },
+        plugins: [ChartDataLabels]
     });
 
 

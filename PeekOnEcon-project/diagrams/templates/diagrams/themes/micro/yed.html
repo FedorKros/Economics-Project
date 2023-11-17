@@ -62,7 +62,13 @@
                             fill: false,
                             borderColor: 'red',
                             tension: 0.1
-                        }]
+                        },
+                        {
+                            pointRadius: 0,
+                            data: [[-2,-3]],
+                            label: 'YED < 1'
+                        }
+                    ]
                     },
                     options: {
                         plugins: {
@@ -70,7 +76,9 @@
                             datalabels: {
                                 formatter: function (value, context) {
                                     // Display the label only for the first data point
-
+                                    if (context.dataIndex === 0 && context.dataset.label != 'Demand') {
+                                        return context.dataset.label || '';
+                                    }
                                     if (context.dataIndex == 5) {
                                         return context.dataset.label || '';
                                     }
@@ -102,7 +110,7 @@
                                 },
                                 title: {
                                     display: true,
-                                    text: 'Quantity demanded',
+                                    text: 'Quantity',
                                     font: {
                                         size: 16
                                     },
@@ -139,6 +147,12 @@
                     yValues = computeYValues(selectedRadius, xValues);
 
                     chart.data.datasets[0].data = yValues;
+                    
+                    
+                    k_values = [3, 0.3, 1, -1]; 
+                    pes_array = ['YED < 1', 'YED > 1', 'YED = 1', 'YED < 0'];
+                    chart.data.datasets[1].label = pes_array[k_values.indexOf(selectedRadius)];
+                    
                     chart.update();
                 });
             });
