@@ -184,11 +184,31 @@
                                 type: 'linear',
                                 position: 'bottom',
                                 min: xMin,
-                                max: xMax
+                                max: xMax,
+                                ticks: {
+                                    display: false
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Quantity of Product X',
+                                    font: {
+                                        size: 16
+                                    },
+                                }
                             },
                             y: {
                                 min: yMin,
                                 max: yMax,  // Adjust this if you expect larger radii
+                                ticks: {
+                                    display: false
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Quantity of Product Y',
+                                    font: {
+                                        size: 16
+                                    },
+                                }
                             }
                         },
 
@@ -219,7 +239,7 @@
                         chart.data.datasets[2].label = 'B (inefficient)';
                         chart.data.datasets[3].label = 'C (efficient)';
                     }
-                    if (selectedRadius === 1){
+                    if (selectedRadius === 1) {
                         chart.data.datasets[1].label = 'A (impossible)';
                         chart.data.datasets[2].label = 'B (efficient)';
                         chart.data.datasets[3].label = 'C (impossible)';

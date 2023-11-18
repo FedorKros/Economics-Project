@@ -66,9 +66,6 @@
                     type: 'line',
 
                     data: {
-
-
-
                         labels: xValues,
                         datasets: [{
                             pointRadius: 0,
@@ -81,10 +78,36 @@
                         },
 
                         {
-                            label: 'Long term trend',
-                            data: [[0.2, 0.8], [26, 3.2]],
+                            label: 'Long term trend line',
+                            data: [[-1, 0.5], [27, 3.2]],
                             borderColor: 'red',
                         },
+                        {
+                            pointRadius: 0,
+                            data: [[8, 2.4]],
+                            label: 'Peak'
+                        },
+                        {
+                            pointRadius: 0,
+                            data: [[6, 0.7]],
+                            label: 'Growth'
+                        },
+                        {
+                            pointRadius: 0,
+                            data: [[9.5, 0.9]],
+                            label: 'Recession'
+                        },
+                        {
+                            pointRadius: 0,
+                            data: [[11, 0.2]],
+                            label: 'Trough'
+                        },
+                        {
+                            pointRadius: 0,
+                            data: [[21, 2.8]],
+                            label: 'Long term trend (red)'
+                        },
+                        
 
                         ]
                     },
@@ -92,12 +115,25 @@
 
                         plugins: {
                             datalabels: {
+                                
                                 formatter: function (value, context) {
                                     // Display the label only for the first data point
-                                    if (context.dataIndex === 50) {
-                                        return context.dataset.label || '';
-                                    } else if (context.dataIndex === 70) {
-                                        return 'Peak';
+                                    // if (context.dataIndex === 60) {
+                                    //     return 'Growth' || '';
+                                    // } else if (context.dataIndex === 80) {
+                                    //     return 'Peak';
+                                    // }
+                                    // else if (context.dataIndex === 100) {
+                                    //     return 'Recession';
+                                    // }
+
+                                    // else if (context.dataIndex === 110) {
+                                    //     return 'Trough';
+                                    // }
+                                    var lab = context.dataset.label;
+                                    var ind = context.dataIndex;
+                                    if (lab != 'Business cycle' && lab != 'Long term trend line') {
+                                        return context.dataset.label || ''; 
                                     }
                                     else {
                                         return ''
@@ -105,10 +141,15 @@
                                 },
                                 anchor: 'end',
                                 align: 'top',
-                                offset: 8,
+                                color: "#202020",
+                                offset: 2,
                                 font: {
+                                    size: '16px',
                                     weight: 'bold'
                                 }
+                            },
+                            legend: {
+                                display: false 
                             }
                         },
 
@@ -133,7 +174,6 @@
                             duration: 300,  // duration in milliseconds
                         },
                     },
-
                     plugins: [ChartDataLabels]
                     // plugins: {
                     //     datalabels: {

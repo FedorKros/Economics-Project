@@ -1,4 +1,4 @@
-{% extends 'diagrams/base.html'  %}
+{% extends 'diagrams/base.html' %}
 {% block content %}
 
 
@@ -7,146 +7,231 @@
 
 <div align="center">
 
-        <h1> Inflation (two types) </h1>
+    <h1> Inflation (two types) </h1>
 
-        <select id="inflation-type">
-            <option value="1">Cost-push inflation</option>
-            <option value="2">Demand-pull inflation</option>
-            <option value="3">Price stability (very rare)</option>
-        </select>
+    <select id="inflation-type">
+        <option value="1">Cost-push inflation</option>
+        <option value="2">Demand-pull inflation</option>
+        <option value="3">Price stability (very rare)</option>
+    </select>
 
 
 
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"
-            integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"
+        integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-        
 
-        
-
-        
-
-        <div style="height: 800px; width: 600px;">
+    <div style="height: 600px; width: 600px;">
         <canvas id="myChart" width="400" height="400"></canvas>
 
         <script>
-    var typeSelector = document.getElementById('inflation-type'); // 1 = demand-pull    2 = cost-push
-    
-   
-    var ctx = document.getElementById('myChart').getContext('2d');
+            var typeSelector = document.getElementById('inflation-type'); // 1 = demand-pull    2 = cost-push
 
-    // Create a function to generate y-values based on current k and b
-    function generateDataSupply(k) {
-        var data = [];
-        for(var x = -9; x <= 9; x+=1) {
-            data.push({x: x, y: x-k});
-        }
-        return data;
-    }
-    function generateDataDemand(b) {
-        var data = [];
-        for(var x = -9; x <= 9; x+=1) {
-            data.push({x: x, y: -x-b});
-        }
-        return data;
-    }
 
-    var initialType = parseFloat(document.getElementById('inflation-type').value);
+            var ctx = document.getElementById('myChart').getContext('2d');
 
-    var chart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            datasets: [{
-                pointRadius: 0,
-                label: 'Aggregate supply 2',
-                data: generateDataSupply(-6),
-                fill: false,
-                borderColor: 'red',
-            },
-            
-            {
-                pointRadius: 0,
-                label: 'Aggregate demand 2',
-                data: generateDataDemand(0),
-                fill: false,
-                borderColor: 'blue',
-            },
-            {
-                pointRadius: 0,
-                label: 'LRAS',
-                data: [[0, -10], [0, 10]],
-                fill: false,
-                borderColor: 'orange',
-            },
-            {
-                pointRadius: 0,
-                label: 'Aggregate supply 1',
-                data: generateDataSupply(0),
-                fill: false,
-                borderColor: 'darkred',
-            },
-            {
-                pointRadius: 0,
-                label: 'Aggregate demand 1',
-                data: generateDataDemand(0),
-                fill: false,
-                borderColor: 'darkblue',
-            },
-        ]
-        },
-        options: {
+            // Create a function to generate y-values based on current k and b
+            function generateDataSupply(k) {
+                var data = [];
+                for (var x = -9; x <= 9; x += 1) {
+                    data.push({ x: x, y: x - k });
+                }
+                return data;
+            }
+            function generateDataDemand(b) {
+                var data = [];
+                for (var x = -9; x <= 9; x += 1) {
+                    data.push({ x: x, y: -x - b });
+                }
+                return data;
+            }
 
-            scales: {
-                x: {
-                        type: 'linear',
-                        position: 'bottom',
-                        min: -10,
-                        max: 10,
-                   },
-                y: {
-                        type: 'linear',
-                        position: 'bottom',
-                        min: -10,
-                        max: 10,
-                   }
+            var initialType = parseFloat(document.getElementById('inflation-type').value);
+
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        pointRadius: 0,
+                        label: 'AS2',
+                        data: generateDataSupply(-6),
+                        fill: false,
+                        borderColor: 'red',
+                    },
+
+                    {
+                        pointRadius: 0,
+                        label: '',
+                        data: generateDataDemand(0),
+                        fill: false,
+                        borderColor: 'blue',
+                    },
+                    {
+                        pointRadius: 0,
+                        label: 'LRAS',
+                        data: [[0, -10], [0,9], [0, 10]],
+                        fill: false,
+                        borderColor: 'darkorange',
+                    },
+                    {
+                        pointRadius: 0,
+                        label: 'AS1',
+                        data: generateDataSupply(0),
+                        fill: false,
+                        borderColor: 'darkred',
+                    },
+                    {
+                        pointRadius: 0,
+                        label: 'AD1',
+                        data: generateDataDemand(0),
+                        fill: false,
+                        borderColor: 'darkblue',
+                    },
+                    ]
+                },
+                options: {
+                    plugins: {
+                        datalabels: {
+
+                            formatter: function (value, context) {
+                                // Display the label only for the first data point
+                                var lab = context.dataset.label;
+                                var ind = context.dataIndex;
+
+                                if (ind === 18 && lab === 'AS1') {
+                                    return context.dataset.label || '';
+                                }
+                                if (ind === 18 && lab === 'AD1') {
+                                    return context.dataset.label || '';
+                                }
+                                if (ind === 12 && lab === 'AS2') {
+                                    return context.dataset.label || '';
+                                }
+                                if (ind === 17 && lab === 'AD2') {
+                                    return context.dataset.label || '';
+                                }
+                                if (ind === 1 && lab === 'LRAS') {
+                                    return context.dataset.label || '';
+                                }
+
+                                else {
+                                    return ''
+                                }
+                            },
+                            anchor: 'end',
+                            align: 'left',
+                            color: "#202020",
+                            offset: 5,
+                            font: {
+                                weight: 'bold',
+                                size: '16px'
+                            }
+                        },
+                        legend: {
+                            display: false
+                        }
+                    },
+
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            min: -10,
+                            max: 10,
+                            ticks: {
+                                display: false
+                            },
+                            title: {
+                                display: true,
+                                align: 'right',
+                                text: 'Real GDP',
+                                font: {
+                                    size: 16
+                                },
+                            }
+                        },
+                        y: {
+                            type: 'linear',
+                            position: 'bottom',
+                            min: -10,
+                            max: 10,
+                            ticks: {
+                                display: false
+                            },
+                            title: {
+                                display: true,
+                                text: 'Price level',
+                                font: {
+                                    size: 16
+                                },
+                            }
+                        }
+
+                    }
+
+                },
+                plugins: [ChartDataLabels]
+
+            });
+
+            // Update chart when sliders change
+            function updateChart() {
+                // Update dynamic writing
+                var contentDiv = document.getElementById("content");
+
+                // Demand-pull
+                if (typeSelector.value == 2) {
+                    chart.data.datasets[1].data = generateDataDemand(-6);
+                    chart.data.datasets[0].data = generateDataSupply(0);
+                    contentDiv.innerHTML = "1) Unemployment ⬇️  <br /> 2) Price level ⬆️ <br /> 3) Short run economic growth ⬆️";
+                    // Remove AS2 add AD2
+                    chart.data.datasets[0].label = "";
+                    chart.data.datasets[1].label = "AD2";
+                }
+                // Cost-push
+                else if (typeSelector.value == 1) {
+                    chart.data.datasets[1].data = generateDataDemand(0);
+                    chart.data.datasets[0].data = generateDataSupply(-6);
+
+                    contentDiv.innerHTML = "1) Unemployment ⬆️  <br /> 2) Price level ⬆️ <br /> 3) Short run economic growth ⬇️";
+
+                    // Add AS2 remove AD2
+                    chart.data.datasets[0].label = "AS2";
+                    chart.data.datasets[1].label = "";
+
+                }
+                else {
+                    chart.data.datasets[1].data = generateDataDemand(0);
+                    chart.data.datasets[0].data = generateDataSupply(0);
+                    contentDiv.innerHTML = "";
+                    // Remove both AD2 AS2
+                    chart.data.datasets[1].label = "";
+                    chart.data.datasets[0].label = "";
+                }
+
+
+                chart.update();
 
             }
 
-        }
-    });
 
-    // Update chart when sliders change
-    function updateChart() {
-        
-        if (typeSelector.value == 2) {
-            chart.data.datasets[1].data = generateDataDemand(-6);
-            chart.data.datasets[0].data = generateDataSupply(0);
-        } 
-        else if (typeSelector.value == 1) {
-            chart.data.datasets[1].data = generateDataDemand(0);
-            chart.data.datasets[0].data = generateDataSupply(-6);
-        }
-        else {
-            chart.data.datasets[1].data = generateDataDemand(0);
-            chart.data.datasets[0].data = generateDataSupply(0);
-        }
-
-        chart.update();
-
-    }
-
-    
-    typeSelector.addEventListener('change', updateChart); 
+            typeSelector.addEventListener('change', updateChart);
 
 
 
-</script>
+        </script>
 
-        </div>
+    </div>
+    <!-- Dynamic text (inflation results) -->
+    <div id="content" style="font-size: 24px; text-align: left; margin: 5px;">
+        1) Unemployment ⬆️ <br /> 2) Price level ⬆️ <br /> 3) Short run economic growth ⬇️
+    </div>
+
 </div>
+
 
 
 {% endblock %}

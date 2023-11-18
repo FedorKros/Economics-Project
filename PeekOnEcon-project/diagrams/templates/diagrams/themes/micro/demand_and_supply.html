@@ -15,11 +15,43 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
-    <input type="range" id="k-slider" min="-10" max="10" step="0.1" value="0">
-    <label for="k-slider">Shift in supply <span id="k-value">0</span></label>
 
-    <input type="range" id="b-slider" min="-10" max="10" step="0.1" value="0">
-    <label for="b-slider">Shift in demand<span id="b-value">0</span></label>
+
+    <select id="demandSelector">
+        <option value="0">Select Demand Shifter</option>
+        <option value="5">Tastes/Preferences +</option>
+        <option value="-5">Tastes/Preferences -</option>
+        <option value="5">Number of Consumers +</option>
+        <option value="-5">Number of Consumers -</option>
+        <option value="-5">Price of Compliments +</option>
+        <option value="5">Price of Compliments -</option>
+        <option value="5">Price of Substitutes +</option>
+        <option value="-5">Price of Substitutes -</option>
+        <option value="5">Income +</option>
+        <option value="-5">Income -</option>
+        <option value="5">Expectations +</option>
+        <option value="-5">Expectations -</option>
+
+    </select>
+
+
+    <select id="supplySelector">
+        <option value="0">Select Supply Shifter</option>
+        <option value="-5">Price of Resources +</option>
+        <option value="5">Price of Resources -</option>
+        <option value="5">Number of Producers +</option>
+        <option value="-5">Number of Producers -</option>
+        <option value="5">Technology +</option>
+        <option value="-5">Technology -</option>
+        <option value="-5">Taxes +</option>
+        <option value="5">Taxes -</option>
+        <option value="5">Subsidies +</option>
+        <option value="-5">Subsidies -</option>
+        <option value="5">Expectations +</option>
+        <option value="-5">Expectations -</option>
+
+    </select>
+
 
     <br>
     <button id="resetButton">Reset values</button>
@@ -28,10 +60,8 @@
         <canvas id="myChart" width="400" height="400"></canvas>
 
         <script>
-            var kSlider = document.getElementById('k-slider');
-            var bSlider = document.getElementById('b-slider');
-            var kValueLabel = document.getElementById('k-value');
-            var bValueLabel = document.getElementById('b-value');
+            var initialSupply = parseFloat(document.getElementById('supplySelector').value);
+            var initialDemand = parseFloat(document.getElementById('demandSelector').value);
             var ctx = document.getElementById('myChart').getContext('2d');
 
             // Create a function to generate y-values based on current k and b
@@ -45,7 +75,7 @@
             function generateDataDemand(b) {
                 var data = [];
                 for (var x = -10; x <= 10; x += 1) {
-                    data.push({ x: x, y: -x - b });
+                    data.push({ x: x, y: -x + b });
                 }
                 return data;
             }
@@ -53,20 +83,51 @@
             var chart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    datasets: [{
+                    datasets: [
+                    // Dynamic supply
+                    {
                         pointRadius: 0,
-                        label: 'supply',
-                        data: generateDataSupply(parseFloat(kSlider.value)),
+                        label: '',
+                        data: generateDataSupply(initialSupply),
                         fill: false,
                         borderColor: 'blue',
                     },
+                    // Dynamic demand
                     {
                         pointRadius: 0,
-                        label: 'demand',
-                        data: generateDataDemand(parseFloat(bSlider.value)),
+                        label: '',
+                        data: generateDataDemand(initialDemand),
                         fill: false,
                         borderColor: 'red',
-                    }
+                    },
+                    // Static supply
+                    {
+                        pointRadius: 0,
+                        label: 'S1',
+                        data: generateDataSupply(initialSupply),
+                        fill: false,
+                        borderColor: 'blue',
+                    },
+                    // static demand
+                    {
+                        pointRadius: 0,
+                        label: 'D1',
+                        data: generateDataDemand(initialDemand),
+                        fill: false,
+                        borderColor: 'red',
+                    },
+                    {
+                        type: 'line',
+                        data: [[0, 0], [0, -10]],
+                        borderColor: 'black',
+                        borderDash: [10, 10],
+                    },
+                    {
+                        type: 'line',
+                        data: [[0, 0], [-10, 0]],
+                        borderColor: 'black',
+                        borderDash: [10, 10],
+                    },
                     ]
                 },
                 options: {
@@ -75,9 +136,16 @@
 
                             formatter: function (value, context) {
                                 // Display the label only for the first data point
-                                if (context.dataIndex === 18 && context.dataset.label === 'demand') {
+                                if (context.dataIndex === 18 && context.dataset.label === 'D1') {
                                     return context.dataset.label || '';
-                                } else if (context.dataIndex == 18 && context.dataset.label === 'supply') {
+                                } 
+                                else if (context.dataIndex == 18 && context.dataset.label === 'S1') {
+                                    return context.dataset.label || '';
+                                }
+                                else if (context.dataIndex === 14 && context.dataset.label === 'D2') {
+                                    return context.dataset.label || '';
+                                }
+                                else if (context.dataIndex === 14 && context.dataset.label === 'S2') {
                                     return context.dataset.label || '';
                                 }
                                 else {
@@ -86,10 +154,15 @@
                             },
                             anchor: 'end',
                             align: 'left',
+                            color: "#202020",
                             offset: 5,
                             font: {
-                                weight: 'bold'
+                                weight: 'bold',
+                                size: '16px'
                             }
+                        },
+                        legend: {
+                            display: false
                         }
                     },
 
@@ -99,12 +172,32 @@
                             position: 'bottom',
                             min: -10,
                             max: 10,
+                            ticks: {
+                                display: false
+                            },
+                        title: {
+                            display: true,
+                            text: 'Quantity',
+                            font: {
+                                    size: 16
+                                },
+                        }
                         },
                         y: {
                             type: 'linear',
                             position: 'bottom',
                             min: -10,
                             max: 10,
+                            ticks: {
+                                display: false
+                            },
+                        title: {
+                            display: true,
+                            text: 'Price',
+                            font: {
+                                    size: 16
+                                },
+                        }
                         }
 
                     }
@@ -113,24 +206,32 @@
                 plugins: [ChartDataLabels]
             });
 
-            // Update chart when sliders change
-            function updateChart() {
-                kValueLabel.textContent = kSlider.value;
-                bValueLabel.textContent = bSlider.value;
-
-                chart.data.datasets[0].data = generateDataSupply(parseFloat(kSlider.value));
-                chart.data.datasets[1].data = generateDataDemand(parseFloat(bSlider.value));
+            document.getElementById('demandSelector').addEventListener('change', function (e) {
+                var selectedDemand = parseFloat(e.target.value);
+                chart.data.datasets[1].data = generateDataDemand(selectedDemand);   
+                chart.data.datasets[1].label = 'D2';  
+                if (selectedDemand === 0) {
+                    chart.data.datasets[1].label = '';
+                }
                 chart.update();
+            });
+           
+            
+            document.getElementById('supplySelector').addEventListener('change', function (s) {
+                var selectedSupply = parseFloat(s.target.value);
+                chart.data.datasets[0].data = generateDataSupply(selectedSupply);
+                chart.data.datasets[0].label = 'S2';
+                if (selectedSupply === 0) {
+                    chart.data.datasets[0].label = '';
+                }
+                chart.update();
+            });
 
-            }
-
-            kSlider.addEventListener('input', updateChart);
-            bSlider.addEventListener('input', updateChart);
             document.getElementById('resetButton').addEventListener('click', function () {
-                document.getElementById('k-slider').value = 0;
-                document.getElementById('b-slider').value = 0;
-                chart.data.datasets[0].data = generateDataSupply(parseFloat(kSlider.value));
-                chart.data.datasets[1].data = generateDataDemand(parseFloat(bSlider.value));
+                chart.data.datasets[0].label = '';
+                chart.data.datasets[1].label = '';
+                chart.data.datasets[0].data = generateDataSupply(initialSupply);
+                chart.data.datasets[1].data = generateDataDemand(initialDemand);
                 chart.update();
             });
         </script>
