@@ -1,323 +1,364 @@
-{% extends 'diagrams/base.html'  %}
+{% extends 'diagrams/base.html' %}
 {% block content %}
 
 
 
 
-<div align = "center">
-        <h1> Indirect taxation </h1>
+<div align="center">
+    <h1> Indirect taxation </h1>
 
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"
-            integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-            <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"
-            integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"
+        integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"
+        integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="path/to/chartjs-plugin-fill-between.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
     <!-- <script src="path/to/chartjs/dist/chart.min.js"></script> -->
     <!-- <script src="path/to/chartjs-plugin-annotation/dist/chartjs-plugin-annotation.min.js"></script> -->
-    
 
 
-        <input type="range" id="b-slider" min="0.25" max="6" step="0.25" value="1">
-        <label for="b-slider">Set demand elasticity<span id="b-value" hidden="hidden">1</span></label>
 
-        <br>
-        <button id="resetButton">Reset values</button>
+    <input type="range" id="b-slider" min="0.25" max="6" step="0.25" value="1">
+    <label for="b-slider">Set demand elasticity<span id="b-value" hidden="hidden">1</span></label>
 
-        <div style="height: 800px; width: 600px;">
+    <br>
+    <button id="resetButton">Reset values</button>
+
+    <div style="height: 800px; width: 600px;">
         <canvas id="myChart" width="400" height="400"></canvas>
 
         <script>
-    var bSlider = document.getElementById('b-slider');
-    var bValueLabel = document.getElementById('b-value');
-    var ctx = document.getElementById('myChart').getContext('2d');
+            var bSlider = document.getElementById('b-slider');
+            var bValueLabel = document.getElementById('b-value');
+            var ctx = document.getElementById('myChart').getContext('2d');
 
-    // Create a function to generate y-values based on b
-  
-    function generateDataDemand(b) {
-        var data = [];
-        for(var x = -10; x <= 10; x+=1) {
-            data.push({x: x, y: -x*b});
-        }
-        return data;
-    }
-    function generateDataSupply(b=1, k=0) {
-        var data = [];
-        for(var x = -10; x <= 10; x+=1) {
-            data.push({x: x, y: x*b+k});
-        }
-        return data;
-    } 
+            // Create a function to generate y-values based on b
 
-    function generatePointCoord() {
-        // coordinate = -5/(2*parseFloat(bSlider.value));
-        coordinate = -5/(1+parseFloat(bSlider.value));
-        return coordinate;
-    }
+            function generateDataDemand(b) {
+                var data = [];
+                for (var x = -10; x <= 10; x += 1) {
+                    data.push({ x: x, y: -x * b });
+                }
+                return data;
+            }
+            function generateDataSupply(b = 1, k = 0) {
+                var data = [];
+                for (var x = -10; x <= 10; x += 1) {
+                    data.push({ x: x, y: x * b + k });
+                }
+                return data;
+            }
 
-    var chart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            datasets: [
-            {
-                pointRadius: 0,
-                label: 'Demand',
-                data: generateDataDemand(parseFloat(bSlider.value)),
-                fill: false,
-                borderColor: 'red',
-                
-            },
+            function generatePointCoord() {
+                // coordinate = -5/(2*parseFloat(bSlider.value));
+                coordinate = -5 / (1 + parseFloat(bSlider.value));
+                return coordinate;
+            }
 
-            {
-                pointRadius: 0,
-                label: 'Supply',
-                data: generateDataSupply(),
-                fill: false,
-                borderColor: 'blue',
-            },
-            {
-                pointRadius: 0,
-                label: 'Supply + tax',
-                data: generateDataSupply(b = 1, k = 5),
-                fill: false,
-                borderColor: 'darkblue',
-            },
-            {
-            type: 'scatter',
-            label: 'Demand meets Supply with tax',
-            data: [{
-                x: -2.5,
-                y: 2.5
-            }],
-            borderColor: 'black',
-            backgroundColor: 'black',
-            pointRadius: 5
-        },
-        {
-            type: 'scatter',
-            label: 'Projection',
-            data: [{
-                x: -2.5,
-                y: -2.5
-            }],
-            borderColor: 'black',
-            backgroundColor: 'black',
-            pointRadius: 5
-        },
-        {
-            type: 'scatter',
-            label: 'Demand meets Supply',
-            data: [{
-                x: 0,
-                y: 0
-            }],
-            borderColor: 'black',
-            backgroundColor: 'black',
-            pointRadius: 5
-        },
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [
+                        {
+                            pointRadius: 0,
+                            label: 'Demand',
+                            data: generateDataDemand(parseFloat(bSlider.value)),
+                            fill: false,
+                            borderColor: 'red',
 
-        // top projection 
-        {
-            type: 'line',
-            data: [[-10, 2.5], [-2.5, 2.5]],
-            borderColor: 'black',
-            fill: '+1',
-            backgroundColor: 'rgba(255,193,8,0.4)',
-            borderDash: [10, 10]
+                        },
 
-        },
+                        {
+                            pointRadius: 0,
+                            label: 'Supply',
+                            data: generateDataSupply(),
+                            fill: false,
+                            borderColor: 'blue',
+                        },
+                        {
+                            pointRadius: 0,
+                            label: 'Supply + tax',
+                            data: generateDataSupply(b = 1, k = 5),
+                            fill: false,
+                            borderColor: 'darkblue',
+                        },
+                        {
+                            type: 'scatter',
+                            label: 'Demand meets Supply with tax',
+                            data: [{
+                                x: -2.5,
+                                y: 2.5
+                            }],
+                            borderColor: 'black',
+                            backgroundColor: 'black',
+                            pointRadius: 5
+                        },
+                        {
+                            type: 'scatter',
+                            label: 'Projection',
+                            data: [{
+                                x: -2.5,
+                                y: -2.5
+                            }],
+                            borderColor: 'black',
+                            backgroundColor: 'black',
+                            pointRadius: 5
+                        },
+                        {
+                            type: 'scatter',
+                            label: 'Demand meets Supply',
+                            data: [{
+                                x: 0,
+                                y: 0
+                            }],
+                            borderColor: 'black',
+                            backgroundColor: 'black',
+                            pointRadius: 5
+                        },
 
-        // mid projection (static)
-        {
-            type: 'line',
-            data: [[-10, 0], [0, 0]],
-            borderColor: 'black',
-            borderDash: [10, 10]
-        },
-        // bottom projection 
-        {
-            type: 'line',
-            data: [[-10, -2.5], [-2.5, -2.5]],
-            borderColor: 'black',
-            fill: '-1',
-            backgroundColor: 'rgba(158, 241, 147,0.4)',
-            borderDash: [10, 10]
+                        // top projection 
+                        {
+                            type: 'line',
+                            data: [[-10, 2.5], [-2.5, 2.5]],
+                            borderColor: 'black',
+                            fill: '+1',
+                            label: 'Pc',
+                            backgroundColor: 'rgba(255,193,8,0.4)',
+                            borderDash: [10, 10]
 
-        },
-        
-        // vertical line
-        {
-            type: 'line',
-            data: [[-2.5, 2.5], [-2.5, -2.5]],
-            borderColor: 'black',
-            borderDash: [10, 10],
-            
-        },
-        
-        {
-            pointRadius: 0,
-            data: [[-4.5,0.5]],
-            label: 'cb'
-        },
-        
-        {
-            pointRadius: 0,
-            data: [[-4.5,-0.5]],
-            label: 'pb'
-        },
+                        },
 
-    
-        ]},
-        options: {
-            plugins: {
-                datalabels: {
-                                formatter: function (value, context) {
-                                    // Display the label only for the first data point
-                                    
-                                   
-                                    if (context.dataIndex === 17 && context.dataset.label == 'Supply') {
-                                        return context.dataset.label || '';
-                                    }
-                                    if (context.dataIndex === 13 && context.dataset.label == 'Supply + tax') {
-                                        return context.dataset.label || '';
-                                    }
-                                    if (context.dataIndex === 17 && context.dataset.label == 'Demand') {
-                                        return context.dataset.label || '';
-                                    }
-                                    if (context.dataset.label == "cb") {
-                                        return 'Consumer burden'
-                                    }
-                                    if (context.dataset.label == "pb") {
-                                        return 'Producer burden'
-                                    }
-                                    else {
-                                        return ''
-                                    }
-                                },
-                                anchor: 'end',
-                                align: 'left',
-                                offset: 8,
-                                font: {
-                                    size: '16px',
-                                    weight: 'bold',
+                        // mid projection (static)
+                        {
+                            type: 'line',
+                            data: [[-10, 0], [0, 0]],
+                            borderColor: 'black',
+                            label: 'Pe',
+                            borderDash: [10, 10]
+                        },
+                        // bottom projection 
+                        {
+                            type: 'line',
+                            data: [[-10, -2.5], [-2.5, -2.5]],
+                            borderColor: 'black',
+                            label: 'Pp',
+                            fill: '-1',
+                            backgroundColor: 'rgba(158, 241, 147,0.4)',
+                            borderDash: [10, 10]
+
+                        },
+
+                        // vertical line
+                        {
+                            type: 'line',
+                            data: [[-2.5, 2.5], [-2.5, -2.5]],
+                            borderColor: 'black',
+                            borderDash: [10, 10],
+
+                        },
+
+                        {
+                            pointRadius: 0,
+                            data: [[-4.5, 0.5]],
+                            label: 'cb'
+                        },
+
+                        {
+                            pointRadius: 0,
+                            data: [[-4.5, -0.5]],
+                            label: 'pb'
+                        },
+                        // equilibrium quantity
+                        {
+                            type: 'line',
+                            data: [[0, 0], [0, -10]],
+                            borderColor: 'black',
+                            label: 'Qe',
+                            borderDash: [10, 10],
+
+                        },
+                        // new quantity
+                        {
+                            type: 'line',
+                            data: [[-2.5, -2.5], [-2.5, -10]],
+                            borderColor: 'black',
+                            label: 'Qt',
+                            borderDash: [10, 10],
+
+                        },
+
+
+
+                    ]
+                },
+                options: {
+                    plugins: {
+                        datalabels: {
+                            formatter: function (value, context) {
+                                // Display the label only for the first data point
+
+                                var lab = context.dataset.label;
+                                var ind = context.dataIndex;
+
+                                if (context.dataIndex === 17 && context.dataset.label == 'Supply') {
+                                    return context.dataset.label || '';
+                                }
+                                if (context.dataIndex === 13 && context.dataset.label == 'Supply + tax') {
+                                    return context.dataset.label || '';
+                                }
+                                if (context.dataIndex === 17 && context.dataset.label == 'Demand') {
+                                    return context.dataset.label || '';
+                                }
+                                if (context.dataset.label == "cb") {
+                                    return 'Consumer burden';
+                                }
+                                if (context.dataset.label == "pb") {
+                                    return 'Producer burden';
+                                }
+                                if ((lab == "Pe" || lab == 'Pc' || lab == 'Pp') && ind == 0) {
+                                    return lab;
+                                }
+                               
+                                if ((lab == "Qe" || lab == 'Qt') && ind == 1) {
+                                    return lab;
+                                }
+
+                                else {
+                                    return ''
                                 }
                             },
-                legend: {
-                    display: false
+                            anchor: 'end',
+                            align: 'left',
+                            color: "#202020",
+                            offset: 8,
+                            font: {
+                                size: '16px',
+                                weight: 'bold',
+                            }
+                        },
+                        legend: {
+                            display: false
+                        },
+
+                    },
+                    animation: {
+                        duration: 300  // duration in milliseconds
+                    },
+
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            min: -10,
+                            max: 10,
+                            ticks: {
+                                display: false
+                            },
+                            title: {
+                                display: true,
+                                text: 'Quantity',
+                                font: {
+                                    size: 16
+                                },
+                            }
+                        },
+                        y: {
+                            type: 'linear',
+                            position: 'bottom',
+                            min: -10,
+                            max: 10,
+                            ticks: {
+                                display: false
+                            },
+                            title: {
+                                padding: { bottom: 20 },
+                                display: true,
+                                text: 'Price',
+                                font: {
+                                    size: 16
+                                },
+                            }
+                        }
+
+                    }
+
                 },
-            
-        },
-            animation: {
-                duration: 300  // duration in milliseconds
-            },
-        
-            scales: {
-                x: {
-                        type: 'linear',
-                        position: 'bottom',
-                        min: -10,
-                        max: 10,
-                        ticks: {
-                                display: false
-                            },
-                        title: {
-                            display: true,
-                            text: 'Quantity',
-                            font: {
-                                    size: 16
-                                },
-                        }
-                   },
-                y: {
-                        type: 'linear',
-                        position: 'bottom',
-                        min: -10,
-                        max: 10,
-                        ticks: {
-                                display: false
-                            },
-                        title: {
-                            display: true,
-                            text: 'Price',
-                            font: {
-                                    size: 16
-                                },
-                        }
-                   }
+                plugins: [ChartDataLabels]
+            });
+
+
+            function updateUpperDotPosition(newX, newY) {
+                // Update the data
+                chart.data.datasets[3].data[0].x = newX;
+                chart.data.datasets[3].data[0].y = newY;
+                chart.data.datasets[6].data[1][0] = newX;
+                chart.data.datasets[6].data[1][1] = newY;
+                chart.data.datasets[6].data[0][1] = newY;
+
+                chart.data.datasets[9].data[0][0] = newX;
+                chart.data.datasets[9].data[0][1] = newY;
+                chart.data.datasets[9].data[1][0] = newX;
+                chart.data.datasets[9].data[1][1] = newY - 5;
+
+                // update new quantity projection
+                chart.data.datasets[13].data[0][0] = newX;
+                chart.data.datasets[13].data[0][1] = newY - 5;
+                chart.data.datasets[13].data[1][0] = newX;
+                chart.data.datasets[13].data[1][1] = -10;
+ 
+
+
+                // chart.options.annotation.annotations[0].value = newX;
+
+                // Refresh the chart
+                chart.update();
+            }
+
+            function updateLowerDotPosition(newX, newY) {
+                // Update the data
+                chart.data.datasets[4].data[0].x = newX;
+                chart.data.datasets[4].data[0].y = newY;
+                chart.data.datasets[8].data[1][0] = newX;
+                chart.data.datasets[8].data[1][1] = newY;
+                chart.data.datasets[8].data[0][1] = newY;
+
+
+                // Refresh the chart
+                chart.update();
+            }
+
+            // Call this function whenever you need to move the dot
+
+
+
+
+            // Update chart when sliders change
+            function updateChart() {
+
+                bValueLabel.textContent = bSlider.value;
+                chart.data.datasets[0].data = generateDataDemand(parseFloat(bSlider.value));
+                updateUpperDotPosition(generatePointCoord(), (generatePointCoord() * b) + 5);
+                updateLowerDotPosition(generatePointCoord(), (generatePointCoord() * b));
+                chart.update();
 
             }
-        
-        },
-        plugins: [ChartDataLabels]
-    });
 
+            bSlider.addEventListener('input', updateChart);
+            document.getElementById('resetButton').addEventListener('click', function () {
 
-    function updateUpperDotPosition(newX, newY) {
-    // Update the data
-    chart.data.datasets[3].data[0].x = newX;
-    chart.data.datasets[3].data[0].y = newY;
-    chart.data.datasets[6].data[1][0] = newX;
-    chart.data.datasets[6].data[1][1] = newY;
-    chart.data.datasets[6].data[0][1] = newY;
-
-    chart.data.datasets[9].data[0][0] = newX;
-    chart.data.datasets[9].data[0][1] = newY;
-    chart.data.datasets[9].data[1][0] = newX;
-    chart.data.datasets[9].data[1][1] = newY - 5;
-
-
-
-    // chart.options.annotation.annotations[0].value = newX;
-
-    // Refresh the chart
-    chart.update();
-}
-
-function updateLowerDotPosition(newX, newY) {
-    // Update the data
-    chart.data.datasets[4].data[0].x = newX;
-    chart.data.datasets[4].data[0].y = newY;
-    chart.data.datasets[8].data[1][0] = newX;
-    chart.data.datasets[8].data[1][1] = newY;
-    chart.data.datasets[8].data[0][1] = newY;
-
-
-    // Refresh the chart
-    chart.update();
-}
-
-// Call this function whenever you need to move the dot
-
-
-
-
-    // Update chart when sliders change
-    function updateChart() {
-       
-        bValueLabel.textContent = bSlider.value;
-        chart.data.datasets[0].data = generateDataDemand(parseFloat(bSlider.value));
-        updateUpperDotPosition(generatePointCoord(), (generatePointCoord()*b)+5);
-        updateLowerDotPosition(generatePointCoord(), (generatePointCoord()*b));
-        chart.update();
-
-    }
-
-    bSlider.addEventListener('input', updateChart);
-    document.getElementById('resetButton').addEventListener('click', function() {
-        
-        document.getElementById('b-slider').value = 1;
-        chart.data.datasets[0].data = generateDataDemand(parseFloat(bSlider.value));
-        updateUpperDotPosition(-2.5, 2.5);
-        updateLowerDotPosition(-2.5, -2.5);
-        chart.update();
-});
-</script>
+                document.getElementById('b-slider').value = 1;
+                chart.data.datasets[0].data = generateDataDemand(parseFloat(bSlider.value));
+                updateUpperDotPosition(-2.5, 2.5);
+                updateLowerDotPosition(-2.5, -2.5);
+                chart.update();
+            });
+        </script>
 
     </div>
 </div>

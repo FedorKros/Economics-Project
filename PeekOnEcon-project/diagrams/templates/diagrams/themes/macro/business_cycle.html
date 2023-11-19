@@ -117,19 +117,7 @@
                             datalabels: {
                                 
                                 formatter: function (value, context) {
-                                    // Display the label only for the first data point
-                                    // if (context.dataIndex === 60) {
-                                    //     return 'Growth' || '';
-                                    // } else if (context.dataIndex === 80) {
-                                    //     return 'Peak';
-                                    // }
-                                    // else if (context.dataIndex === 100) {
-                                    //     return 'Recession';
-                                    // }
-
-                                    // else if (context.dataIndex === 110) {
-                                    //     return 'Trough';
-                                    // }
+                                    
                                     var lab = context.dataset.label;
                                     var ind = context.dataIndex;
                                     if (lab != 'Business cycle' && lab != 'Long term trend line') {
@@ -158,17 +146,42 @@
                             align: 'start'
                         },
                         scales: {
-                            x: {
-                                type: 'linear',
-                                position: 'bottom',
-                                min: xMin,
-                                max: xMax
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            min: xMin,
+                            max: xMax,
+                            ticks: {
+                                display: false
                             },
-                            y: {
-                                min: yMin,
-                                max: yMax,  // Adjust this if you expect larger radii
+                            title: {
+                                display: true,
+                                
+                                text: 'Time',
+                                font: {
+                                    size: 16
+                                },
                             }
                         },
+                        y: {
+                            type: 'linear',
+                            position: 'bottom',
+                            min: yMin,
+                            max: yMax,
+                            ticks: {
+                                display: false
+                            },
+                            title: {
+                                display: true,
+                                padding: { bottom: 20 },
+                                text: 'Economic activity',
+                                font: {
+                                    size: 16
+                                },
+                            }
+                        }
+
+                    },
 
                         animation: {
                             duration: 300,  // duration in milliseconds

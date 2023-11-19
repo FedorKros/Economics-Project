@@ -1,0 +1,265 @@
+{% extends 'diagrams/base.html' %}
+{% block content %}
+
+
+
+
+<div align="center">
+    <h1> Quotas </h1>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"
+        integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+
+    <input type="range" id="k-slider" min="0" max="10" step="0.1" value="4">
+    <label for="k-slider">Shift in supply <span id="k-value">4</span></label>
+
+    
+
+    <br>
+    <button id="resetButton">Reset values</button>
+
+    <div style="height: 800px; width: 600px;">
+        <canvas id="myChart" width="400" height="400"></canvas>
+
+        <script>
+            var kSlider = document.getElementById('k-slider');
+            
+            var kValueLabel = document.getElementById('k-value');
+            
+            var ctx = document.getElementById('myChart').getContext('2d');
+
+            // Create a function to generate y-values based on current k and b
+            function generateDataSupply(k) {
+                var data = [];
+                for (var x = -10; x <= 10; x += 1) {
+                    data.push({ x: x, y: x - k });
+                }
+                return data;
+            }
+            function generateDataDemand(b) {
+                var data = [];
+                for (var x = -10; x <= 10; x += 1) {
+                    data.push({ x: x, y: -x - b });
+                }
+                return data;
+            }
+
+
+
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    datasets: [{
+                        pointRadius: 0,
+                        label: 'Supply + subsidy',
+                        data: generateDataSupply(parseFloat(kSlider.value)),
+                        fill: false,
+                        borderColor: 'blue',
+                    },
+                    {
+                        pointRadius: 0,
+                        label: 'Demand',
+                        data: generateDataDemand(0),
+                        fill: false,
+                        borderColor: 'red',
+                    },
+                    {
+                        pointRadius: 0,
+                        label: 'Supply',
+                        data: generateDataSupply(0),
+                        fill: false,
+                        borderColor: 'blue',
+                    },
+                    // {
+                    //     pointRadius: 0,
+                    //     label: 'AS1',
+                    //     data: generateDataSupply(parseFloat(kSlider.value)),
+                    //     fill: false,
+                    //     borderColor: 'blue',
+                    // },
+                    // {
+                    //     pointRadius: 0,
+                    //     label: 'AD1',
+                    //     data: generateDataDemand(parseFloat(bSlider.value)),
+                    //     fill: false,
+                    //     borderColor: 'red',
+                    // },
+                    {
+                        pointRadius: 0,
+                        label: 'Sworld',
+                        data: [[-10,-6], [10,-6]],
+                        fill: false,
+                        
+                        borderColor: 'black',
+                    },
+                    {
+                        type: 'line',
+                        data: [[-2, -6], [-2, -10]],
+                        label: 'projY',
+                        borderColor: 'black',
+                        label: 'Q2',
+                        borderDash: [10, 10],
+                    },
+                    {
+                        type: 'line',
+                        data: [[6, -6], [6, -10]],
+                        label: 'projY',
+                        borderColor: 'black',
+                        label: 'Q4',
+                        borderDash: [10, 10],
+                    },
+                    {
+                        pointRadius: 0,
+                        data: [[10,-5.5]],
+                        label: 'S world'
+                    },
+                    {
+                        pointRadius: 0,
+                        data: [[-10,-6]],
+                        label: 'Pw'
+                    },
+                    {
+                        type: 'line',
+                        data: [[0, 0], [-10, 0]],
+                        label: 'projY',
+                        borderColor: 'black',
+                        borderDash: [10, 10],
+                    },
+                    {
+                        pointRadius: 0,
+                        data: [[-10,0]],
+                        label: 'P1'
+                    },
+                    {
+                        type: 'line',
+                        data: [[0, 0], [0, -10]],
+                        label: 'projY',
+                        borderColor: 'black',
+                        label: 'Q3',
+                        borderDash: [10, 10],
+                    },
+                    {
+                        type: 'line',
+                        data: [[-6, -6], [-6, -10]],
+                        label: 'projY',
+                        borderColor: 'black',
+                        label: 'Q1',
+                        borderDash: [10, 10],
+                    }
+                    ]
+                },
+                options: {
+                    plugins: {
+                        datalabels: {
+
+                            formatter: function (value, context) {
+                                var lab = context.dataset.label;
+                                var ind = context.dataIndex;
+                                if ((lab == 'Supply + subsidy' || lab == 'Demand') && ind == 18) {
+                                    return context.dataset.label || '';
+                                }
+                                else if ((lab == 'Supply') && ind == 18) {
+                                    return context.dataset.label || '';
+                                }
+                                else if (lab == 'S world' && ind == 0) {
+                                    return context.dataset.label || '';
+                                }
+                                else if (lab == 'Pw' || lab == 'P1') {
+                                    return context.dataset.label || '';
+                                }
+                                else if ((lab == 'Q1' || lab == 'Q2' || lab == 'Q3' || lab == 'Q4') && ind == 1) {
+                                    return context.dataset.label || '';
+                                }
+                                else {
+                                    return '';
+                                }
+                            },
+                            anchor: 'end',
+                            align: 'left',
+                            color: "#202020",
+                            offset: 5,
+                            font: {
+                                weight: 'bold',
+                                size: '16px'
+                            }
+                        },
+                        legend: {
+                            display: false
+                        },
+                    },
+
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            min: -10,
+                            max: 10,
+                            ticks: {
+                                display: false
+                            },
+                            title: {
+                                display: true,
+                                
+                                text: 'Quantity',
+                                font: {
+                                    size: 16
+                                },
+                            }
+                        },
+                        y: {
+                            type: 'linear',
+                            position: 'bottom',
+                            min: -10,
+                            max: 10,
+                            ticks: {
+                                display: false
+                            },
+                            title: {
+                                display: true,
+                                padding: { bottom: 20 },
+                                text: 'Price',
+                                font: {
+                                    size: 16
+                                },
+                            }
+                        }
+
+                    }
+
+                },
+                plugins: [ChartDataLabels]
+            });
+
+            // Update chart when sliders change
+            function updateChart() {
+                kValueLabel.textContent = kSlider.value;
+                cur = parseFloat(kSlider.value)
+                chart.data.datasets[0].data = generateDataSupply(cur);
+                chart.data.datasets[4].data[0][0] = cur- 6;
+                chart.data.datasets[4].data[1][0] = cur - 6;
+                chart.update();
+
+            }
+
+            kSlider.addEventListener('input', updateChart);
+            
+            document.getElementById('resetButton').addEventListener('click', function () {
+                document.getElementById('k-slider').value = 4;
+               
+                chart.data.datasets[0].data = generateDataSupply(parseFloat(kSlider.value));
+                chart.data.datasets[4].data[0][0] = -2;
+                chart.data.datasets[4].data[1][0] = -2;
+                chart.update();
+            });
+        </script>
+
+    </div>
+</div>
+
+{% endblock %}

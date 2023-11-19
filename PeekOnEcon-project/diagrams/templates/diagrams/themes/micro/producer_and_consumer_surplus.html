@@ -124,6 +124,23 @@
                 // fillColor: 'rgb(232, 12, 23)',
                 fill: false
             },
+            {
+                pointRadius: 0, 
+                data: [[0.5, 4]],
+                label: 'Consumer surplus',
+                borderColor: 'black',
+                
+            },
+            {
+                
+                pointRadius: 0,
+                data: [[0.5, -4]],
+                label: 'Producer surplus',
+                
+                
+            },
+
+        
             
         ]
     },
@@ -134,6 +151,12 @@
                     // Display the label only for the first data point
             
                     if ((context.dataset.label === 'Demand' || context.dataset.label === 'Supply') && context.dataIndex == 9) {
+                        return context.dataset.label || '';
+                    }
+                    if (context.dataset.label === 'Consumer surplus') {
+                        return context.dataset.label || '';
+                    }
+                    if (context.dataset.label === 'Producer surplus') {
                         return context.dataset.label || '';
                     }
                     else {
@@ -179,8 +202,8 @@
                         borderDash: [10, 10],  // Make the line dotted
                     }
                 }
-            }
-            ,
+            },
+            
             legend: {
                 display: false
             },
@@ -195,84 +218,6 @@
     },
     plugins: [ChartDataLabels]
 });
-
-
-
-
-
-//     document.addEventListener('DOMContentLoaded', function() {
-//     var ctx = document.getElementById('myChart').getContext('2d');
-
-//     var xMin = 0.3;
-//     var xMax = 2.2;  // Note: Adjust this if you expect larger radii
-//     var step = 0.01;
-//     var yMin = 0.3;
-//     var yMax = 2.2;
-
-//     // Function to calculate y values based on the selected radius
-//     function computeYValues(radius, xValues) {
-//         var yValues = [];
-//         for (var x of xValues) {
-//             yValues.push(Math.sqrt(Math.pow(radius, 2) - Math.pow(x, 2)));
-//         }
-//         return yValues;
-//     }
-
-//     // Initial values
-//     var xValues = [];
-//     for (var x = xMin; x <= xMax; x += step) {
-//         xValues.push(x);
-//     }
-//     var initialRadius = parseFloat(document.getElementById('radiusSelector').value);
-//     var yValues = computeYValues(initialRadius, xValues);
-
-//     var chart = new Chart(ctx, {
-//         type: 'line',
-        
-//         data: {
-//             labels: xValues,
-//             datasets: [{
-//                 pointRadius: 0,
-//                 label: 'y = sqrt(' + initialRadius + '^2 - x^2)',
-//                 data: yValues,
-//                 fill: false,
-//                 borderColor: 'rgb(106, 143, 241)',
-//                 tension: 0.1
-//             }]
-//         },
-//         options: {
-//             scales: {
-//                 x: {
-//                     type: 'linear',
-//                     position: 'bottom',
-//                     min: xMin,
-//                     max: xMax
-//                 },
-//                 y:  {
-//                     min: yMin,
-//                     max: yMax,  // Adjust this if you expect larger radii
-//                 }
-//             },
-
-//             animation: {
-//                 duration: 300  // duration in milliseconds
-//             },
-//         }
-//     });
-
-//     // Dropdown change event
-//     document.getElementById('radiusSelector').addEventListener('change', function(e) {
-//         var selectedRadius = parseFloat(e.target.value);
-//         yValues = computeYValues(selectedRadius, xValues);
-        
-//         chart.data.datasets[0].data = yValues;
-        
-//         // Update the label to reflect the radius change
-//         chart.data.datasets[0].label = 'y = sqrt(' + selectedRadius + '^2 - x^2)';
-        
-//         chart.update();
-//     });
-// });
 
     </script>
 

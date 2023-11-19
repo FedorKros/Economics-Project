@@ -23,7 +23,7 @@
 
     <br>
     <button id="resetButton">Reset values</button>
-    <h3>The Labor Market </h3>
+    <!-- <h3>The Labor Market </h3> -->
 
     <div style="height: 800px; width: 600px;">
         <canvas id="myChart" width="400" height="400"></canvas>
@@ -58,18 +58,21 @@
                     {
                         type: 'line',
                         data: [[-10, 2], [10, 2]],
+                        label: 'Min',
                         borderColor: 'black',
                     },
                     {
                         type: 'line',
                         data: [[-2, 2], [-2, -10]],
                         borderColor: 'black',
+                        label: 'Q1',
                         borderDash: [10, 10],
                     },
                     {
                         type: 'line',
                         data: [[2, 2], [2, -10]],
                         borderColor: 'black',
+                        label: 'Q2',
                         borderDash: [10, 10],
 
                     },
@@ -80,18 +83,16 @@
                         label: 'Dot',
                     },
                     {
-                        type: 'line',
                         data: [[0, 0], [0, -10]],
                         borderColor: 'black',
+                        label: 'Qe',
                         borderDash: [10, 10],
-
                     },
                     {
-                        type: 'line',
                         data: [[0, 0], [-10, 0]],
                         borderColor: 'black',
+                        label: 'W',
                         borderDash: [10, 10],
-
                     },
                     ]
                 },
@@ -100,13 +101,20 @@
                         datalabels: {
 
                             formatter: function (value, context) {
-                                // Display the label only for the first data point
+                                var lab = context.dataset.label;
+                                var ind = context.dataIndex;
                                 if (context.dataIndex === 1 && context.dataset.label === 'Demand') {
                                     return context.dataset.label || '';
                                 } else if (context.dataIndex == 1 && context.dataset.label === 'Supply') {
                                     return context.dataset.label || '';
                                 } else if (context.dataIndex == 0 && context.dataset.label === 'Dot') {
                                     return 'Minimum wage' || '';
+                                }
+                                else if (lab == 'Min' && ind == 0) {
+                                    return 'W1';
+                                }
+                                else if (ind == 1 && (lab == 'Q1' || lab == 'Q2' || lab == 'Qe' || lab == 'W' || lab == 'W1')) {
+                                return lab || '';
                                 }
                                 else {
                                     return ''
@@ -136,6 +144,7 @@
                             },
                             title: {
                                 display: true,
+                                
                                 text: 'Quantity of Labor',
                                 font: {
                                     size: 16
@@ -152,6 +161,7 @@
                             },
                             title: {
                                 display: true,
+                                padding: { bottom: 20 },
                                 text: 'Wage rate',
                                 font: {
                                     size: 16

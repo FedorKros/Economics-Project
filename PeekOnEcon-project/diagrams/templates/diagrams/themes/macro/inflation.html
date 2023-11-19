@@ -81,15 +81,34 @@
                         label: 'AS1',
                         data: generateDataSupply(0),
                         fill: false,
-                        borderColor: 'darkred',
+                        borderColor: 'red',
                     },
                     {
                         pointRadius: 0,
                         label: 'AD1',
                         data: generateDataDemand(0),
                         fill: false,
-                        borderColor: 'darkblue',
+                        borderColor: 'blue',
                     },
+                    {
+                        data: [[-3,3], [-3,-10]],
+                        borderDash: [10,10],
+                        borderColor: 'black', 
+                        label: 'Y2',
+                    },
+                    {
+                        data: [[-3,3], [-10,3]],
+                        borderDash: [10,10],
+                        borderColor: 'black', 
+                        label: 'P2',
+                    },
+                    {
+                        data: [[0,0], [-10, 0]],
+                        borderDash: [10,10],
+                        borderColor: 'black', 
+                        label: 'P1',
+                    },
+                    
                     ]
                 },
                 options: {
@@ -114,6 +133,18 @@
                                     return context.dataset.label || '';
                                 }
                                 if (ind === 1 && lab === 'LRAS') {
+                                    return context.dataset.label || '';
+                                }
+                                if (ind === 0 && lab === 'LRAS') {
+                                    return 'Y1';
+                                }
+                                if (ind === 1 && lab === 'P1') {
+                                    return lab;
+                                }
+                                if (ind === 1 && lab === 'Y2') {
+                                    return context.dataset.label || '';
+                                }
+                                if (ind === 1 && lab === 'P2') {
                                     return context.dataset.label || '';
                                 }
 
@@ -146,7 +177,6 @@
                             },
                             title: {
                                 display: true,
-                                align: 'right',
                                 text: 'Real GDP',
                                 font: {
                                     size: 16
@@ -162,8 +192,10 @@
                                 display: false
                             },
                             title: {
+                                
                                 display: true,
                                 text: 'Price level',
+                                padding: { bottom: 20 },
                                 font: {
                                     size: 16
                                 },
@@ -186,18 +218,29 @@
                 if (typeSelector.value == 2) {
                     chart.data.datasets[1].data = generateDataDemand(-6);
                     chart.data.datasets[0].data = generateDataSupply(0);
+                    // Update text (implications)
                     contentDiv.innerHTML = "1) Unemployment ⬇️  <br /> 2) Price level ⬆️ <br /> 3) Short run economic growth ⬆️";
+                    // Update projections Y2 and P2
+                    chart.data.datasets[5].data = [[3,3], [3,-10]];
+                    chart.data.datasets[6].data = [[3,3], [-10,3]];
+                    
                     // Remove AS2 add AD2
                     chart.data.datasets[0].label = "";
                     chart.data.datasets[1].label = "AD2";
+
                 }
                 // Cost-push
                 else if (typeSelector.value == 1) {
                     chart.data.datasets[1].data = generateDataDemand(0);
                     chart.data.datasets[0].data = generateDataSupply(-6);
+                    chart.data.datasets[5].data = [[-3,3], [-3,-10]];
+                    chart.data.datasets[6].data = [[-3,3], [-10,3]];
 
+                    // Update text (implications)
                     contentDiv.innerHTML = "1) Unemployment ⬆️  <br /> 2) Price level ⬆️ <br /> 3) Short run economic growth ⬇️";
-
+                    // Update projections Y2 and P2
+                    chart.data.datasets[5].data = [[-3,3], [-3,-10]];
+                    chart.data.datasets[6].data = [[-3,3], [-10,3]];
                     // Add AS2 remove AD2
                     chart.data.datasets[0].label = "AS2";
                     chart.data.datasets[1].label = "";
@@ -210,6 +253,9 @@
                     // Remove both AD2 AS2
                     chart.data.datasets[1].label = "";
                     chart.data.datasets[0].label = "";
+                    // Update projections Y2 and P2
+                    chart.data.datasets[5].data = [];
+                    chart.data.datasets[6].data = [];
                 }
 
 

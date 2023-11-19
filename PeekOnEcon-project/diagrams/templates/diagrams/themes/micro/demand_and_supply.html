@@ -119,12 +119,14 @@
                     {
                         type: 'line',
                         data: [[0, 0], [0, -10]],
+                        label: 'projX',
                         borderColor: 'black',
                         borderDash: [10, 10],
                     },
                     {
                         type: 'line',
                         data: [[0, 0], [-10, 0]],
+                        label: 'projY',
                         borderColor: 'black',
                         borderDash: [10, 10],
                     },
@@ -147,6 +149,12 @@
                                 }
                                 else if (context.dataIndex === 14 && context.dataset.label === 'S2') {
                                     return context.dataset.label || '';
+                                }
+                                else if (context.dataIndex === 1 && context.dataset.label === 'projX') {
+                                    return 'Pe';
+                                }
+                                else if (context.dataIndex === 1 && context.dataset.label === 'projY') {
+                                    return 'Qe';
                                 }
                                 else {
                                     return ''
@@ -192,6 +200,7 @@
                                 display: false
                             },
                         title: {
+                            padding: { bottom: 20 },
                             display: true,
                             text: 'Price',
                             font: {

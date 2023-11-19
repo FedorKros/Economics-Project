@@ -61,12 +61,14 @@
                         type: 'line',
                         data: [[-2, 2], [-2, -10]],
                         borderColor: 'black',
+                        label: 'Q1',
                         borderDash: [10, 10],
                     },
                     {
                         type: 'line',
                         data: [[2, 2], [2, -10]],
                         borderColor: 'black',
+                        label: 'Q2',
                         borderDash: [10, 10],
 
                     },
@@ -75,6 +77,18 @@
                         pointRadius: 0,
                         data: [[9, 2.5]],
                         label: 'Dot',
+                    },
+                    {
+                        data: [[0, 0], [0, -10]],
+                        borderColor: 'black',
+                        label: 'Qe',
+                        borderDash: [10, 10],
+                    },
+                    {
+                        data: [[0, 0], [-10, 0]],
+                        borderColor: 'black',
+                        label: 'Pe',
+                        borderDash: [10, 10],
                     }
                     ]
                 },
@@ -83,13 +97,17 @@
                         datalabels: {
 
                             formatter: function (value, context) {
-                                // Display the label only for the first data point
+                                var lab = context.dataset.label;
+                                var ind = context.dataIndex;
                                 if (context.dataIndex === 1 && context.dataset.label === 'Demand') {
                                     return context.dataset.label || '';
                                 } else if (context.dataIndex == 1 && context.dataset.label === 'Supply') {
                                     return context.dataset.label || '';
                                 } else if (context.dataIndex == 0 && context.dataset.label === 'Dot') {
                                     return 'Price floor' || '';
+                                }
+                                else if (ind == 1 && (lab == 'Q1' || lab == 'Q2' || lab == 'Qe' || lab == 'Pe')) {
+                                return lab || '';
                                 }
                                 else {
                                     return ''
@@ -135,6 +153,7 @@
                             },
                             title: {
                                 display: true,
+                                padding: { bottom: 20 },
                                 text: 'Price',
                                 font: {
                                     size: 16

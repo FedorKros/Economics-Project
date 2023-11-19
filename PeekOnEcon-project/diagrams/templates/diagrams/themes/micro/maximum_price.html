@@ -56,7 +56,7 @@
                         type: 'line',
                         label: 'Price ceiling',
                         pointRadius: 0,
-                        data: [[-10, -2],  [10, -2]],
+                        data: [[-10, -2], [10, -2]],
                         // data: [[-10, -2], [10, -2]],
                         borderColor: 'black',
                     },
@@ -64,11 +64,13 @@
                         type: 'line',
                         data: [[-2, -2,], [-2, -10]],
                         borderColor: 'black',
+                        label: 'Q1',
                         borderDash: [10, 10],
                     },
                     {
                         type: 'line',
                         data: [[2, -2,], [2, -10]],
+                        label: 'Q2',
                         borderColor: 'black',
                         borderDash: [10, 10],
 
@@ -76,8 +78,20 @@
                     // Mark helper
                     {
                         pointRadius: 0,
-                        data: [[9,-1.5]],
+                        data: [[9, -1.5]],
                         label: 'Dot',
+                    },
+                    {
+                        data: [[0, 0], [0, -10]],
+                        borderColor: 'black',
+                        label: 'Qe',
+                        borderDash: [10, 10],
+                    },
+                    {
+                        data: [[0, 0], [-10, 0]],
+                        borderColor: 'black',
+                        label: 'Pe',
+                        borderDash: [10, 10],
                     }
                     ]
                 },
@@ -86,7 +100,10 @@
                         datalabels: {
 
                             formatter: function (value, context) {
-                                // Display the label only for the first data point
+
+
+                                var lab = context.dataset.label;
+                                var ind = context.dataIndex;
                                 if (context.dataIndex === 1 && context.dataset.label === 'Demand') {
                                     return context.dataset.label || '';
                                 } else if (context.dataIndex == 1 && context.dataset.label === 'Supply') {
@@ -94,60 +111,70 @@
                                 } else if (context.dataIndex == 0 && context.dataset.label === 'Dot') {
                                     return 'Price ceiling' || '';
                                 }
-                                else {
-                                    return ''
+                                else if (ind == 0 && context.dataset.label === 'Dot') {
+                                    return 'Price ceiling' || '';
                                 }
+                                else if (ind == 0 && context.dataset.label === 'Price ceiling') {
+                                    return 'P' || '';
+                                }
+                                else if (ind == 1 && (lab == 'Q1' || lab == 'Q2' || lab == 'Qe' || lab == 'Pe')) {
+                                return lab || '';
+                                }
+                                else {
+                return ''
+            }
                             },
-                            anchor: 'end',
-                            align: 'left',
-                            offset: 5,
-                            font: {
-                                weight: 'bold',
-                                size: '16px'
-                            }
+            anchor: 'end',
+                align: 'left',
+                    offset: 5,
+                        font: {
+                weight: 'bold',
+                    size: '16px'
+            }
                         },
-                        legend: {
-                            display: false
-                        },
+            legend: {
+                display: false
+            },
                     },
-                    scales: {
-                        x: {
-                            type: 'linear',
-                            position: 'bottom',
+            scales: {
+                x: {
+                    type: 'linear',
+                        position: 'bottom',
                             min: -10,
-                            max: 10,
-                            ticks: {
-                                display: false
-                            },
-                            title: {
-                                display: true,
-                                text: 'Quantity',
+                                max: 10,
+                                    ticks: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                            text: 'Quantity',
                                 font: {
-                                    size: 16
-                                },
-                            }
+                            size: 16
                         },
-                        y: {
-                            type: 'linear',
-                            position: 'bottom',
-                            min: -10,
-                            max: 10,
-                            ticks: {
-                                display: false
-                            },
-                            title: {
-                                display: true,
-                                text: 'Price',
-                                font: {
-                                    size: 16
-                                },
-                            }
-                        }
-
                     }
+                },
+                y: {
+                    type: 'linear',
+                        position: 'bottom',
+                            min: -10,
+                                max: 10,
+                                    ticks: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        padding: { bottom: 20 },
+                            text: 'Price',
+                                font: {
+                            size: 16
+                        },
+                    }
+                }
+
+            }
 
                 },
-                plugins: [ChartDataLabels]
+            plugins: [ChartDataLabels]
             });
 
             // Update chart when sliders change

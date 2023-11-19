@@ -5,7 +5,7 @@
 
 
 <div align = "center">
-        <h1> New classical perspective - AD & AS </h1>
+        <h1>Keynesian perspective</h1>
 
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -16,23 +16,14 @@
 
         
 
-        <input type="range" id="k-slider" min="-10" max="10" step="0.1" value="0">
-        <label for="k-slider">Shift in supply <span id="k-value">0</span></label>
-
-        <input type="range" id="b-slider" min="-10" max="10" step="0.1" value="0">
-        <label for="b-slider">Shift in demand<span id="b-value">0</span></label>
-
-        <br>
-        <button id="resetButton">Reset values</button>
+       
 
         <div style="height: 800px; width: 600px;">
         <canvas id="myChart" width="400" height="400"></canvas>
 
+        Another important point that the classical economists made is that the full employment level of output Y fe corresponds to the natural rate of unemployment, as at the long-run equilibrium only the natural rate of unemployment exists.
         <script>
-    var kSlider = document.getElementById('k-slider');
-    var bSlider = document.getElementById('b-slider');
-    var kValueLabel = document.getElementById('k-value');
-    var bValueLabel = document.getElementById('b-value');
+   
     var ctx = document.getElementById('myChart').getContext('2d');
 
     // Create a function to generate y-values based on current k and b
@@ -64,63 +55,183 @@
         data: {
             datasets: [{
                 pointRadius: 0,
-                label: 'Aggregate supply',
-                data: generateDataSupply(parseFloat(kSlider.value)),
+                label: 'AS',
+                data: generateDataSupply(0),
+                fill: false,
+                borderColor: 'red',
+            },
+            {
+                pointRadius: 0,
+                label: 'AD1',
+                data: [[-6, 4], [0, -6]],
                 fill: false,
                 borderColor: 'blue',
             },
             {
                 pointRadius: 0,
-                label: 'Aggregate demand',
-                data: generateDataDemand(parseFloat(bSlider.value)),
+                label: 'AD2',
+                data: [[2.5, 4], [8.5, -6]],
                 fill: false,
-                borderColor: 'red',
+                borderColor: 'blue',
+            },
+            {
+                pointRadius: 0,
+                label: 'AD3',
+                data: [[2.5, 9], [8.5, -1]],
+                fill: false,
+                borderColor: 'blue',
+            },
+            {
+                pointRadius: 0,
+                data: [[-3.6, 0], [-3.6, -10]],
+                borderColor: 'black',
+                label: 'Y1',
+                borderDash: [10, 10],
+            },
+            {
+                pointRadius: 0,
+                data: [[4.6, 0.36], [4.6, -10]],
+                borderColor: 'black',
+                // label: 'Y2',
+                borderDash: [10, 10],
+            },
+            {
+                pointRadius: 0,
+                data: [[4.6, 0.36], [-10, 0.36]],
+                borderColor: 'black',
+                // label: 'P2',
+                borderDash: [10, 10],
+            },
+            {
+                pointRadius: 0,
+                data: [[5, 4.8], [-10, 4.8]],
+                borderColor: 'black',
+                // label: 'P3',
+                borderDash: [10, 10],
+            },
+            {
+                pointRadius: 0,
+                data: [[5, 1], [5, -10]],
+                borderColor: 'black',
+                label: 'Yfe',
+                borderDash: [10, 10],
             },
             
-        ]
-        },
-        options: {
-
-            scales: {
-                x: {
-                        type: 'linear',
-                        position: 'bottom',
-                        min: -10,
-                        max: 10,
-                   },
-                y: {
-                        type: 'linear',
-                        position: 'bottom',
-                        min: -10,
-                        max: 10,
-                   }
-
+            {
+                pointRadius: 0,
+                data: [[3.2, -10]],
+                label: 'Y2',
+            },
+            {
+                pointRadius: 0,
+                data: [[-11.2, 4.8]],
+                label: 'P3',
+            },
+            {
+                pointRadius: 0,
+                data: [[-11.2, 0.5]],
+                label: 'P2',
+            },
+            {
+                pointRadius: 0,
+                data: [[-11.2, -0.3]],
+                label: 'P1',
             }
 
-        }
+            ]
+        },
+        options: {
+            plugins: {
+                        datalabels: {
+
+                            formatter: function (value, context) {
+                                var lab = context.dataset.label;
+                                var ind = context.dataIndex;
+                                if ((lab == 'Y1' || lab == 'Yfe' || lab == 'AD1' || lab == 'AD2' || lab == 'AD3') && ind == 1) {
+                                    return context.dataset.label || '';
+                                }
+                                if ((lab == 'P2' || lab == 'P1' || lab == 'P3')  && ind == 0) {
+                                    align: 'left'
+                                    return context.dataset.label || '';
+                                }
+                                if (lab == 'AS' && ind == 190) {
+                                    return context.dataset.label || '';
+                                }
+                                if (lab == 'Y2' && ind == 0) {
+                                    return lab;
+                                }
+                                else {
+                                    return '';
+                                }
+                                
+                            },
+                            anchor: 'end',
+                            align: 'right',
+                            offset: 5,
+                            font: {
+                                weight: 'bold',
+                                size: '16px'
+                            }
+                        },
+                        legend: {
+                            display: false
+                        },
+                    },
+
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            min: -10,
+                            max: 10,
+                            ticks: {
+                                display: false
+                            },
+                            title: {
+                                display: true,
+                                
+                                text: 'Real GDP',
+                                font: {
+                                    size: 16
+                                },
+                            }
+                        },
+                        y: {
+                            type: 'linear',
+                            position: 'bottom',
+                            min: -10,
+                            max: 10,
+                            ticks: {
+                                display: false
+                            },
+                            title: {
+                                display: true,
+                                padding: { bottom: 20 },
+                                text: 'Price level',
+                                font: {
+                                    size: 16
+                                },
+                            }
+                        }
+
+                    }
+
+        },
+        plugins: [ChartDataLabels]
     });
 
     
     // Update chart when sliders change
-    function updateChart() {
-        kValueLabel.textContent = kSlider.value;
-        bValueLabel.textContent = bSlider.value;
+    // function updateChart() {
+   
+    //     chart.data.datasets[0].data = generateDataSupply(parseFloat(kSlider.value));
+    //     chart.data.datasets[1].data = generateDataDemand(parseFloat(bSlider.value));
+    //     chart.update();
 
-        chart.data.datasets[0].data = generateDataSupply(parseFloat(kSlider.value));
-        chart.data.datasets[1].data = generateDataDemand(parseFloat(bSlider.value));
-        chart.update();
+    // }
 
-    }
-
-    kSlider.addEventListener('input', updateChart);
-    bSlider.addEventListener('input', updateChart);
-    document.getElementById('resetButton').addEventListener('click', function() {
-        document.getElementById('k-slider').value = 0; 
-        document.getElementById('b-slider').value = 0;
-        chart.data.datasets[0].data = generateDataSupply(parseFloat(kSlider.value));
-        chart.data.datasets[1].data = generateDataDemand(parseFloat(bSlider.value));
-        chart.update();
-});
+    
+   
 </script>
 
         </div>
