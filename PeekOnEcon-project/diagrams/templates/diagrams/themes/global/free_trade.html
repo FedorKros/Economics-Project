@@ -15,17 +15,14 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
-
-    <!-- <button id="resetButton">Reset values</button> -->
-
     <div style="height: 800px; width: 600px;">
         <canvas id="myChart" width="400" height="400"></canvas>
 
         <script>
             var kSlider = document.getElementById('k-slider');
-           
+
             var kValueLabel = document.getElementById('k-value');
-           
+
             var ctx = document.getElementById('myChart').getContext('2d');
 
             // Create a function to generate y-values based on current k and b
@@ -102,7 +99,7 @@
                     },
                     {
                         pointRadius: 0,
-                        data: [[10,  -5.5]],
+                        data: [[10, -5.5]],
                         label: 'S world',
                     }
 
@@ -118,22 +115,22 @@
                                 if (lab == 'S world') {
                                     return lab;
                                 }
-                                if ((lab == 'Qe' || lab == 'Pe') && ind == 0 ) {
+                                if ((lab == 'Qe' || lab == 'Pe') && ind == 0) {
                                     return lab;
                                 }
-                                if ((lab == 'Qe' || lab == 'Pe') && ind == 0 ) {
+                                if ((lab == 'Qe' || lab == 'Pe') && ind == 0) {
                                     return lab;
                                 }
-                                if ((lab == 'Q1' || lab == 'Q2') && ind == 1 ) {
+                                if ((lab == 'Q1' || lab == 'Q2') && ind == 1) {
                                     return lab;
                                 }
-                                if (lab == 'D domestic' && ind == 20 ) {
+                                if (lab == 'D domestic' && ind == 20) {
                                     return lab;
                                 }
-                                if (lab == 'S domestic' && ind == 19 ) {
+                                if (lab == 'S domestic' && ind == 19) {
                                     return lab;
                                 }
-                                
+
                                 else {
                                     return '';
                                 }
@@ -162,7 +159,7 @@
                             },
                             title: {
                                 display: true,
-                                
+
                                 text: 'Quantity',
                                 font: {
                                     size: 16
@@ -195,26 +192,6 @@
 
             });
 
-            // Update chart when sliders change
-            // function updateChart() {
-            //     kValueLabel.textContent = kSlider.value;
-            //     bValueLabel.textContent = bSlider.value;
-
-            //     chart.data.datasets[0].data = generateDataSupply(parseFloat(kSlider.value));
-            //     chart.data.datasets[1].data = generateDataDemand(parseFloat(bSlider.value));
-            //     chart.update();
-
-            // }
-
-            // kSlider.addEventListener('input', updateChart);
-            // bSlider.addEventListener('input', updateChart);
-            // document.getElementById('resetButton').addEventListener('click', function () {
-            //     document.getElementById('k-slider').value = 0;
-            //     document.getElementById('b-slider').value = 0;
-            //     chart.data.datasets[0].data = generateDataSupply(parseFloat(kSlider.value));
-            //     chart.data.datasets[1].data = generateDataDemand(parseFloat(bSlider.value));
-            //     chart.update();
-            // });
         </script>
 
     </div>

@@ -4,11 +4,23 @@
   <h1>{{ quiz.title }} Results</h1>
   <p>You scored {{ score }} out of {{ total_questions }}!</p>
 
- 
-  {% for question in questions %}
-      <p>{{ quiz.description }}</p>
-  {% endfor %}
 
-  <a href="{% url 'all_list' %}">Take another quiz</a>
+  {% for question_info in results %}
+    <h4>{{ question_info.question.text }}</h4>
+    {% if question_info.selected_choice %}
+        {% if question_info.is_correct %}
+            <p style="color: green;">Your Answer: {{ question_info.selected_choice.text }} (Correct)</p>
+        {% else %}
+            <p style="color: purple;">Your Answer: {{ question_info.selected_choice.text }} (Incorrect)</p>
+            <p style="color:  purple;">Correct answer: {{ question_info.correct_choice }}</p>
+        {% endif %}
+    {% else %}
+        <p style="color: red;">No answer provided</p>
+        Correct answer: {{ question_info.correct_choice }}
+    {% endif %}
+{% endfor %}
+<br>
+<a href="{% url 'all_list' %}">Take another quiz</a> 
+
 
 {% endblock %}

@@ -53,8 +53,7 @@
     </select>
 
 
-    <br>
-    <button id="resetButton">Reset values</button>
+    
 
     <div style="height: 800px; width: 600px;">
         <canvas id="myChart" width="400" height="400"></canvas>
@@ -236,13 +235,7 @@
                 chart.update();
             });
 
-            document.getElementById('resetButton').addEventListener('click', function () {
-                chart.data.datasets[0].label = '';
-                chart.data.datasets[1].label = '';
-                chart.data.datasets[0].data = generateDataSupply(initialSupply);
-                chart.data.datasets[1].data = generateDataDemand(initialDemand);
-                chart.update();
-            });
+            
         </script>
 
     </div>

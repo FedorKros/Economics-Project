@@ -37,9 +37,9 @@
                 var yMax = 5;
 
                 // List Functions coefficients to indexes 0-4 in order to change PES notation further
-                
-                
-                
+
+
+
                 // Function to calculate y values based on the selected radius
                 function computeYValues(radius, xValues) {
                     var yValues = [];
@@ -65,20 +65,20 @@
                     data: {
                         labels: xValues,
                         datasets: [
-                        {
-                            pointRadius: 0,
-                            label: 'Supply',
-                            data: yValues,
-                            fill: false,
-                            borderColor: 'blue',
-                            tension: 0.1
-                        },
-                        {
-                            pointRadius: 0,
-                            data: [[-2,-3]],
-                            label: 'PES = ∞'
-                        }
-                    ]
+                            {
+                                pointRadius: 0,
+                                label: 'Supply',
+                                data: yValues,
+                                fill: false,
+                                borderColor: 'blue',
+                                tension: 0.1
+                            },
+                            {
+                                pointRadius: 0,
+                                data: [[-2, -3]],
+                                label: 'PES = ∞'
+                            }
+                        ]
                     },
                     options: {
                         plugins: {
@@ -86,8 +86,8 @@
                             datalabels: {
                                 formatter: function (value, context) {
                                     // Display the label only for the first data point
-                                    
-                                   
+
+
                                     if (context.dataIndex === 0 && context.dataset.label != 'Supply') {
                                         return context.dataset.label || '';
                                     }
@@ -100,6 +100,7 @@
                                 },
                                 anchor: 'end',
                                 align: 'bottom',
+                                color: "#202020",
                                 offset: 8,
                                 font: {
                                     size: '16px',
@@ -111,61 +112,61 @@
                                 display: false
                             }
                         },
-                    
-                    scales: {
-                        x: {
-                            type: 'linear',
-                            position: 'bottom',
-                            min: xMin,
-                            max: xMax,
-                            ticks: {
-                                display: false
-                            },
-                            title: {
-                                display: true,
-                                text: 'Quantity',
-                                font: {
-                                    size: 16
+
+                        scales: {
+                            x: {
+                                type: 'linear',
+                                position: 'bottom',
+                                min: xMin,
+                                max: xMax,
+                                ticks: {
+                                    display: false
                                 },
-                                padding: { top: 20, left: 0, right: 0, bottom: 0 }
+                                title: {
+                                    display: true,
+                                    text: 'Quantity',
+                                    font: {
+                                        size: 16
+                                    },
+                                    padding: { top: 20, left: 0, right: 0, bottom: 0 }
+                                }
+                            },
+                            y: {
+                                min: yMin,
+                                max: yMax,
+                                ticks: {
+                                    display: false
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Price',
+                                    font: {
+                                        size: 16
+                                    },
+                                    padding: { top: 20, left: 0, right: 0, bottom: 0 }
+                                }
                             }
                         },
-                        y: {
-                            min: yMin,
-                            max: yMax,
-                            ticks: {
-                                display: false
-                            },
-                            title: {
-                                display: true,
-                                text: 'Price',
-                                font: {
-                                    size: 16
-                                },
-                                padding: { top: 20, left: 0, right: 0, bottom: 0 }
-                            }
-                        }
-                    },
 
-                    animation: {
-                        duration: 300  // duration in milliseconds
+                        animation: {
+                            duration: 300  // duration in milliseconds
+                        },
                     },
-                },
                     plugins: [ChartDataLabels]
-            });
+                });
 
-            // Dropdown change event
-            document.getElementById('radiusSelector').addEventListener('change', function (e) {
-                var selectedRadius = parseFloat(e.target.value);
-                yValues = computeYValues(selectedRadius, xValues);
-                chart.data.datasets[0].data = yValues;
-                
-                k_values = [0, 0.4, 1, 8, 1000]; 
-                pes_array = ['PES = ∞', 'PES > 1', 'PES = 1', '0 < PES < 1', 'PES = 0'];
-                chart.data.datasets[1].label = pes_array[k_values.indexOf(selectedRadius)];
-                chart.update();
+                // Dropdown change event
+                document.getElementById('radiusSelector').addEventListener('change', function (e) {
+                    var selectedRadius = parseFloat(e.target.value);
+                    yValues = computeYValues(selectedRadius, xValues);
+                    chart.data.datasets[0].data = yValues;
+
+                    k_values = [0, 0.4, 1, 8, 1000];
+                    pes_array = ['PES = ∞', 'PES > 1', 'PES = 1', '0 < PES < 1', 'PES = 0'];
+                    chart.data.datasets[1].label = pes_array[k_values.indexOf(selectedRadius)];
+                    chart.update();
+                });
             });
-        });
 
         </script>
 

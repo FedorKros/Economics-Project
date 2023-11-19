@@ -12,7 +12,15 @@
     // let timeLimit = {{ time_limit }} * 60; // VS code doesn't like this approach...
     let timeLimit = document.getElementById('quiz-timer').getAttribute('data-time-limit') * 60;
     let quizTimer = setTimeout(submitQuiz, timeLimit * 1000); // Set the timeout
-  
+    // Added
+    document.querySelectorAll('input[type="radio"]').forEach((radio) => {
+        radio.addEventListener('change', function () {
+            let questionId = this.name.replace('question_', '');
+            let hiddenField = document.getElementById('user_answer_' + questionId);
+            hiddenField.value = this.value;
+        });
+    })
+
     function submitQuiz() {
       // Submit the quiz form
       document.getElementById('quiz-form').submit();
@@ -78,7 +86,19 @@ function startTimer(duration, display) {
     <div id="timer" class="container-timer" align="center">Time left: <span id="time">Calculating...</span></div>
 
   
-
+    <!-- {% for question, choices in question_choices_random %}
+    <h3>{{ question.text }}</h3>
+    <ul>
+        {% for choice in choices %}
+            <li>
+                <label>
+                    <input type="radio" name="question_{{ question.id }}" value="{{ choice.id }}">
+                    {{ choice.text }}
+                </label>
+            </li>
+        {% endfor %}
+    </ul>
+{% endfor %} -->
     {% for question in questions %}
       <li>
         <fieldset>

@@ -69,10 +69,10 @@
                         },
                         {
                             pointRadius: 0,
-                            data: [[-2,-3]],
+                            data: [[-2, -3]],
                             label: 'PED = 1'
                         }
-                    ]
+                        ]
                     },
                     options: {
                         plugins: {
@@ -92,6 +92,7 @@
                                 },
                                 anchor: 'end',
                                 align: 'bottom',
+                                color: "#202020",
                                 offset: 8,
                                 font: {
                                     size: '16px',
@@ -151,10 +152,10 @@
                     yValues = computeYValues(selectedRadius, xValues);
 
                     chart.data.datasets[0].data = yValues;
-                    k_values = [-1, -0.3, -8, 0, 10000]; 
+                    k_values = [-1, -0.3, -8, 0, 10000];
                     pes_array = ['PED = 1', 'PED > 1', '0 < PED < 1', 'PED = ∞', 'PED = 0'];
                     chart.data.datasets[1].label = pes_array[k_values.indexOf(selectedRadius)];
-                    
+
 
                     chart.update();
                 });

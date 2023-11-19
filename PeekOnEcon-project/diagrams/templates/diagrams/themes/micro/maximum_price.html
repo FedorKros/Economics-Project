@@ -118,63 +118,64 @@
                                     return 'P' || '';
                                 }
                                 else if (ind == 1 && (lab == 'Q1' || lab == 'Q2' || lab == 'Qe' || lab == 'Pe')) {
-                                return lab || '';
+                                    return lab || '';
                                 }
                                 else {
-                return ''
-            }
+                                    return ''
+                                }
                             },
-            anchor: 'end',
-                align: 'left',
-                    offset: 5,
-                        font: {
-                weight: 'bold',
-                    size: '16px'
-            }
+                            anchor: 'end',
+                            align: 'left',
+                            color: "#202020",
+                            offset: 5,
+                            font: {
+                                weight: 'bold',
+                                size: '16px'
+                            }
                         },
-            legend: {
-                display: false
-            },
+                        legend: {
+                            display: false
+                        },
                     },
-            scales: {
-                x: {
-                    type: 'linear',
-                        position: 'bottom',
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
                             min: -10,
-                                max: 10,
-                                    ticks: {
-                        display: false
-                    },
-                    title: {
-                        display: true,
-                            text: 'Quantity',
+                            max: 10,
+                            ticks: {
+                                display: false
+                            },
+                            title: {
+                                display: true,
+                                text: 'Quantity',
                                 font: {
-                            size: 16
+                                    size: 16
+                                },
+                            }
                         },
-                    }
-                },
-                y: {
-                    type: 'linear',
-                        position: 'bottom',
+                        y: {
+                            type: 'linear',
+                            position: 'bottom',
                             min: -10,
-                                max: 10,
-                                    ticks: {
-                        display: false
-                    },
-                    title: {
-                        display: true,
-                        padding: { bottom: 20 },
-                            text: 'Price',
+                            max: 10,
+                            ticks: {
+                                display: false
+                            },
+                            title: {
+                                display: true,
+                                padding: { bottom: 20 },
+                                text: 'Price',
                                 font: {
-                            size: 16
-                        },
-                    }
-                }
+                                    size: 16
+                                },
+                            }
+                        }
 
-            }
+                    }
 
                 },
-            plugins: [ChartDataLabels]
+                plugins: [ChartDataLabels]
             });
 
             // Update chart when sliders change
