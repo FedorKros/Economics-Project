@@ -5,6 +5,9 @@
   <p>You scored {{ score }} out of {{ total_questions }}!</p>
 
  
+  {% for question in questions %}
+      <p>{{ quiz.description }}</p>
+  {% endfor %}
 
   <a href="{% url 'all_list' %}">Take another quiz</a>
 

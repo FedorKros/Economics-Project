@@ -14,7 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
 
     <input type="range" id="b-slider" min="0.2" max="6" step="0.1" value="1">
-    <label for="b-slider">Set demand elasticity<span id="b-value">1</span></label>
+    <label for="b-slider">Set demand elasticity<span id="b-value" hidden="hidden">1</span></label>
 
     <br>
     <button id="resetButton">Reset values</button>
@@ -166,13 +166,13 @@
                         },
                         {
                             data: [[0, 0], [0, -10]],
-                            label: 'Qe',
+                            label: 'Qs',
                             borderColor: 'black',
                             borderDash: [10, 10],
                         },
                         {
                             data: [[-2.5, 2.5], [-2.5, -10]],
-                            label: 'Qs',
+                            label: 'Qe',
                             borderColor: 'black',
                             borderDash: [10, 10],
                         },

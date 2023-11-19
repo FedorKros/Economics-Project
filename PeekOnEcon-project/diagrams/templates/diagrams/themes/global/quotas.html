@@ -17,9 +17,9 @@
 
 
     <input type="range" id="k-slider" min="0" max="10" step="0.1" value="4">
-    <label for="k-slider">Shift in supply <span id="k-value">4</span></label>
+    <label for="k-slider">Quota<span id="k-value" hidden="hidden">4</span></label>
 
-    
+
 
     <br>
     <button id="resetButton">Reset values</button>
@@ -29,15 +29,20 @@
 
         <script>
             var kSlider = document.getElementById('k-slider');
-            
             var kValueLabel = document.getElementById('k-value');
-            
             var ctx = document.getElementById('myChart').getContext('2d');
 
             // Create a function to generate y-values based on current k and b
             function generateDataSupply(k) {
                 var data = [];
                 for (var x = -10; x <= 10; x += 1) {
+                    data.push({ x: x, y: x - k });
+                }
+                return data;
+            }
+            function generateDataSupply2(k) {
+                var data = [];
+                for (var x = -2; x <= 10; x += 1) {
                     data.push({ x: x, y: x - k });
                 }
                 return data;
@@ -57,21 +62,24 @@
                 data: {
                     datasets: [{
                         pointRadius: 0,
-                        label: 'Supply + subsidy',
-                        data: generateDataSupply(parseFloat(kSlider.value)),
+                        label: 'Domestic + import supply',
+                        data: [[-2,-6], [10, 6]],
                         fill: false,
                         borderColor: 'blue',
                     },
                     {
-                        pointRadius: 0,
-                        label: 'Demand',
-                        data: generateDataDemand(0),
-                        fill: false,
-                        borderColor: 'red',
+                        // pointRadius: 0,
+                        type: 'line',
+                        data: [[-6, -6], [-2, -6]],
+                        label: 'Quota',
+                        borderColor: 'blue',
+                        // label: 'Q1',
+
                     },
+
                     {
                         pointRadius: 0,
-                        label: 'Supply',
+                        label: 'Domestic supply',
                         data: generateDataSupply(0),
                         fill: false,
                         borderColor: 'blue',
@@ -93,18 +101,15 @@
                     {
                         pointRadius: 0,
                         label: 'Sworld',
-                        data: [[-10,-6], [10,-6]],
+                        data: [[-10, -6], [10, -6]],
                         fill: false,
-                        
+
                         borderColor: 'black',
                     },
                     {
-                        type: 'line',
-                        data: [[-2, -6], [-2, -10]],
-                        label: 'projY',
-                        borderColor: 'black',
-                        label: 'Q2',
-                        borderDash: [10, 10],
+                        pointRadius:0,
+                        data: [[-2, -6]],
+                        
                     },
                     {
                         type: 'line',
@@ -116,34 +121,21 @@
                     },
                     {
                         pointRadius: 0,
-                        data: [[10,-5.5]],
+                        data: [[10, -5.5]],
                         label: 'S world'
                     },
                     {
                         pointRadius: 0,
-                        data: [[-10,-6]],
+                        data: [[-10, -6]],
                         label: 'Pw'
                     },
-                    {
-                        type: 'line',
-                        data: [[0, 0], [-10, 0]],
-                        label: 'projY',
-                        borderColor: 'black',
-                        borderDash: [10, 10],
-                    },
+
                     {
                         pointRadius: 0,
-                        data: [[-10,0]],
-                        label: 'P1'
+                        data: [[-10, 0]],
+                        // label: 'P1'
                     },
-                    {
-                        type: 'line',
-                        data: [[0, 0], [0, -10]],
-                        label: 'projY',
-                        borderColor: 'black',
-                        label: 'Q3',
-                        borderDash: [10, 10],
-                    },
+
                     {
                         type: 'line',
                         data: [[-6, -6], [-6, -10]],
@@ -151,7 +143,35 @@
                         borderColor: 'black',
                         label: 'Q1',
                         borderDash: [10, 10],
-                    }
+                    },
+
+                    {
+                        pointRadius: 0,
+                        label: 'Demand',
+                        data: generateDataDemand(0),
+                        fill: false,
+                        borderColor: 'red',
+                    },
+                    {
+                        data: [[2, -2], [2,-10]],
+                        borderDash: [10, 10],
+                        borderColor: 'black',
+                        label: 'Q3'
+                    },{
+                        data: [[2, -2], [-10,-2]],
+                        borderDash: [10, 10],
+                        borderColor: 'black',
+                        label: 'P1'
+                    },
+                    {
+                        type: 'line',
+                        data: [[-2, -2], [-2,-10]],
+                        label: 'projY',
+                        borderColor: 'black',
+                        label: 'Q2',
+                        borderDash: [10, 10],
+                    },
+
                     ]
                 },
                 options: {
@@ -161,16 +181,23 @@
                             formatter: function (value, context) {
                                 var lab = context.dataset.label;
                                 var ind = context.dataIndex;
-                                if ((lab == 'Supply + subsidy' || lab == 'Demand') && ind == 18) {
+                                if ((lab == 'Domestic supply' || lab == 'Demand') && ind == 18) {
                                     return context.dataset.label || '';
                                 }
-                                else if ((lab == 'Supply') && ind == 18) {
+                                if (lab == 'Domestic + import supply' && ind == 1) {
+                                    return context.dataset.label || '';
+                                }
+                                
+                                else if ((lab == 'Domestic supply') && ind == 18) {
                                     return context.dataset.label || '';
                                 }
                                 else if (lab == 'S world' && ind == 0) {
                                     return context.dataset.label || '';
                                 }
-                                else if (lab == 'Pw' || lab == 'P1') {
+                                else if (lab == 'Pw') {
+                                    return context.dataset.label || '';
+                                }
+                                else if (lab == 'P1' && ind == 1) {
                                     return context.dataset.label || '';
                                 }
                                 else if ((lab == 'Q1' || lab == 'Q2' || lab == 'Q3' || lab == 'Q4') && ind == 1) {
@@ -205,7 +232,7 @@
                             },
                             title: {
                                 display: true,
-                                
+
                                 text: 'Quantity',
                                 font: {
                                     size: 16
@@ -240,21 +267,53 @@
             function updateChart() {
                 kValueLabel.textContent = kSlider.value;
                 cur = parseFloat(kSlider.value)
-                chart.data.datasets[0].data = generateDataSupply(cur);
-                chart.data.datasets[4].data[0][0] = cur- 6;
-                chart.data.datasets[4].data[1][0] = cur - 6;
+                chart.data.datasets[0].data[0][0] = cur - 6;
+                chart.data.datasets[0].data[1][0] = cur + 6;
+                // chart.data.datasets[4].data[0][0] = cur - 6;
+                // chart.data.datasets[4].data[1][0] = cur - 6;
+                // chart.data.datasets[4].label = 'Q2';
+                // Update quota
+                chart.data.datasets[1].data[1][0] = cur - 6;
+                chart.data.datasets[0].label = 'Domestic + import supply';
+
+                // Update equilibrium
+                chart.data.datasets[11].data[0][0] = cur/2;
+                chart.data.datasets[11].data[0][1] = -cur/2;
+                chart.data.datasets[11].data[1][0] = cur/2;
+                
+                chart.data.datasets[12].data[0][1] = -cur/2;
+                chart.data.datasets[12].data[1][1] = -cur/2;
+                chart.data.datasets[12].data[0][0] = cur/2;
+                // Update left copy projection 
+                chart.data.datasets[13].data[0][0] = -cur/2;
+                chart.data.datasets[13].data[0][1] = -cur/2;
+                chart.data.datasets[13].data[1][0] = -cur/2;
+                if (cur == 0) {
+                    chart.data.datasets[4].label = '';
+                    chart.data.datasets[0].label = '';
+                }
+
+
+
                 chart.update();
 
             }
 
             kSlider.addEventListener('input', updateChart);
-            
+
             document.getElementById('resetButton').addEventListener('click', function () {
                 document.getElementById('k-slider').value = 4;
-               
-                chart.data.datasets[0].data = generateDataSupply(parseFloat(kSlider.value));
-                chart.data.datasets[4].data[0][0] = -2;
-                chart.data.datasets[4].data[1][0] = -2;
+
+                chart.data.datasets[0].data = [[-2,-6], [10,6]];
+                // chart.data.datasets[4].data[0][0] = -2;
+                // chart.data.datasets[4].data[1][0] = -2;
+              
+                chart.data.datasets[11].data = [[2, -2], [2,-10]];
+                chart.data.datasets[12].data = [[2, -2], [-10,-2]];
+                chart.data.datasets[13].data = [[-2, -2], [-2,-10]];
+                // Update Quota
+                
+                chart.data.datasets[1].data[1][0] = -2;
                 chart.update();
             });
         </script>
