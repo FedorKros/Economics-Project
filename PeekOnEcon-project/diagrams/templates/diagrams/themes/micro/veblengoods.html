@@ -16,16 +16,16 @@
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <canvas id="myChart" width="400" height="400"></canvas>
         <script>
-            // Wait for the document to be fully loaded
+            
             document.addEventListener('DOMContentLoaded', function () {
                 var ctx = document.getElementById('myChart').getContext('2d');
 
-                // Define the domain
+               
                 var xMin = 0;
                 var xMax = 12;
                 var step = 0.1;
 
-                // Generate x and y values
+                
                 var xValues = [];
                 var yPositive = [];
                 var yNegative = [];
@@ -36,7 +36,7 @@
                     yNegative.push(-Math.sqrt(4 * x));
                 }
 
-                //for dropdown list
+               
 
 
                 var chart = new Chart(ctx, {
@@ -85,7 +85,7 @@
                         plugins: {
                             datalabels: {
                                 formatter: function (value, context) {
-                                    // Display the label only for the first data point
+                                    
                                     if (context.dataset.label === 'snob value') {
                                         return context.dataset.label || '';
                                     } 
@@ -116,8 +116,8 @@
                             x: {
                                 type: 'linear',
                                 position: 'bottom',
-                                min: -1,   // This restricts the domain
-                                max: xMax    // This restricts the domain
+                                min: -1,   
+                                max: xMax    
                             },
                             y: {
                                 min: -10,

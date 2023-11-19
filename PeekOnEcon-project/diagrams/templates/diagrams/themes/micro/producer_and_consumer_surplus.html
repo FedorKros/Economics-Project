@@ -10,13 +10,6 @@
 <h1>Producer and consumer surplus</h1>
 
 
-<!-- 
-<select id="radiusSelector">
-    <option value="1.5">Default PP</option>
-    <option value="1">Decrease PP</option>
-    <option value="2">Increase PP</option>
-</select> -->
-
 <div style="height: 800px; width: 600px;">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script
@@ -38,7 +31,7 @@
     var xCross = 5;
     var step = 1;
     
-            // Generate x and y values
+            
     var xValues = [];
     var y1 = [];
     var y2 = [null, null, null, null, null];
@@ -102,7 +95,6 @@
                 label: 'Line 2',
                 data: y3,
                 borderColor: 'red',
-                // fillColor: 'rgb(232, 12, 23)',
                 fill: '-1',
                 backgroundColor: 'rgba(158, 241, 147,0.2)'
             },
@@ -112,7 +104,6 @@
                 data: y2,
                 xMin: xCross,
                 borderColor: 'blue',
-                // fillColor: 'rgb(232, 12, 23)',
                 fill: false
             },
             {
@@ -121,7 +112,6 @@
                 data: y4,
                 xMin: xCross,
                 borderColor: 'red',
-                // fillColor: 'rgb(232, 12, 23)',
                 fill: false
             },
             {
@@ -148,7 +138,7 @@
         plugins: {
             datalabels: {
                 formatter: function (value, context) {
-                    // Display the label only for the first data point
+                    
             
                     if ((context.dataset.label === 'Demand' || context.dataset.label === 'Supply') && context.dataIndex == 9) {
                         return context.dataset.label || '';
@@ -175,7 +165,7 @@
                         
             annotation: {
                 annotations: {
-                    // Vertical projection to x-axis
+                    // projection to x-axis
                     verticalLine: {
                         type: 'line',
                         xMin: 5,
@@ -186,10 +176,10 @@
                         value: xCross,
                         borderColor: 'grey',
                         borderWidth: 1,
-                        borderDash: [10, 10],  // Make the line dotted
+                        borderDash: [10, 10],  
                         
                     },
-                    // Horizontal projection to y-axis
+                    //projection to y-axis
                     horizontalLine: {
                         type: 'line',
                         xMin: 0,
@@ -200,7 +190,7 @@
                         value: 0,
                         borderColor: 'grey',
                         borderWidth: 1,
-                        borderDash: [10, 10],  // Make the line dotted
+                        borderDash: [10, 10],
                     }
                 }
             },
@@ -210,9 +200,9 @@
             },
             fillBetween: {
                 datasets: [{
-                    from: 'Line 1',   // Name of the first dataset
-                    to: 'Line 2',     // Name of the second dataset
-                    fillColor: 'rgb(232, 200, 200)' // Shading color
+                    from: 'Line 1',   
+                    to: 'Line 2',    
+                    fillColor: 'rgb(232, 200, 200)' 
                 }]
             }
         }

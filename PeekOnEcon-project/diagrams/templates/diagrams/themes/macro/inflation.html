@@ -33,7 +33,7 @@
 
             var ctx = document.getElementById('myChart').getContext('2d');
 
-            // Create a function to generate y-values based on current k and b
+        
             function generateDataSupply(k) {
                 var data = [];
                 for (var x = -9; x <= 9; x += 1) {
@@ -116,7 +116,7 @@
                         datalabels: {
 
                             formatter: function (value, context) {
-                                // Display the label only for the first data point
+                            
                                 var lab = context.dataset.label;
                                 var ind = context.dataIndex;
 
@@ -209,9 +209,9 @@
 
             });
 
-            // Update chart when sliders change
+            // Update graph when sliders change
             function updateChart() {
-                // Update dynamic writing
+                
                 var contentDiv = document.getElementById("content");
 
                 // Demand-pull

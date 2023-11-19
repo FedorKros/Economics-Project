@@ -1,127 +1,126 @@
-{% extends 'diagrams/base.html'  %}
+{% extends 'diagrams/base.html' %}
 {% block content %}
 
 
 
 
-<div align = "center">
-        <h1> Tariffs </h1>
+<div align="center">
+    <h1> Tariffs </h1>
 
 
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"
-            integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-        
-
-        <input type="range" id="k-slider" min="-7" max="-1" step="1" value="-2">
-        <label for="k-slider"> Price ceiling <span id="k-value" hidden="hidden">-2</span></label>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"
+        integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
-        <br>
-        <button id="resetButton">Reset values</button>
 
-        <div style="height: 800px; width: 600px;">
+    <input type="range" id="k-slider" min="-7" max="-1" step="1" value="-2">
+    <label for="k-slider"> Price ceiling <span id="k-value" hidden="hidden">-2</span></label>
+
+
+    <br>
+    <button id="resetButton">Reset values</button>
+
+    <div style="height: 800px; width: 600px;">
         <canvas id="myChart" width="400" height="400"></canvas>
 
         <script>
-    var kSlider = document.getElementById('k-slider');
-    var kValueLabel = document.getElementById('k-value');
+            var kSlider = document.getElementById('k-slider');
+            var kValueLabel = document.getElementById('k-value');
 
-    var ctx = document.getElementById('myChart').getContext('2d');
-
-    // Create a function to generate y-values based on current k and b
+            var ctx = document.getElementById('myChart').getContext('2d');
 
 
-    var chart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            datasets: [{
-                pointRadius: 0,
-                label: 'S domestic',
-                data: [[-10,-10], [7, 7], [10,10]],
-                fill: false,
-                borderColor: 'blue',
-            },
-            {
-                pointRadius: 0,
-                label: 'D domestic',
-                data: [[-10,10], [-7, 7], [10,-10]],
-                fill: false,
-                borderColor: 'red',
-            },
-            // S world + tariff
-            {
+
+            var chart = new Chart(ctx, {
                 type: 'line',
-                data: [[-10, -2],[10,-2]],
-                borderColor: 'darkorange',
-            },
-            {
-                type: 'line',
-                data: [[-2, -2,], [-2,-10]],
-                borderColor: 'black',
-                label: 'Q3',
-                borderDash: [10, 10],
-            },
-            {
-                type: 'line',
-                data: [[2, -2,], [2,-10]],
-                borderColor: 'black',
-                label: 'Q2',
-                borderDash: [10, 10],
-                
-            },
-            // S world
-            {
-                type: 'line',
-                data: [[-10, -7],[10,-7]],
-                borderColor: 'darkorange',
-            },
-            // dotted line from S world
-            {
-                type: 'line',
-                data: [[7, -7,], [7,-10]],
-                borderColor: 'black',
-                label: 'Q1',
-                borderDash: [10, 10],
-            },
-            {
-                type: 'line',
-                data: [[-7, -7,], [-7,-10]],
-                borderColor: 'black',
-                label: 'Q4',
-                borderDash: [10, 10],
-                
-            },
+                data: {
+                    datasets: [{
+                        pointRadius: 0,
+                        label: 'S domestic',
+                        data: [[-10, -10], [7, 7], [10, 10]],
+                        fill: false,
+                        borderColor: 'blue',
+                    },
+                    {
+                        pointRadius: 0,
+                        label: 'D domestic',
+                        data: [[-10, 10], [-7, 7], [10, -10]],
+                        fill: false,
+                        borderColor: 'red',
+                    },
+                    // S world + tariff
+                    {
+                        type: 'line',
+                        data: [[-10, -2], [10, -2]],
+                        borderColor: 'darkorange',
+                    },
+                    {
+                        type: 'line',
+                        data: [[-2, -2,], [-2, -10]],
+                        borderColor: 'black',
+                        label: 'Q3',
+                        borderDash: [10, 10],
+                    },
+                    {
+                        type: 'line',
+                        data: [[2, -2,], [2, -10]],
+                        borderColor: 'black',
+                        label: 'Q2',
+                        borderDash: [10, 10],
 
-            {
-                pointRadius: 0,
-                data: [[10,-1.5]],
-                label: 'Sw+tariff'
-            },
-            {
-                pointRadius: 0,
-                data: [[10,-6.5]],
-                label: 'Sw'
-            },
-            {
-                pointRadius: 0,
-                data: [[-9,-1.5]],
-                label: 'Pw+t'
-            },
-            {
-                pointRadius: 0,
-                data: [[-9.5, -6.5]],
-                label: 'Pw'
-            },
+                    },
+                    // S world
+                    {
+                        type: 'line',
+                        data: [[-10, -7], [10, -7]],
+                        borderColor: 'darkorange',
+                    },
+                    // dotted line from S world
+                    {
+                        type: 'line',
+                        data: [[7, -7,], [7, -10]],
+                        borderColor: 'black',
+                        label: 'Q1',
+                        borderDash: [10, 10],
+                    },
+                    {
+                        type: 'line',
+                        data: [[-7, -7,], [-7, -10]],
+                        borderColor: 'black',
+                        label: 'Q4',
+                        borderDash: [10, 10],
+
+                    },
+
+                    {
+                        pointRadius: 0,
+                        data: [[10, -1.5]],
+                        label: 'Sw+tariff'
+                    },
+                    {
+                        pointRadius: 0,
+                        data: [[10, -6.5]],
+                        label: 'Sw'
+                    },
+                    {
+                        pointRadius: 0,
+                        data: [[-9, -1.5]],
+                        label: 'Pw+t'
+                    },
+                    {
+                        pointRadius: 0,
+                        data: [[-9.5, -6.5]],
+                        label: 'Pw'
+                    },
 
 
-        ]
-        },
-        options: {
-            plugins: {
+                    ]
+                },
+                options: {
+                    plugins: {
                         datalabels: {
 
                             formatter: function (value, context) {
@@ -146,11 +145,11 @@
                                 if (lab == 'Sw+tariff' || lab == 'Sw') {
                                     return lab;
                                 }
-                                if ((lab == 'S domestic' || lab == 'D domestic') && ind == 1){
+                                if ((lab == 'S domestic' || lab == 'D domestic') && ind == 1) {
                                     return lab;
                                 }
-                                
-                                
+
+
                                 else {
                                     return '';
                                 }
@@ -180,7 +179,7 @@
                             },
                             title: {
                                 display: true,
-                                
+
                                 text: 'Quantity',
                                 font: {
                                     size: 16
@@ -207,59 +206,59 @@
 
                     }
 
-        },
-        plugins: [ChartDataLabels]
-    });
+                },
+                plugins: [ChartDataLabels]
+            });
 
-    // Update chart when sliders change
-    function updateChart() {
-        kValueLabel.textContent = kSlider.value;
+            // Update graph when sliders change
+            function updateChart() {
+                kValueLabel.textContent = kSlider.value;
 
-        new_value = parseFloat(kSlider.value)
-        chart.data.datasets[2].data[0][1] = new_value;
-        chart.data.datasets[2].data[1][1] = new_value;
+                new_value = parseFloat(kSlider.value)
+                chart.data.datasets[2].data[0][1] = new_value;
+                chart.data.datasets[2].data[1][1] = new_value;
 
-        chart.data.datasets[3].data[0][0] = new_value;
-        chart.data.datasets[3].data[0][1] = new_value;
-        chart.data.datasets[3].data[1][0] = new_value;
+                chart.data.datasets[3].data[0][0] = new_value;
+                chart.data.datasets[3].data[0][1] = new_value;
+                chart.data.datasets[3].data[1][0] = new_value;
 
-        chart.data.datasets[4].data[0][0] = -new_value;
-        chart.data.datasets[4].data[0][1] = new_value;
-        chart.data.datasets[4].data[1][0] = -new_value;
-        
-        // Update Pw on axes
-        chart.data.datasets[10].data[0][1] = new_value + 0.5;
-        // Update labels
-        chart.data.datasets[4].label = 'Q2';
-        chart.data.datasets[3].label = 'Q3';
-        chart.data.datasets[7].label = 'Q4';
-        chart.data.datasets[10].label = 'Pw+t';
-        chart.data.datasets[8].label = 'Sw+tariff';
-        
-        // Update s w tariff data
-        chart.data.datasets[8].data[0][1] = new_value + 0.5;
+                chart.data.datasets[4].data[0][0] = -new_value;
+                chart.data.datasets[4].data[0][1] = new_value;
+                chart.data.datasets[4].data[1][0] = -new_value;
 
-        if (new_value == -7) {
-            chart.data.datasets[8].label = '';
-            chart.data.datasets[4].label = '';
-            chart.data.datasets[3].label = '';
-            chart.data.datasets[7].label = 'Q2';
-            chart.data.datasets[10].label = '';
-        } 
+                // Update Pw on axes
+                chart.data.datasets[10].data[0][1] = new_value + 0.5;
+                // Update labels
+                chart.data.datasets[4].label = 'Q2';
+                chart.data.datasets[3].label = 'Q3';
+                chart.data.datasets[7].label = 'Q4';
+                chart.data.datasets[10].label = 'Pw+t';
+                chart.data.datasets[8].label = 'Sw+tariff';
 
-        chart.update();
+                // Update s w tariff data
+                chart.data.datasets[8].data[0][1] = new_value + 0.5;
 
-    }
+                if (new_value == -7) {
+                    chart.data.datasets[8].label = '';
+                    chart.data.datasets[4].label = '';
+                    chart.data.datasets[3].label = '';
+                    chart.data.datasets[7].label = 'Q2';
+                    chart.data.datasets[10].label = '';
+                }
 
-    kSlider.addEventListener('input', updateChart);
-    document.getElementById('resetButton').addEventListener('click', function() {
-        document.getElementById('k-slider').value = -2;
-        updateChart();
-        chart.update();
-});
-</script>
+                chart.update();
 
-        </div>
+            }
+
+            kSlider.addEventListener('input', updateChart);
+            document.getElementById('resetButton').addEventListener('click', function () {
+                document.getElementById('k-slider').value = -2;
+                updateChart();
+                chart.update();
+            });
+        </script>
+
+    </div>
 </div>
 
 {% endblock %}

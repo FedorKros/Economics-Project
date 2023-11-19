@@ -34,7 +34,7 @@
                 var yMin = -5;
                 var yMax = 5;
 
-                // Function to calculate y values based on the selected radius
+                
                 function computeYValues(radius, xValues) {
                     var yValues = [];
                     for (var x of xValues) {
@@ -43,7 +43,7 @@
                     return yValues;
                 }
 
-                // Initial values
+                
                 var xValues = [];
                 for (var x = xMin; x <= xMax; x += step) {
                     xValues.push(x);
@@ -79,7 +79,7 @@
 
                             datalabels: {
                                 formatter: function (value, context) {
-                                    // Display the label only for the first data point
+                                    
                                     if (context.dataIndex === 0 && context.dataset.label != 'Demand') {
                                         return context.dataset.label || '';
                                     }
@@ -140,13 +140,13 @@
                         },
 
                         animation: {
-                            duration: 300  // duration in milliseconds
+                            duration: 300  
                         },
                     },
                     plugins: [ChartDataLabels]
                 });
 
-                // Dropdown change event
+                // Dropdown list change event
                 document.getElementById('radiusSelector').addEventListener('change', function (e) {
                     var selectedRadius = parseFloat(e.target.value);
                     yValues = computeYValues(selectedRadius, xValues);

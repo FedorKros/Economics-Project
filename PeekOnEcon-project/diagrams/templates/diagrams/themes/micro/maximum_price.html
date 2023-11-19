@@ -32,7 +32,6 @@
 
             var ctx = document.getElementById('myChart').getContext('2d');
 
-            // Create a function to generate y-values based on current k and b
 
 
             var chart = new Chart(ctx, {
@@ -104,17 +103,17 @@
 
                                 var lab = context.dataset.label;
                                 var ind = context.dataIndex;
-                                if (context.dataIndex === 1 && context.dataset.label === 'Demand') {
-                                    return context.dataset.label || '';
-                                } else if (context.dataIndex == 1 && context.dataset.label === 'Supply') {
-                                    return context.dataset.label || '';
-                                } else if (context.dataIndex == 0 && context.dataset.label === 'Dot') {
+                                if (ind === 1 && lab === 'Demand') {
+                                    return lab || '';
+                                } else if (ind == 1 && lab === 'Supply') {
+                                    return lab || '';
+                                } else if (ind == 0 && lab === 'Dot') {
                                     return 'Price ceiling' || '';
                                 }
-                                else if (ind == 0 && context.dataset.label === 'Dot') {
+                                else if (ind == 0 && lab === 'Dot') {
                                     return 'Price ceiling' || '';
                                 }
-                                else if (ind == 0 && context.dataset.label === 'Price ceiling') {
+                                else if (ind == 0 && lab === 'Price ceiling') {
                                     return 'P' || '';
                                 }
                                 else if (ind == 1 && (lab == 'Q1' || lab == 'Q2' || lab == 'Qe' || lab == 'Pe')) {
@@ -178,7 +177,7 @@
                 plugins: [ChartDataLabels]
             });
 
-            // Update chart when sliders change
+            // Update graph when sliders change
             function updateChart() {
                 kValueLabel.textContent = kSlider.value;
 

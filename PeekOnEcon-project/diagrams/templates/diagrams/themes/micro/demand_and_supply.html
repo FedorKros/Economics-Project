@@ -63,7 +63,7 @@
             var initialDemand = parseFloat(document.getElementById('demandSelector').value);
             var ctx = document.getElementById('myChart').getContext('2d');
 
-            // Create a function to generate y-values based on current k and b
+            
             function generateDataSupply(k) {
                 var data = [];
                 for (var x = -10; x <= 10; x += 1) {
@@ -136,7 +136,7 @@
                         datalabels: {
 
                             formatter: function (value, context) {
-                                // Display the label only for the first data point
+                                
                                 if (context.dataIndex === 18 && context.dataset.label === 'D1') {
                                     return context.dataset.label || '';
                                 } 

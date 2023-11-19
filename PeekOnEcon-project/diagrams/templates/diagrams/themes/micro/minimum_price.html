@@ -17,7 +17,7 @@
 
 
     <input type="range" id="k-slider" min="1" max="8" step="1" value="2">
-    <label for="k-slider"> Price ceiling <span id="k-value" hidden="hidden">2</span></label>
+    <label for="k-slider"> Price floor <span id="k-value" hidden="hidden">2</span></label>
 
 
     <br>
@@ -32,7 +32,7 @@
 
             var ctx = document.getElementById('myChart').getContext('2d');
 
-            // Create a function to generate y-values based on current k and b
+           
 
 
             var chart = new Chart(ctx, {
@@ -56,6 +56,7 @@
                         type: 'line',
                         data: [[-10, 2], [10, 2]],
                         borderColor: 'black',
+                        label: 'P1'
                     },
                     {
                         type: 'line',
@@ -99,15 +100,18 @@
                             formatter: function (value, context) {
                                 var lab = context.dataset.label;
                                 var ind = context.dataIndex;
-                                if (context.dataIndex === 1 && context.dataset.label === 'Demand') {
-                                    return context.dataset.label || '';
-                                } else if (context.dataIndex == 1 && context.dataset.label === 'Supply') {
-                                    return context.dataset.label || '';
-                                } else if (context.dataIndex == 0 && context.dataset.label === 'Dot') {
+                                if (ind === 1 && lab === 'Demand') {
+                                    return lab || '';
+                                } else if (ind == 1 && lab === 'Supply') {
+                                    return lab || '';
+                                } else if (ind == 0 && lab === 'Dot') {
                                     return 'Price floor' || '';
                                 }
                                 else if (ind == 1 && (lab == 'Q1' || lab == 'Q2' || lab == 'Qe' || lab == 'Pe')) {
                                     return lab || '';
+                                }
+                                else if (ind == 0 && lab == 'P1') {
+                                    return lab;
                                 }
                                 else {
                                     return ''

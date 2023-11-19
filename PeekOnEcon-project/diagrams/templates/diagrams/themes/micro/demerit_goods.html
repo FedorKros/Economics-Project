@@ -33,7 +33,7 @@
                 var yMin = -2;
                 var yMax = 6;
 
-                // Function to calculate y values based on the selected radius
+                
                 function computeYValues(radius, xValues) {
                     var yValues = [];
                     for (var x of xValues) {
@@ -88,13 +88,10 @@
                         plugins: {
                             datalabels: {
                                 formatter: function (value, context) {
-                                    // Display the label only for the first data point
-
-
+                                    
                                     if (context.dataIndex === 1) {
                                         return context.dataset.label || '';
                                     }
-
                                     else {
                                         return ''
                                     }
@@ -149,20 +146,20 @@
                         },
 
                         animation: {
-                            duration: 300  // duration in milliseconds
+                            duration: 300 
                         },
                     },
                     plugins: [ChartDataLabels]
                 });
 
-                // Dropdown change event
+                // Dropdown list change 
                 document.getElementById('radiusSelector').addEventListener('change', function (e) {
                     var selectedRadius = parseFloat(e.target.value);
                     yValues = computeYValues(selectedRadius, xValues);
 
 
 
-                    // Update the label to reflect the radius change
+                    // Update the diagram
 
                     if (selectedRadius === -1) {
                         chart.data.datasets[0].data = [[5, -5], [-5, 5]]

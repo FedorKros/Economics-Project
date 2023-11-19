@@ -35,7 +35,6 @@
             var bValueLabel = document.getElementById('b-value');
             var ctx = document.getElementById('myChart').getContext('2d');
 
-            // Create a function to generate y-values based on current k and b
             function generateDataSupply(k) {
                 var data = [];
                 for (var x = -10; x <= 10; x += 1) {
@@ -70,20 +69,7 @@
                         fill: false,
                         borderColor: 'red',
                     },
-                    // {
-                    //     pointRadius: 0,
-                    //     label: 'AS1',
-                    //     data: generateDataSupply(parseFloat(kSlider.value)),
-                    //     fill: false,
-                    //     borderColor: 'blue',
-                    // },
-                    // {
-                    //     pointRadius: 0,
-                    //     label: 'AD1',
-                    //     data: generateDataDemand(parseFloat(bSlider.value)),
-                    //     fill: false,
-                    //     borderColor: 'red',
-                    // },
+            
                     {
                         pointRadius: 0,
                         label: 'LRAS',
@@ -166,7 +152,7 @@
                 plugins: [ChartDataLabels]
             });
 
-            // Update chart when sliders change
+            // Update graph when sliders change
             function updateChart() {
                 kValueLabel.textContent = kSlider.value;
                 bValueLabel.textContent = bSlider.value;

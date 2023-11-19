@@ -19,7 +19,7 @@
     <input type="range" id="k-slider" min="0" max="10" step="0.1" value="4">
     <label for="k-slider">Shift in supply <span id="k-value" hidden="hidden">4</span></label>
 
-    
+
 
     <br>
     <button id="resetButton">Reset values</button>
@@ -29,12 +29,12 @@
 
         <script>
             var kSlider = document.getElementById('k-slider');
-            
+
             var kValueLabel = document.getElementById('k-value');
-            
+
             var ctx = document.getElementById('myChart').getContext('2d');
 
-            // Create a function to generate y-values based on current k and b
+
             function generateDataSupply(k) {
                 var data = [];
                 for (var x = -10; x <= 10; x += 1) {
@@ -76,26 +76,12 @@
                         fill: false,
                         borderColor: 'blue',
                     },
-                    // {
-                    //     pointRadius: 0,
-                    //     label: 'AS1',
-                    //     data: generateDataSupply(parseFloat(kSlider.value)),
-                    //     fill: false,
-                    //     borderColor: 'blue',
-                    // },
-                    // {
-                    //     pointRadius: 0,
-                    //     label: 'AD1',
-                    //     data: generateDataDemand(parseFloat(bSlider.value)),
-                    //     fill: false,
-                    //     borderColor: 'red',
-                    // },
                     {
                         pointRadius: 0,
                         label: 'Sworld',
-                        data: [[-10,-6], [10,-6]],
+                        data: [[-10, -6], [10, -6]],
                         fill: false,
-                        
+
                         borderColor: 'black',
                     },
                     {
@@ -116,12 +102,12 @@
                     },
                     {
                         pointRadius: 0,
-                        data: [[10,-5.5]],
+                        data: [[10, -5.5]],
                         label: 'S world'
                     },
                     {
                         pointRadius: 0,
-                        data: [[-10,-6]],
+                        data: [[-10, -6]],
                         label: 'Pw'
                     },
                     {
@@ -133,7 +119,7 @@
                     },
                     {
                         pointRadius: 0,
-                        data: [[-10,0]],
+                        data: [[-10, 0]],
                         label: 'P1'
                     },
                     {
@@ -205,7 +191,7 @@
                             },
                             title: {
                                 display: true,
-                                
+
                                 text: 'Quantity',
                                 font: {
                                     size: 16
@@ -236,15 +222,15 @@
                 plugins: [ChartDataLabels]
             });
 
-            // Update chart when sliders change
+            // Update graph when sliders change
             function updateChart() {
                 kValueLabel.textContent = kSlider.value;
                 cur = parseFloat(kSlider.value)
                 chart.data.datasets[0].data = generateDataSupply(cur);
-                chart.data.datasets[4].data[0][0] = cur- 6;
+                chart.data.datasets[4].data[0][0] = cur - 6;
                 chart.data.datasets[4].data[1][0] = cur - 6;
                 chart.data.datasets[4].label = 'Q2';
-                    chart.data.datasets[0].label = 'Supply + subsidy';
+                chart.data.datasets[0].label = 'Supply + subsidy';
                 if (cur == 0) {
                     chart.data.datasets[4].label = '';
                     chart.data.datasets[0].label = '';
@@ -257,10 +243,10 @@
             }
 
             kSlider.addEventListener('input', updateChart);
-            
+
             document.getElementById('resetButton').addEventListener('click', function () {
                 document.getElementById('k-slider').value = 4;
-               
+
                 chart.data.datasets[0].data = generateDataSupply(parseFloat(kSlider.value));
                 chart.data.datasets[4].data[0][0] = -2;
                 chart.data.datasets[4].data[1][0] = -2;

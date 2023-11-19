@@ -22,15 +22,15 @@
     })
 
     function submitQuiz() {
-      // Submit the quiz form
+      // Submit the form
       document.getElementById('quiz-form').submit();
     }
     
-    // Optional: Update the UI with the remaining time
-    // This can show a countdown timer to the user
+    
     let timerDisplay = document.getElementById('timer-display');
     setInterval(function() {
       let minutes = Math.floor(timeLimit / 60);
+      
       let seconds = timeLimit % 60;
       timerDisplay.textContent = `Time Remaining: ${minutes}:${seconds.toString().padStart(2, '0')}`;
       if (timeLimit <= 0) {
@@ -43,7 +43,7 @@
 
 
   window.onload = function() {
-  // Assuming you've set your time limit in seconds as a data attribute in your HTML
+  // Time limit in seconds
   let timeLimit = parseInt(document.getElementById('quiz-timer').getAttribute('data-time-limit')) * 60;
   let display = document.getElementById('time');
 
@@ -57,14 +57,14 @@ function startTimer(duration, display) {
     minutes = parseInt(timer / 60, 10);
     seconds = parseInt(timer % 60, 10);
 
-    minutes = minutes < 10 ? "0" + minutes : minutes;
-    seconds = seconds < 10 ? "0" + seconds : seconds;
+    minutes = minutes < 10 ? "0"+minutes : minutes;
+    seconds = seconds < 10 ? "0"+seconds : seconds;
 
     display.textContent = minutes + ":" + seconds;
 
     if (--timer < 0) {
       clearInterval(interval);
-      // Optional: Automatically submit the form when the timer reaches 0
+      // Automatically submit when the timer 0
       submitQuiz();
     }
   }, 1000);
@@ -80,25 +80,12 @@ function startTimer(duration, display) {
   {% csrf_token %} 
 
   <div class = ""> 
-    <!-- connecting JS to python time_limit attribute -->
+    <!-- JS to python time_limit attribute -->
   <div id="quiz-timer" data-time-limit="{{ time_limit }}"></div>
   <ol>
     <div id="timer" class="container-timer" align="center">Time left: <span id="time">Calculating...</span></div>
 
-  
-    <!-- {% for question, choices in question_choices_random %}
-    <h3>{{ question.text }}</h3>
-    <ul>
-        {% for choice in choices %}
-            <li>
-                <label>
-                    <input type="radio" name="question_{{ question.id }}" value="{{ choice.id }}">
-                    {{ choice.text }}
-                </label>
-            </li>
-        {% endfor %}
-    </ul>
-{% endfor %} -->
+
     {% for question in questions %}
       <li>
         <fieldset>

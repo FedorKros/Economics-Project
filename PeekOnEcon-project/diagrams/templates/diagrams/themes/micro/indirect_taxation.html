@@ -38,7 +38,6 @@
             var bValueLabel = document.getElementById('b-value');
             var ctx = document.getElementById('myChart').getContext('2d');
 
-            // Create a function to generate y-values based on b
 
             function generateDataDemand(b) {
                 var data = [];
@@ -56,7 +55,6 @@
             }
 
             function generatePointCoord() {
-                // coordinate = -5/(2*parseFloat(bSlider.value));
                 coordinate = -5 / (1 + parseFloat(bSlider.value));
                 return coordinate;
             }
@@ -201,24 +199,23 @@
                     plugins: {
                         datalabels: {
                             formatter: function (value, context) {
-                                // Display the label only for the first data point
 
                                 var lab = context.dataset.label;
                                 var ind = context.dataIndex;
 
-                                if (context.dataIndex === 17 && context.dataset.label == 'Supply') {
-                                    return context.dataset.label || '';
+                                if (ind === 17 && lab == 'Supply') {
+                                    return lab || '';
                                 }
-                                if (context.dataIndex === 13 && context.dataset.label == 'Supply + tax') {
-                                    return context.dataset.label || '';
+                                if (ind === 13 && lab == 'Supply + tax') {
+                                    return lab || '';
                                 }
-                                if (context.dataIndex === 17 && context.dataset.label == 'Demand') {
-                                    return context.dataset.label || '';
+                                if (ind === 17 && lab == 'Demand') {
+                                    return lab || '';
                                 }
-                                if (context.dataset.label == "cb") {
+                                if (lab == "cb") {
                                     return 'Consumer burden';
                                 }
-                                if (context.dataset.label == "pb") {
+                                if (lab == "pb") {
                                     return 'Producer burden';
                                 }
                                 if ((lab == "Pe" || lab == 'Pc' || lab == 'Pp') && ind == 0) {

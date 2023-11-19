@@ -26,7 +26,7 @@
    
     var ctx = document.getElementById('myChart').getContext('2d');
 
-    // Create a function to generate y-values based on current k and b
+   
     function generateDataSupply(k) {
         var data = [];
         for(var x = -10; x <= 4; x+=0.1) {
@@ -220,15 +220,7 @@
         plugins: [ChartDataLabels]
     });
 
-    
-    // Update chart when sliders change
-    // function updateChart() {
-   
-    //     chart.data.datasets[0].data = generateDataSupply(parseFloat(kSlider.value));
-    //     chart.data.datasets[1].data = generateDataDemand(parseFloat(bSlider.value));
-    //     chart.update();
 
-    // }
 
     
    

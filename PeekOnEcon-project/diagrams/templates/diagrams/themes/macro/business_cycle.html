@@ -45,7 +45,7 @@
                 }
 
 
-                // Function to calculate y values 
+
                 function computeYValues(radius, xValues) {
                     var yValues = [];
                     for (var x of xValues) {
@@ -54,7 +54,7 @@
                     return yValues;
                 }
 
-                // Initial values
+
                 var xValues = [];
                 for (var x = xMin; x <= xMax; x += step) {
                     xValues.push(x);
@@ -69,7 +69,7 @@
                         labels: xValues,
                         datasets: [{
                             pointRadius: 0,
-                            // label: setDataLabel(x),
+
                             label: 'Business cycle',
                             data: yValues,
                             fill: false,
@@ -107,7 +107,7 @@
                             data: [[21, 2.8]],
                             label: 'Long term trend (red)'
                         },
-                        
+
 
                         ]
                     },
@@ -115,13 +115,13 @@
 
                         plugins: {
                             datalabels: {
-                                
+
                                 formatter: function (value, context) {
-                                    
+
                                     var lab = context.dataset.label;
                                     var ind = context.dataIndex;
                                     if (lab != 'Business cycle' && lab != 'Long term trend line') {
-                                        return context.dataset.label || ''; 
+                                        return context.dataset.label || '';
                                     }
                                     else {
                                         return ''
@@ -137,7 +137,7 @@
                                 }
                             },
                             legend: {
-                                display: false 
+                                display: false
                             }
                         },
 
@@ -146,58 +146,49 @@
                             align: 'start'
                         },
                         scales: {
-                        x: {
-                            type: 'linear',
-                            position: 'bottom',
-                            min: xMin,
-                            max: xMax,
-                            ticks: {
-                                display: false
-                            },
-                            title: {
-                                display: true,
-                                
-                                text: 'Time',
-                                font: {
-                                    size: 16
+                            x: {
+                                type: 'linear',
+                                position: 'bottom',
+                                min: xMin,
+                                max: xMax,
+                                ticks: {
+                                    display: false
                                 },
-                            }
-                        },
-                        y: {
-                            type: 'linear',
-                            position: 'bottom',
-                            min: yMin,
-                            max: yMax,
-                            ticks: {
-                                display: false
-                            },
-                            title: {
-                                display: true,
-                                padding: { bottom: 20 },
-                                text: 'Economic activity',
-                                font: {
-                                    size: 16
-                                },
-                            }
-                        }
+                                title: {
+                                    display: true,
 
-                    },
+                                    text: 'Time',
+                                    font: {
+                                        size: 16
+                                    },
+                                }
+                            },
+                            y: {
+                                type: 'linear',
+                                position: 'bottom',
+                                min: yMin,
+                                max: yMax,
+                                ticks: {
+                                    display: false
+                                },
+                                title: {
+                                    display: true,
+                                    padding: { bottom: 20 },
+                                    text: 'Economic activity',
+                                    font: {
+                                        size: 16
+                                    },
+                                }
+                            }
+
+                        },
 
                         animation: {
-                            duration: 300,  // duration in milliseconds
+                            duration: 300,
                         },
                     },
                     plugins: [ChartDataLabels]
-                    // plugins: {
-                    //     datalabels: {
-                    //         // color: 'black', // label text color
-                    //         // anchor: 'end', // label anchor position
-                    //         // align: 'top', // label alignment
-                    //         // offset: 4, // offset from data point
-                    //         // display: true, // display data labels
 
-                    //     },
-                    // }
 
                 });
             });

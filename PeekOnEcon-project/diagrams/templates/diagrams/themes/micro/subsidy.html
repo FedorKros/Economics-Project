@@ -27,7 +27,6 @@
             var bValueLabel = document.getElementById('b-value');
             var ctx = document.getElementById('myChart').getContext('2d');
 
-            // Create a function to generate y-values based on b
 
             function generateDataDemand(b) {
                 var data = [];
@@ -45,7 +44,6 @@
             }
 
             function generatePointCoord() {
-                // coordinate = -5/(2*parseFloat(bSlider.value));
                 coordinate = -5 / (1 + parseFloat(bSlider.value));
                 return coordinate;
             }
@@ -112,7 +110,7 @@
                         },
 
 
-                        // top projection 66666666
+
                         {
                             type: 'line',
                             data: [[-10, 5], [0, 5]],
@@ -123,7 +121,7 @@
                             borderDash: [10, 10]
 
                         },
-                        // middle projection 777777777
+                        // middle projection
                         {
                             type: 'line',
                             data: [[-10, 2.5], [0, 2.5]],
@@ -185,7 +183,7 @@
                     plugins: {
                         datalabels: {
                             formatter: function (value, context) {
-                                // Display the label only for the first data point
+
                                 var lab = context.dataset.label;
                                 var ind = context.dataIndex;
 
@@ -231,7 +229,7 @@
 
                     },
                     animation: {
-                        duration: 300  // duration in milliseconds
+                        duration: 300
                     },
 
                     scales: {
@@ -281,9 +279,9 @@
                 chart.data.datasets[3].data[0].y = newY + 5;
                 chart.data.datasets[7].data[1][1] = newY + 5;
                 chart.data.datasets[7].data[0][1] = newY + 5;
-            
 
-                chart.data.datasets[13].data[0][0] = newX ;
+
+                chart.data.datasets[13].data[0][0] = newX;
                 chart.data.datasets[13].data[0][1] = newY + 5;
                 chart.data.datasets[13].data[1][0] = newX;
                 chart.data.datasets[13].data[1][1] = -10;
@@ -292,7 +290,7 @@
             }
 
 
-            // Update chart when sliders change
+            // Update graph when sliders change
             function updateChart() {
 
                 bValueLabel.textContent = bSlider.value;
