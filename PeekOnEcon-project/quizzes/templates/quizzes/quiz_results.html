@@ -11,12 +11,12 @@
         {% if question_info.is_correct %}
             <p style="color: green;">Your Answer: {{ question_info.selected_choice.text }} (Correct)</p>
         {% else %}
-            <p style="color: purple;">Your Answer: {{ question_info.selected_choice.text }} (Incorrect)</p>
+            <p style="color: purple;">Your Answer: {{ question_info.selected_choice.text }} (Incorrect)
             <p style="color:  purple;">Correct answer: {{ question_info.correct_choice }}</p>
         {% endif %}
     {% else %}
-        <p style="color: red;">No answer provided</p>
-        Correct answer: {{ question_info.correct_choice }}
+        <p style="color: red;">No answer provided </p>
+        <p style="color: red;">Correct answer: {{ question_info.correct_choice }}</p>
     {% endif %}
 {% endfor %}
 <br>

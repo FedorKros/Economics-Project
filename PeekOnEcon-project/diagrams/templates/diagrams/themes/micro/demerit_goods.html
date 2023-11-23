@@ -7,7 +7,7 @@
     <h1>Demerit goods - negative externalities</h1>
 
 
-    <select id="radiusSelector">
+    <select id="gradientSelector">
         <option value="1">Production</option>
         <option value="-1">Consumption</option>
 
@@ -19,7 +19,6 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"
             integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="path/to/chartjs-plugin-fill-between.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
         <canvas id="myChart" width="400" height="400"></canvas>
         <script>
@@ -34,10 +33,10 @@
                 var yMax = 6;
 
                 
-                function computeYValues(radius, xValues) {
+                function computeYValues(gradient, xValues) {
                     var yValues = [];
                     for (var x of xValues) {
-                        yValues.push(radius * x);
+                        yValues.push(gradient * x);
                     }
                     return yValues;
                 }
@@ -47,9 +46,9 @@
                 for (var x = xMin; x <= xMax; x += step) {
                     xValues.push(x);
                 }
-                var initialRadius = parseFloat(document.getElementById('radiusSelector').value);
-                var yValues = computeYValues(initialRadius, xValues);
-                if (initialRadius = 0) {
+                var initialGradient = parseFloat(document.getElementById('gradientSelector').value);
+                var yValues = computeYValues(initialGradient, xValues);
+                if (initialGradient = 0) {
                     yValues = [5, 5, 5, 5, 5, 5]
                 }
 
@@ -153,22 +152,22 @@
                 });
 
                 // Dropdown list change 
-                document.getElementById('radiusSelector').addEventListener('change', function (e) {
-                    var selectedRadius = parseFloat(e.target.value);
-                    yValues = computeYValues(selectedRadius, xValues);
+                document.getElementById('gradientSelector').addEventListener('change', function (e) {
+                    var selectedGradient = parseFloat(e.target.value);
+                    yValues = computeYValues(selectedGradient, xValues);
 
 
 
                     // Update the diagram
 
-                    if (selectedRadius === -1) {
+                    if (selectedGradient === -1) {
                         chart.data.datasets[0].data = [[5, -5], [-5, 5]]
                         chart.data.datasets[0].label = "MSB"
                         chart.data.datasets[2].label = "MPC = MBC"
                         chart.data.datasets[1].label = "MPB";
 
                     }
-                    if (selectedRadius === 1) {
+                    if (selectedGradient === 1) {
                         chart.data.datasets[1].label = "MPB = MSB"
                         chart.data.datasets[0].data = [[-5, -5], [5, 5]];
                         chart.data.datasets[0].label = "MPC"

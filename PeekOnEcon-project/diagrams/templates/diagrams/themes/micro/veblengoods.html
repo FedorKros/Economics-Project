@@ -16,16 +16,16 @@
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <canvas id="myChart" width="400" height="400"></canvas>
         <script>
-            
+
             document.addEventListener('DOMContentLoaded', function () {
                 var ctx = document.getElementById('myChart').getContext('2d');
 
-               
+
                 var xMin = 0;
                 var xMax = 12;
                 var step = 0.1;
 
-                
+
                 var xValues = [];
                 var yPositive = [];
                 var yNegative = [];
@@ -36,7 +36,7 @@
                     yNegative.push(-Math.sqrt(4 * x));
                 }
 
-               
+
 
 
                 var chart = new Chart(ctx, {
@@ -77,7 +77,7 @@
                                 data: [[8, -2.5]],
                                 label: 'behaves like normal good'
                             }
-                            
+
                         ]
 
                     },
@@ -85,10 +85,10 @@
                         plugins: {
                             datalabels: {
                                 formatter: function (value, context) {
-                                    
+
                                     if (context.dataset.label === 'snob value') {
                                         return context.dataset.label || '';
-                                    } 
+                                    }
                                     else if (context.dataset.label === 'behaves like normal good') {
                                         return context.dataset.label || '';
                                     }
@@ -116,12 +116,34 @@
                             x: {
                                 type: 'linear',
                                 position: 'bottom',
-                                min: -1,   
-                                max: xMax    
+                                min: -1,
+                                max: xMax,
+                                ticks: {
+                                    display: false
+                                },
+                                title: {
+                                    display: true,
+
+                                    text: 'Quantity',
+                                    font: {
+                                        size: 16
+                                    },
+                                }
                             },
                             y: {
                                 min: -10,
                                 max: 10,
+                                ticks: {
+                                    display: false
+                                },
+                                title: {
+                                    display: true,
+
+                                    text: 'Price',
+                                    font: {
+                                        size: 16
+                                    },
+                                }
                             }
                         }
                     },

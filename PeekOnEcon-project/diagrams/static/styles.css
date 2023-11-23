@@ -16,6 +16,7 @@ body {
   /* background-image: url(images/aki.png); */
   /* background-image: url(images/nyc.avif); */
   background-size: cover;
+  /* transition: background-image 0.2s ease-in-out; */
 }
 
 h2 {

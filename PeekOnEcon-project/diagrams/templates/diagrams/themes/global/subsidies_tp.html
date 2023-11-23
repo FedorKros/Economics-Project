@@ -248,8 +248,11 @@
                 document.getElementById('k-slider').value = 4;
 
                 chart.data.datasets[0].data = generateDataSupply(parseFloat(kSlider.value));
+                chart.data.datasets[0].label = 'Supply + subsidy';
                 chart.data.datasets[4].data[0][0] = -2;
                 chart.data.datasets[4].data[1][0] = -2;
+                
+
                 chart.update();
             });
         </script>

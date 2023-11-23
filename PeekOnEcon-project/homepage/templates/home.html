@@ -1,6 +1,10 @@
 {% extends 'diagrams/base.html'  %}
 {% block content %}
 
+<link rel="preload" href="static/images/nyc.avif" as="image">
+<link rel="preload" href="static/images/dollars.avif" as="image">
+<link rel="preload" href="static/images/mount.avif" as="image">
+<link rel="preload" href="static/images/tokyo.avif" as="image"> 
 
 
 <script>
@@ -23,7 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 <a href = "{% url 'topics' %}" class="button-diagrams">Start your journey in economics from here.</a> 
         <br>
                 <a href = "{% url 'all_list' %}" class="button-quizzes">Or test your knowledge here.</a>
-
 
 
 </div>

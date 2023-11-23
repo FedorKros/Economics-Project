@@ -1,1 +1,0 @@
-nextStep = message.text

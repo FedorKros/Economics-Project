@@ -15,7 +15,7 @@ CORRECT = True
 INCORRECT = False
 
 bot = telebot.TeleBot(BOT_API_TOKEN)
-
+teacher_ids = [556272797]
 
 @bot.message_handler(commands=['start'])
 def main(message):
@@ -24,19 +24,16 @@ def main(message):
 
 @bot.message_handler(commands=['add_quiz'])
 def addQuiz(message):
-    if message.from_user.id == 556272797:
+    if message.from_user.id in teacher_ids:
         try:
             quiz = bot.reply_to(message,
                                 "Please enter quiz title, description and time limit for the new quiz. Separate them with an empty line")
             bot.register_next_step_handler(quiz, addQuestionAndAnswer)
-
-
         except Exception as e:
             print(f"An error occured: {e}")
             bot.send_message("Ooops! Something went wrong. Please try again.")
-
     else:
-        bot.send_message("You are not an admin. Back off!")
+        bot.send_message(message.chat.id, "You are not an admin. Back off!")
 
 
 def addQuestionAndAnswer(message):

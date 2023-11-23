@@ -1,215 +1,244 @@
-{% extends 'diagrams/base.html'  %}
+{% extends 'diagrams/base.html' %}
 {% block content %}
 
 
 
 
 
-<div align = "center">
+<div align="center">
 
-<h1>Producer and consumer surplus</h1>
+    <h1>Producer and consumer surplus</h1>
 
 
-<div style="height: 800px; width: 600px;">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script
+    <div style="height: 800px; width: 600px;">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script
             src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"
             integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="path/to/chartjs-plugin-fill-between.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
-    
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.2"></script>
 
-    <canvas id="myChart" width="400" height="400"></canvas>
-    <script>
-    var ctx = document.getElementById('myChart').getContext('2d');
-    
-    
-    
-    var xMin = 0;
-    var xMax = 10;
-    var xCross = 5;
-    var step = 1;
-    
-            
-    var xValues = [];
-    var y1 = [];
-    var y2 = [null, null, null, null, null];
-    var y3 = [];
-    var y4 = [null, null, null, null, null];
-    var y5 = [];
-    var y6 = [];
+
+        <canvas id="myChart" width="400" height="400"></canvas>
+        <script>
+            var ctx = document.getElementById('myChart').getContext('2d');
 
 
 
-    for (var x = xMin; x <= xCross; x += step) {
-        xValues.push(x);
-        y1.push(4*(x-5));
-        y3.push(-4*(x-5));
+            var xMin = 0;
+            var xMax = 10;
+            var xCross = 5;
+            var step = 1;
+            var yMin = -20;
+            var yMax = 20;
 
-    }
-
-    
-    
-    for (var x = xCross; x <= xMax; x += step) {
-        xValues.push(x);
-        y2.push(4*(x-5));
-        y4.push(-4*(x-5));
-        
-    }
-
-    y4.pop()
-    y2.pop()
+            var xValues = [];
+            var y1 = [];
+            var y2 = [null, null, null, null, null];
+            var y3 = [];
+            var y4 = [null, null, null, null, null];
+            var y5 = [];
+            var y6 = [];
 
 
-    for (var x = 0; x < 10; x+=step) {
-        y5.push(0)
-    } 
-    
-    
-    
-    
-    
-    var chart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: xValues,
-        datasets: [
-            {
-                pointRadius: 0,
-                label: 'Line 1',
-                data: y1,
-                borderColor: 'blue',
-                fill: '+1',
-                backgroundColor: 'rgba(255,193,8,0.2)'
-            },
-            {
-                pointRadius: 0,
-                label: 'Line invisible',
-                data: y5,
-                borderColor: 'rgba(232, 12, 23, 0)',
-                fill: false,
-            },
-            {
-                pointRadius: 0,
-                label: 'Line 2',
-                data: y3,
-                borderColor: 'red',
-                fill: '-1',
-                backgroundColor: 'rgba(158, 241, 147,0.2)'
-            },
-            {
-                pointRadius: 0,
-                label: 'Supply',
-                data: y2,
-                xMin: xCross,
-                borderColor: 'blue',
-                fill: false
-            },
-            {
-                pointRadius: 0,
-                label: 'Demand',
-                data: y4,
-                xMin: xCross,
-                borderColor: 'red',
-                fill: false
-            },
-            {
-                pointRadius: 0, 
-                data: [[0.5, 4]],
-                label: 'Consumer surplus',
-                borderColor: 'black',
-                
-            },
-            {
-                
-                pointRadius: 0,
-                data: [[0.5, -4]],
-                label: 'Producer surplus',
-                
-                
-            },
 
-        
-            
-        ]
-    },
-    options: {
-        plugins: {
-            datalabels: {
-                formatter: function (value, context) {
-                    
-            
-                    if ((context.dataset.label === 'Demand' || context.dataset.label === 'Supply') && context.dataIndex == 9) {
-                        return context.dataset.label || '';
-                    }
-                    if (context.dataset.label === 'Consumer surplus') {
-                        return context.dataset.label || '';
-                    }
-                    if (context.dataset.label === 'Producer surplus') {
-                        return context.dataset.label || '';
-                    }
-                    else {
-                        return ''
+            for (var x = xMin; x <= xCross; x += step) {
+                xValues.push(x);
+                y1.push(4 * (x - 5));
+                y3.push(-4 * (x - 5));
+
+            }
+
+
+
+            for (var x = xCross; x <= xMax; x += step) {
+                xValues.push(x);
+                y2.push(4 * (x - 5));
+                y4.push(-4 * (x - 5));
+
+            }
+
+            y4.pop()
+            y2.pop()
+
+
+            for (var x = 0; x < 10; x += step) {
+                y5.push(0)
+            }
+
+
+
+
+
+            var chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: xValues,
+                    datasets: [
+                        {
+                            pointRadius: 0,
+                            label: 'Line 1',
+                            data: y1,
+                            borderColor: 'blue',
+                            fill: '+1',
+                            backgroundColor: 'rgba(255,193,8,0.2)'
+                        },
+                        {
+                            pointRadius: 0,
+                            label: 'Line invisible',
+                            data: y5,
+                            borderColor: 'rgba(232, 12, 23, 0)',
+                            fill: false,
+                        },
+                        {
+                            pointRadius: 0,
+                            label: 'Line 2',
+                            data: y3,
+                            borderColor: 'red',
+                            fill: '-1',
+                            backgroundColor: 'rgba(158, 241, 147,0.2)'
+                        },
+                        {
+                            pointRadius: 0,
+                            label: 'Supply',
+                            data: y2,
+                            xMin: xCross,
+                            borderColor: 'blue',
+                            fill: false
+                        },
+                        {
+                            pointRadius: 0,
+                            label: 'Demand',
+                            data: y4,
+                            xMin: xCross,
+                            borderColor: 'red',
+                            fill: false
+                        },
+                        {
+                            pointRadius: 0,
+                            data: [[0.5, 4]],
+                            label: 'Consumer surplus',
+                            borderColor: 'black',
+
+                        },
+                        {
+
+                            pointRadius: 0,
+                            data: [[0.5, -4]],
+                            label: 'Producer surplus',
+
+
+                        },
+
+
+
+                    ]
+                },
+                options: {
+                    plugins: {
+                        datalabels: {
+                            formatter: function (value, context) {
+
+
+                                if ((context.dataset.label === 'Demand' || context.dataset.label === 'Supply') && context.dataIndex == 9) {
+                                    return context.dataset.label || '';
+                                }
+                                if (context.dataset.label === 'Consumer surplus') {
+                                    return context.dataset.label || '';
+                                }
+                                if (context.dataset.label === 'Producer surplus') {
+                                    return context.dataset.label || '';
+                                }
+                                else {
+                                    return ''
+                                }
+                            },
+                            anchor: 'end',
+                            align: 'right',
+                            color: "#202020",
+                            offset: 8,
+                            font: {
+                                size: '16px',
+                                weight: 'bold'
+                            }
+                        },
+
+
+                        annotation: {
+                            annotations: {
+                                // projection to x-axis
+                                verticalLine: {
+                                    type: 'line',
+                                    xMin: 5,
+                                    xMax: 5,
+                                    yMin: -20,
+                                    yMax: 0,
+                                    mode: 'vertical',
+                                    value: xCross,
+                                    borderColor: 'grey',
+                                    borderWidth: 1,
+                                    borderDash: [10, 10],
+
+                                },
+                                //projection to y-axis
+                                horizontalLine: {
+                                    type: 'line',
+                                    xMin: 0,
+                                    xMax: 5,
+                                    yMin: 0,
+                                    yMax: 0,
+                                    mode: 'horizontal',
+                                    value: 0,
+                                    borderColor: 'grey',
+                                    borderWidth: 1,
+                                    borderDash: [10, 10],
+                                }
+                            }
+                        },
+
+                        legend: {
+                            display: false
+                        },
+                        fillBetween: {
+                            datasets: [{
+                                from: 'Line 1',
+                                to: 'Line 2',
+                                fillColor: 'rgb(232, 200, 200)'
+                            }]
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                display: false
+                            },
+                            title: {
+                                display: true,
+                                text: 'Quantity',
+                                font: {
+                                    size: 16
+                                },
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                display: false
+                            },
+                            title: {
+                                padding: { bottom: 20 },
+                                display: true,
+                                text: 'Price',
+                                font: {
+                                    size: 16
+                                },
+                            }
+                        }
+
                     }
                 },
-                anchor: 'end',
-                align: 'right',
-                color: "#202020",
-                offset: 8,
-                font: {
-                    size: '16px',
-                    weight: 'bold'
-                }
-            },
-                        
-            annotation: {
-                annotations: {
-                    // projection to x-axis
-                    verticalLine: {
-                        type: 'line',
-                        xMin: 5,
-                        xMax: 5,
-                        yMin: -20,
-                        yMax: 0,
-                        mode: 'vertical',
-                        value: xCross,
-                        borderColor: 'grey',
-                        borderWidth: 1,
-                        borderDash: [10, 10],  
-                        
-                    },
-                    //projection to y-axis
-                    horizontalLine: {
-                        type: 'line',
-                        xMin: 0,
-                        xMax: 5,
-                        yMin: 0,
-                        yMax: 0,
-                        mode: 'horizontal',
-                        value: 0,
-                        borderColor: 'grey',
-                        borderWidth: 1,
-                        borderDash: [10, 10],
-                    }
-                }
-            },
-            
-            legend: {
-                display: false
-            },
-            fillBetween: {
-                datasets: [{
-                    from: 'Line 1',   
-                    to: 'Line 2',    
-                    fillColor: 'rgb(232, 200, 200)' 
-                }]
-            }
-        }
-    },
-    plugins: [ChartDataLabels]
-});
+                plugins: [ChartDataLabels]
+            });
 
-    </script>
+        </script>
 
-{% endblock %}
+        {% endblock %}
