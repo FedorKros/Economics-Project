@@ -1,9 +1,5 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import Http404, HttpResponseRedirect
-from django.urls import path
-from django.contrib.auth.models import User
-from .models import Quiz, Question, Choice
-from random import shuffle
+from django.shortcuts import render, get_object_or_404
+from .models import Quiz, Choice
 from django.db.models import Prefetch
 
 
@@ -15,8 +11,7 @@ def view_quiz(request, quiz_id):
     quiz = get_object_or_404(Quiz, id=quiz_id)
     questions = quiz.questions.all().prefetch_related(Prefetch('choices', queryset=Choice.objects.order_by('?')))
     time_limit = quiz.time_limit
-
-    print(questions)
+    
     return render(request, 'quizzes/view_quiz.html', {'quiz':quiz, 'questions': questions, 'time_limit': time_limit})
 
 
